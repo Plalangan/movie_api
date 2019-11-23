@@ -33,6 +33,7 @@ let topmovies = [{
   title: 'Captain America: Civil War'
 }];
 
+express.static('public');
 
 app.get('/movies', function(req, res) {
   res.json(topmovies)
@@ -42,7 +43,6 @@ app.get('/', function(req, res){
   res.send('Hello welcome to my page!')
 });
 
-express.static('public');
 
 app.use(morgan('common'));
 
