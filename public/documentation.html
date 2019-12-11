@@ -1,13 +1,151 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Moviepedia</title>
+<head>
+<meta charset="utf-8"> <title>Moviepedia</title>
+<link rel="stylesheet" type="text/css" href="css/styles.css">
   </head>
   <body>
     <h1>Documentation</h1>
-    <p>This API is the go to resource when it comes to movie titles, actors, characters, and directors.
-      Users will be able to sign up, update their personal information, and create a list of their favorite movies
-    </p>
+<p>This API is the go to resource when it comes to movie titles, actors, characters, and directors.
+      Users will be able to sign up, update their personal
+information, and create a list of their favorite movies
+</p>
+<table class="content-table" style="width: 1000px;">
+<thead> <tr>
+<th>Request</th>
+<th>URL</th>
+<th>HTTP Method</th>
+<th>Request Body Data Format</th> <th>Response Body Data Format</th>
+        </tr>
+      </thead>
+<tbody> <tr>
+          <td>Get a list of ALL movies to the user</td>
+          <td>/movies</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>A JSON object holding data about all the movies</td>
+        </tr>
+        <tr>
+          <td>Get data about a single movie by title</td>
+          <td>/movies/[Title]</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>A JSON object holding data about a single movie,
+containing a
+image.
+title, description, genre, and directors.
+<br><br>
+Example:
+<br><br>
+{
+"Title": "Avengers: Endgame",
+"Description": "After the devastating events of Avengers: Infinity War (2018),
+the universe is in ruins. With the help of remaining allies, the Avengers
+assemble once more in order to reverse Thanos' actions and restore balance to
+the universe.",
+"Genre":
+{"Name":"Superhero Films",
+"Description": "A superhero film, superhero movie or superhero motion picture
+is a film that is focused on the actions of one or more superheroes:
+individuals who usually possess superhuman abilities relative to a normal person
+and are dedicated to protecting the public."}
+"Director":
+{"Name": "Anthony Russo", "Joe Russo"
+}
+}
+
+</p> </td>
+</tr> <tr>
+          <td>Get data about a movie genre</td>
+          <td>/movies/genres/[Name]</td>
+          <td>GET</td>
+          <td>None</td>
+<td>A JSON object holding data about a movie genre.
+<br><br> Example:
+<br><br>
+{
+"Name": "Superhero Films",
+"Description": ""A superhero film, superhero movie or superhero motion picture
+is a film that is focused on the actions of one or more superheroes:
+individuals who usually possess superhuman abilities relative to a normal person
+and are dedicated to protecting the public."
+} </p>
+</td> </tr>
+<tr>
+<td>Get data about a director</td> <td>/movies/directors/[Name]</td>
+<td>GET</td>
+<td>None</td>
+<td>A JSON object holding data about a director.
+<br><br>
+ Example:
+<br><br>
+{"Name": "Anthony Russo",
+"Bio": "Anthony Russo was born on February 3, 1970 in Cleveland, Ohio, USA as
+Anthony J. Russo. He is a producer and director, known for..."}
+{"Name:" "Joe Russo",
+"Bio": "Joe Russo was born on July 8, 1971 in Cleveland, Ohio, USA as Joseph
+Vincent Russo. He is a producer and director, known for..."}
+
+
+</p> </td>
+</tr> <tr>
+          <td>Add new user accounts</td>
+          <td>/users</td>
+          <td>POST</td>
+          <td>A JSON object holding data about the user to add,
+structured like:
+<br><br>
+{
+"Username" : "user1234", "Password" : "password1234", "Email" : "example@hotmail.com", "Birthday" : "01-01-1991"
+}
+
+
+</p> </td>
+          <td>A JSON object holding data about the user that was
+added, including an ID:
+<br><br>
+{
+"FavoriteMovies": [],
+"_id": "01234", "Username": "user1234", "Password": "password1234",
+"Email": "example@hotmail.com", "Birthday": "01-01-1991"
+} </p>
+</td> </tr>
+        <tr>
+          <td>Update a user's information</td>
+          <td>/users/[Username]</td>
+          <td>PUT</td>
+          <td>A JSON object holding data about the user to add
+<br><br>Example:
+<br><br>
+{
+"Username" : "Newuser1234", "Password" : "Newpassword1234", "Email" : "example@gmail.com", "Birthday" : "01-01-1991"
+} </p>
+</td>
+          <td>A text message indicating the user's information was
+updated</td>
+</tr> <tr>
+          <td>Add movies to user's list of favorites</td>
+          <td>/users/[Username]/Movies/[MovieID]</td>
+          <td>POST</td>
+          <td>None</td>
+          <td>A message indicating the movie was added to the user's
+list of favorites</td>
+</tr> <tr>
+          <td>Remove movies from user's list of favorites</td>
+          <td>/users/[Username]/Movies/[MovieID]</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>A message indicating the movie was removed from the
+user's list of favorites</td>
+</tr> <tr>
+          <td>Remove user accounts</td>
+          <td>/users/[Username]</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>A message indicating the user's account was deleted</td>
+
+        </tr>
+      </tbody>
+</table>
   </body>
 </html>
