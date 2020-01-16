@@ -4,6 +4,17 @@ morgan = require('morgan'),
 bodyParser = require('body-parser'),
 uuid = require('uuid');
 
+//Middleware
+express.static('public');
+app.use(morgan('common'));
+app.use(bodyParser.json());
+
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('There is an error!');
+});
+
 
 let movies = [
   {
@@ -104,7 +115,7 @@ let genres = [
 },
 {
   name: 'Comedy',
-  description: 'Comedy Films are "make \'em laugh" films designed to elicit laughter from the audience. Comedies are light-hearted dramas, crafted to amuse, entertain, and provoke enjoyment. The comedy genre humorously exaggerates the situation, the language, action, and characters. Comedies observe the deficiencies, foibles, and frustrations of life, providing merriment and a momentary escape from day-to-day life. They usually have happy endings, although the humor may have a serious or pessimistic side.'
+  description: 'Comedy Films are \"make \'em laugh\" films designed to elicit laughter from the audience. Comedies are light-hearted dramas, crafted to amuse, entertain, and provoke enjoyment. The comedy genre humorously exaggerates the situation, the language, action, and characters. Comedies observe the deficiencies, foibles, and frustrations of life, providing merriment and a momentary escape from day-to-day life. They usually have happy endings, although the humor may have a serious or pessimistic side.'
 },
 {
   name: 'Action',
@@ -117,9 +128,7 @@ let genres = [
 {
   name: 'Crime',
   description: 'Crime film is a genre that revolves around the action of a criminal mastermind. A Crime film will often revolve around the criminal himself, chronicling his rise and fall. ... This genre tends to be fast paced with an air of mystery – this mystery can come from the plot or from the characters themselves.'
-}
-
-];
+}];
 
 let directors = [
 {
@@ -142,13 +151,19 @@ let directors = [
 
 let users = [
 {
-  id: 0,
+  id: '0',
   name: 'John',
   username: 'username',
   password: 'password',
   email: 'example@gmail.com'
-}
-]
+},
+{
+  id: '1',
+  name: 'Jane',
+  username: 'username2',
+  password: 'password',
+  email: 'example2@gmail.com'
+}];
 
 
 express.static('public');
@@ -167,30 +182,57 @@ app.get('/movies', (req, res) => {
 
 // Get the data about a single movie by title
 
-app.get('/movies/:title', (req, res) =>
-{
-  res.json(movies.find( (movie) =>
-  { return movie.title === req.params.title }));
+/*
+app.get(
+  "/movies/:title",
+  function(req, res) {
+    Movies.findOne({ Title: req.params.Title })
+      .then(function(movie) {
+        res.json(movie);
+      })
+      .catch(function(err) {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
+*/
+
+app.get('/movies/:title', (req, res) => {
+  res.json(movies.find( (movie) => { return movie.title.toLowerCase().includes(req.params.title.toLowerCase()); }));
+});
+
+
+// get list of all genres
+app.get('/genres', (req, res) => {
+  res.json(genres)
 });
 
 // get the data about a single genre by name
 
-app.get('/genres/:name', (req, res) =>
-{
-  res.json(Genres.find( (genre) =>
-{ return genre.name === req.params.name}))
+app.get('/genres/:name', (req, res) => {
+  res.json(genres.find( (genre) => { return genre.name === req.params.name; }));
+});
+
+// get list of all directors
+app.get('/directors', (req, res) => {
+  res.json(directors)
 });
 
 // get the data about a single director by name
 
 app.get('/directors/:name', (req, res) => {
-  res.json(directors.find( (director) => {
-    return director.name === req.params.name;  }))
+  res.json(directors.find( (director) => { return director.name === req.params.name; }));
+});
+
+// get a list of all users
+app.get('/users', (req, res) => {
+  res.json(users);
 });
 
 // add data for a new user
 
-app.post('/users/:id', (req, res) =>{
+app.post('/users', (req, res) =>{
 let newUser = req.body;
 
 if (!newUser.name){
@@ -199,10 +241,11 @@ if (!newUser.name){
   }
   else {
     newUser.id = uuid.v4();
-    Users.push(newUser);
+    users.push(newUser);
     res.status(201).send(newUser);
   }
 });
+
 
 // Delete a user by ID
 
@@ -215,12 +258,69 @@ app.delete('/users/:id', (req, res) => {
     }
   });
 
+  //update the info of a user by their id
+
+
+  app.put('/users/:id', (req, res) => {
+    let user = Users.find((user) => { return user.id === req.params.id; });
+    let newUserInfo = req.body;
+
+    if (user && newUserInfo) {
+      // preserve the user id
+      newUserInfo.id = user.id;
+      // preserve the user favorites
+      newUserInfo.favorites = user.favorites;
+      // merge old info and new info (TODO: validate new info)
+      Object.assign(user, newUserInfo);
+      // merge user with update info into the list of Users
+      Users = Users.map((user) => (user.id === newUserInfo.id) ? newUserInfo : user);
+      res.status(201).send(user);
+    } else if (!newUserInfo.name) {
+      const message = 'Missing name in request body';
+      res.status(400).send(message);
+    } else {
+      res.status(404).send('User with id ' + req.params.id + ' was not found.');
+    }
+  });
+
+
+// adds a movie to the favorites list of a user
+
+app.post('/users/:id/:movie_id', (req, res) => {
+  let user = Users.find((user) => { return user.id === req.params.id; });
+  let movie = Movies.find((movie) => { return movie.id === req.params.movie_id; });
+
+  if (user && movie) {
+    user.favorites = [...new Set([...user.favorites, req.params.movie_id])];
+    res.status(201).send(user);
+  } else if (!movie) {
+    res.status(404).send('Movie with id ' + req.params.movie_id + ' was not found.');
+  } else {
+    res.status(404).send('User with id ' + req.params.id + ' was not found.');
+  }
+});
+
+// removes a movie from the favorites list of a user
+
+app.delete('/users/:id/:movie_id', (req, res) => {
+  let user = Users.find((user) => { return user.id === req.params.id; });
+  let movie = Movies.find((movie) => { return movie.id === req.params.movie_id; });
+
+  if (user && movie) {
+    user.favorites = user.favorites.filter((movie_id) => { return movie_id !== req.params.movie_id; });
+    res.status(201).send(user);
+  } else if (!movie) {
+    res.status(404).send('Movie with id ' + req.params.movie_id + ' was not found.');
+  } else {
+    res.status(404).send('User with id ' + req.params.id + ' was not found.');
+  }
+});
 
 
 
-app.use(morgan('common'));
 
-app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('There is an error!');
+
+
+app.listen(3000, ()=> {
+  console.log('Your app is listening on port 3000')
 });

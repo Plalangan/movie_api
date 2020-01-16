@@ -102,6 +102,10 @@ app.get("/students/:name/gpa", (req, res) => {
   }
 });
 
-app.listen(8080, () => {
-  console.log(`Your app is listening on port 8080`);
+
+//listens for request on port 3000
+
+var port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", function() {
+  console.log("Listening on Port 3000");
 });
