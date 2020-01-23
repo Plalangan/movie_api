@@ -2,12 +2,17 @@ const express = require('express'),
 app = express(),
 morgan = require('morgan'),
 bodyParser = require('body-parser'),
-uuid = require('uuid');
+uuid = require('uuid'),
+passport = require('passport'),
+validator = require('express-validator');
+
+
 
 //Middleware
 express.static('public');
 app.use(morgan('common'));
 app.use(bodyParser.json());
+
 
 
 app.use(function (err, req, res, next) {
@@ -155,14 +160,16 @@ let users = [
   name: 'John',
   username: 'username',
   password: 'password',
-  email: 'example@gmail.com'
-},
+  email: 'example@gmail.com',
+  favorites: []
+  },
 {
   id: '1',
   name: 'Jane',
   username: 'username2',
   password: 'password',
-  email: 'example2@gmail.com'
+  email: 'example2@gmail.com',
+  favorites: []
 }];
 
 
@@ -182,21 +189,6 @@ app.get('/movies', (req, res) => {
 
 // Get the data about a single movie by title
 
-/*
-app.get(
-  "/movies/:title",
-  function(req, res) {
-    Movies.findOne({ Title: req.params.Title })
-      .then(function(movie) {
-        res.json(movie);
-      })
-      .catch(function(err) {
-        console.error(err);
-        res.status(500).send("Error: " + err);
-      });
-  }
-);
-*/
 
 app.get('/movies/:title', (req, res) => {
   res.json(movies.find( (movie) => { return movie.title.toLowerCase().includes(req.params.title.toLowerCase()); }));
@@ -247,22 +239,25 @@ if (!newUser.name){
 });
 
 
-// Delete a user by ID
-
-app.delete('/users/:id', (req, res) => {
-  let user = Users.find((user)=> {
-    return student.id === req.params.id });
-    if (user){
-      Users.filter(function(obj) { return obj.id !== req.params.id });
-      res.status(201).send("User" + req.params.id + "was deleted.")
-    }
-  });
-
-  //update the info of a user by their id
+// Delete a user by username
 
 
-  app.put('/users/:id', (req, res) => {
-    let user = Users.find((user) => { return user.id === req.params.id; });
+
+app.delete('/users/:username', (req, res) => {
+  let user = users.find((user) => { return user.username === req.params.username; });
+
+  if (user) {
+    users = users.filter(function(obj) { return obj.username !== req.params.username; });
+    res.status(201).send('User ' + user.name + ' with username ' + req.params.username + ' was deleted.')
+  }
+});
+
+  //update the info of a user by their username
+
+
+
+  app.put('/users/:username', (req, res) => {
+    let user = users.find((user) => { return user.username === req.params.username; });
     let newUserInfo = req.body;
 
     if (user && newUserInfo) {
@@ -273,26 +268,29 @@ app.delete('/users/:id', (req, res) => {
       // merge old info and new info (TODO: validate new info)
       Object.assign(user, newUserInfo);
       // merge user with update info into the list of Users
-      Users = Users.map((user) => (user.id === newUserInfo.id) ? newUserInfo : user);
-      res.status(201).send(user);
+      users = users.map((user) => (user.username === newUserInfo.username) ? newUserInfo : user);
+      res.status(201).send('Info for username ' + req.params.username + ' has been updated');
     } else if (!newUserInfo.name) {
       const message = 'Missing name in request body';
       res.status(400).send(message);
     } else {
-      res.status(404).send('User with id ' + req.params.id + ' was not found.');
+      res.status(404).send('User with username ' + req.params.username + ' was not found.');
     }
   });
 
 
+
+
 // adds a movie to the favorites list of a user
 
+
 app.post('/users/:id/:movie_id', (req, res) => {
-  let user = Users.find((user) => { return user.id === req.params.id; });
-  let movie = Movies.find((movie) => { return movie.id === req.params.movie_id; });
+  let user = users.find((user) => { return user.id === req.params.id; });
+  let movie = movies.find((movie) => { return movie.id === req.params.movie_id; });
 
   if (user && movie) {
     user.favorites = [...new Set([...user.favorites, req.params.movie_id])];
-    res.status(201).send(user);
+    res.status(201).send('Movie with ID ' + req.params.movie_id + ' was added to the favorites list of User with ID ' + req.params.id);
   } else if (!movie) {
     res.status(404).send('Movie with id ' + req.params.movie_id + ' was not found.');
   } else {
@@ -300,11 +298,14 @@ app.post('/users/:id/:movie_id', (req, res) => {
   }
 });
 
+
+
 // removes a movie from the favorites list of a user
 
+
 app.delete('/users/:id/:movie_id', (req, res) => {
-  let user = Users.find((user) => { return user.id === req.params.id; });
-  let movie = Movies.find((movie) => { return movie.id === req.params.movie_id; });
+  let user = users.find((user) => { return user.id === req.params.id; });
+  let movie = movies.find((movie) => { return movie.id === req.params.movie_id; });
 
   if (user && movie) {
     user.favorites = user.favorites.filter((movie_id) => { return movie_id !== req.params.movie_id; });
@@ -315,6 +316,7 @@ app.delete('/users/:id/:movie_id', (req, res) => {
     res.status(404).send('User with id ' + req.params.id + ' was not found.');
   }
 });
+
 
 
 
