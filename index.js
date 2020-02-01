@@ -23,9 +23,7 @@ app.use(bodyParser.json());
 var auth = require('./auth.js')(app);
 
 
-//Cors
 
-/*
 var allowedOrigins = ['http://localhost:3000', 'http://testsite.com', 'http://localhost:8080'];
 
 app.use(cors({
@@ -38,7 +36,7 @@ app.use(cors({
     return callback(null, true);
   }
 }));
-*/
+
 
 app.use(function (err, req, res, next) {
   console.error(err.stack);
@@ -56,7 +54,7 @@ app.get('/', (req, res) => {
 
 // Get the list of data about all movies
 
-app.get('/movies', function(req, res) {
+app.get('/movies',  passport.authenticate("jwt", { session: false }), function(req, res) {
   Movies.find()
   .then(function(movies){
     res.status(201).json(movies)
@@ -70,7 +68,7 @@ app.get('/movies', function(req, res) {
 // Get the data about a single movie by title
 
 
-app.get('/movies/:Title', function(req, res){
+app.get('/movies/:Title',  passport.authenticate("jwt", { session: false }), function(req, res){
   Movies.findOne({ Title: req.params.Title})
   .then(function(movie){
     res.json(movie)
@@ -84,7 +82,7 @@ app.get('/movies/:Title', function(req, res){
 
 // get the data about a single genre by name
 
-app.get('/movies/genres/:Name', function (req, res){
+app.get('/movies/genres/:Name',  passport.authenticate("jwt", { session: false }), function (req, res){
   Movies.findOne({ "Genre.Name" : req.params.Name})
   .then(function(movie){
     res.status(201).json(movie.Genre)
