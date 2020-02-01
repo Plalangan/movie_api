@@ -12,8 +12,8 @@ models = require('./models.js'),
 Movies = models.Movie,
 Users = models.User;
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
-
+//mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://plalangan:<Lime727>@cluster0-koyhm.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 
 //Middleware
@@ -55,7 +55,7 @@ app.get('/', (req, res) => {
 
 // Get the list of data about all movies
 
-app.get('/movies', passport.authenticate('jwt', { session: false}), function(req, res) {
+app.get('/movies', function(req, res) {
   Movies.find()
   .then(function(movies){
     res.status(201).json(movies)
