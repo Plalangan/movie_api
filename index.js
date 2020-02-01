@@ -25,7 +25,7 @@ var auth = require('./auth.js')(app);
 
 //Cors
 
-var allowedOrigins = ['http://localhost:3000', 'http://testsite.com'];
+//var allowedOrigins = ['http://localhost:3000', 'http://testsite.com'];
 
 app.use(cors({
   origin: function(origin, callback){
