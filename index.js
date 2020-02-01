@@ -55,7 +55,7 @@ app.get('/', (req, res) => {
 
 // Get the list of data about all movies
 
-app.get('/movies', passport.authenticate('jwt', { session: false}), function(req, res) {
+app.get('/movies', function(req, res) {
   Movies.find()
   .then(function(movies){
     res.status(201).json(movies)
@@ -69,7 +69,7 @@ app.get('/movies', passport.authenticate('jwt', { session: false}), function(req
 // Get the data about a single movie by title
 
 
-app.get('/movies/:Title', passport.authenticate('jwt', { session: false}), function(req, res){
+app.get('/movies/:Title', function(req, res){
   Movies.findOne({ Title: req.params.Title})
   .then(function(movie){
     res.json(movie)
@@ -83,7 +83,7 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false}), funct
 
 // get the data about a single genre by name
 
-app.get('/movies/genres/:Name', passport.authenticate('jwt', { session: false}), function (req, res){
+app.get('/movies/genres/:Name', function (req, res){
   Movies.findOne({ "Genre.Name" : req.params.Name})
   .then(function(movie){
     res.status(201).json(movie.Genre)
@@ -131,7 +131,7 @@ app.post('/users',
 check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
 check('Password', 'Password is required').not().isEmpty(),
 check('Email', 'Email does not appear to be valid').isEmail()],
-passport.authenticate('jwt', { session: false}),
+
 //
 function(req, res) {
   var errors = validationResult(req);
