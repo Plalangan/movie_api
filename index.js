@@ -12,8 +12,8 @@ models = require('./models.js'),
 Movies = models.Movie,
 Users = models.User;
 
-//mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
-mongoose.connect('mongodb+srv://plalangan:<Lime727>@cluster0-koyhm.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
+//mongoose.connect('mongodb+srv://plalangan:<Lime727>@cluster0-koyhm.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 
 //Middleware
@@ -54,7 +54,7 @@ app.get('/', (req, res) => {
 
 // Get the list of data about all movies
 
-app.get('/movies',  passport.authenticate("jwt", { session: false }), function(req, res) {
+app.get('/movies', function(req, res) {
   Movies.find()
   .then(function(movies){
     res.status(201).json(movies)
@@ -68,7 +68,7 @@ app.get('/movies',  passport.authenticate("jwt", { session: false }), function(r
 // Get the data about a single movie by title
 
 
-app.get('/movies/:Title',  passport.authenticate("jwt", { session: false }), function(req, res){
+app.get('/movies/:Title', function(req, res){
   Movies.findOne({ Title: req.params.Title})
   .then(function(movie){
     res.json(movie)
@@ -82,7 +82,7 @@ app.get('/movies/:Title',  passport.authenticate("jwt", { session: false }), fun
 
 // get the data about a single genre by name
 
-app.get('/movies/genres/:Name',  passport.authenticate("jwt", { session: false }), function (req, res){
+app.get('/movies/genres/:Name', function (req, res){
   Movies.findOne({ "Genre.Name" : req.params.Name})
   .then(function(movie){
     res.status(201).json(movie.Genre)
@@ -96,7 +96,7 @@ app.get('/movies/genres/:Name',  passport.authenticate("jwt", { session: false }
 
 // get the data about a single director by name
 
-app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false}), function (req, res){
+app.get('/movies/directors/:Name', function (req, res){
   Movies.findOne({ "Director.Name" : req.params.Name})
 .then(function(movie){
   res.status(201).json(movie.Director)
@@ -108,7 +108,7 @@ app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false
 });
 
 // get a list of all users
-app.get('/users', passport.authenticate('jwt', { session: false}), function(req, res) {
+app.get('/users', /*passport.authenticate('jwt', { session: false}),*/ function(req, res) {
 
   Users.find()
   .then(function(users) {
@@ -187,7 +187,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false}), 
 
 
 
-  app.put('/users/:Username', passport.authenticate('jwt', { session: false}), function(req, res) {
+  app.put('/users/:Username', /*passport.authenticate('jwt', { session: false}),*/ function(req, res) {
   Users.findOneAndUpdate({ Username : req.params.Username }, { $set :
   {
     Name: req.body.Name,
@@ -251,7 +251,7 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
 
 
 
-var port = process.env.PORT || 3000;
-app.listen(port, "0.0.0.0", ()=> {
+//var port = process.env.PORT || 3000;
+app.listen(3000, ()=> {
   console.log('Your app is listening on port 3000')
 });
