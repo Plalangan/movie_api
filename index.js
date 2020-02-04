@@ -12,8 +12,8 @@ models = require('./models.js'),
 Movies = models.Movie,
 Users = models.User;
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
-//mongoose.connect('mongodb+srv://plalangan:<Lime727>@cluster0-koyhm.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
+//mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://plalangan:<Lime727>@cluster0-koyhm.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 
 //Middleware
@@ -108,7 +108,7 @@ app.get('/movies/directors/:Name', function (req, res){
 });
 
 // get a list of all users
-app.get('/users', /*passport.authenticate('jwt', { session: false}),*/ function(req, res) {
+app.get('/users', passport.authenticate('jwt', { session: false}), function(req, res) {
 
   Users.find()
   .then(function(users) {
@@ -187,7 +187,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false}), 
 
 
 
-  app.put('/users/:Username', /*passport.authenticate('jwt', { session: false}),*/ function(req, res) {
+  app.put('/users/:Username', passport.authenticate('jwt', { session: false}), function(req, res) {
   Users.findOneAndUpdate({ Username : req.params.Username }, { $set :
   {
     Name: req.body.Name,
@@ -251,7 +251,7 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
 
 
 
-//var port = process.env.PORT || 3000;
-app.listen(3000, ()=> {
+var port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", ()=> {
   console.log('Your app is listening on port 3000')
 });
