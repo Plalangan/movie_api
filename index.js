@@ -13,7 +13,7 @@ Movies = models.Movie,
 Users = models.User;
 
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
-mongoose.connect('mongodb+srv://plalangan:<Lime727>@cluster0-koyhm.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://plalangan:<Lime727!>@cluster0-koyhm.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 
 //Middleware
@@ -24,7 +24,7 @@ var auth = require('./auth.js')(app);
 
 
 
-var allowedOrigins = ['http://localhost:3000', 'http://testsite.com', 'http://localhost:8080'];
+var allowedOrigins = ['http://localhost:3000', 'https://myflixdb-pl.herokuapp.com/'];
 
 app.use(cors({
   origin: function(origin, callback){
