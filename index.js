@@ -20,7 +20,7 @@ mongoose.connect( process.env.CONNECTION_URI , {useNewUrlParser: true});
 express.static('public');
 app.use(morgan('common'));
 app.use(bodyParser.json());
-var auth = require('./auth.js')(app);
+let auth = require('./auth.js')(app);
 
 
 
