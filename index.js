@@ -13,7 +13,7 @@ Movies = models.Movie,
 Users = models.User;
 
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
-mongoose.connect( 'process.env.CONNECTION_URI' , {useNewUrlParser: true});
+mongoose.connect( process.env.CONNECTION_URI , {useNewUrlParser: true});
 
 
 //Middleware
