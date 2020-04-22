@@ -13,7 +13,7 @@ Movies = models.Movie,
 Users = models.User;
 
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
-mongoose.connect('mongodb+srv://plalangan:<Lime727!>@cluster0-koyhm.mongodb.net/myFlixDB?retryWrites=true&w=majority', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://plalangan:<Lime727!>@cluster0-koyhm.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 
 //Middleware
@@ -143,7 +143,7 @@ function(req, res) {
     if (user) {
       return res.status(400).send(req.body.Username + "already exists");
     } else {
-      Usersusers
+      Users
       .create({
         Name: req.body.Name,
         Username: req.body.Username,
@@ -225,7 +225,7 @@ app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { sess
     } else {
       res.json(updatedUser)
     }
-  })-
+  })
 });
 
 
