@@ -133,36 +133,32 @@ check('Email', 'Email does not appear to be valid').isEmail()],
 
 //
 function(req, res) {
-  var errors = validationResult(req);
-  if (!errors.isEmpty()){
-    return res.status(422).json({ errors: errors.array() });
-  }
-  var hashedPassword = Users.hashPassword(req.body.Password);
-  Users.findOne({ Username : req.body.Username })
-  .then(function(user) {
-    if (user) {
-      return res.status(400).send(req.body.Username + "already exists");
-    } else {
-      Users
-      .create({
-        Name: req.body.Name,
-        Username: req.body.Username,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Birthday: req.body.Birthday
-      })
-      .then(function(user) {res.status(201).json(user) })
-      .catch(function(error) {
-        console.error(error);
-        res.status(500).send("Error: " + error);
-      })
-    }
-  }).catch(function(error) {
-    console.error(error);
-    res.status(500).send("Error: " + error);
-  });
+  let hashedPassword = Users.hashPassword(req.body.Password);
+ Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
+   .then((user) => {
+     if (user) {
+     //If the user is found, send a response that it already exists
+       return res.status(400).send(req.body.Username + ' already exists');
+     } else {
+       Users
+         .create({
+           Username: req.body.Username,
+           Password: hashedPassword,
+           Email: req.body.Email,
+           Birthday: req.body.Birthday
+         })
+         .then((user) => { res.status(201).json(user) })
+         .catch((error) => {
+           console.error(error);
+           res.status(500).send('Error: ' + error);
+         });
+     }
+   })
+   .catch((error) => {
+     console.error(error);
+     res.status(500).send('Error: ' + error);
+   });
 });
-
 
 // Delete a user by username
 
