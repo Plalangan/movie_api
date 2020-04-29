@@ -33147,6 +33147,9 @@ function RegistrationView(props) {
     type: "submit"
   }, "Create User"));
 }
+
+;
+RegistrationView.proptypes = {};
 },{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","./registration-view.scss":"components/registration-view/registration-view.scss","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 

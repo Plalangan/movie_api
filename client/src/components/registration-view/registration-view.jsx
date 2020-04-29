@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Proptypes from 'prop-types';
+import proptypes from 'prop-types';
 import './registration-view.scss';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -69,4 +69,8 @@ return (
     </form>
 )
 
-}
+};
+
+RegistrationView.proptypes= {
+
+};
