@@ -24,7 +24,7 @@ let auth = require('./auth.js')(app);
 
 
 
-var allowedOrigins = ['http://localhost:3000', 'https://myflixdb-pl.herokuapp.com/'];
+var allowedOrigins = ['http://localhost:3000', 'https://myflixdb-pl.herokuapp.com/','http://localhost:1234'];
 
 app.use(cors({
   origin: function(origin, callback){

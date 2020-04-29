@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import './main-view.scss';
 
 import  {MovieCard}  from '../movie-card/movie-card';
 import  {MovieView}  from '../movie-view/movie-view';
@@ -22,7 +23,7 @@ export class MainView extends React.Component {
       .then(response => {
         // Assign the result to the state
         this.setState({
-          movies: response.data
+          movies: response.Title
         });
       })
       .catch(function (error) {
@@ -46,7 +47,7 @@ export class MainView extends React.Component {
     render() {
       const { movies, selectedMovie, user } = this.state;
 
-      if (!user) return <LoginView onLoggedIn={user => this.oonLoggedIn(user)}/>;
+      if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>;
   
       // Before the movies have been loaded
       if (!movies) return <div className="main-view"/>;
