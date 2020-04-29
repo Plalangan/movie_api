@@ -17,7 +17,7 @@ mongoose.connect( 'mongodb+srv://plalangan:Infiniti727@cluster0-koyhm.mongodb.ne
 
 
 //Middleware
-express.static('public');
+app.use(express.static('public'));
 app.use(morgan('common'));
 app.use(bodyParser.json());
 let auth = require('./auth.js')(app);
@@ -54,7 +54,7 @@ app.get('/', (req, res) => {
 
 // Get the list of data about all movies
 
-app.get('/movies', function(req, res) {
+app.get('/movies', passport.authenticate('jwt', { session: false }), function(req, res) {
   Movies.find()
   .then(function(movies){
     res.status(201).json(movies)

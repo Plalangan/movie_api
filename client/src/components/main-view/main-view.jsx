@@ -22,8 +22,12 @@ export class MainView extends React.Component {
       };
     }
   
-    componentDidMount() {
-        axios.get('https://myflixdb-pl.herokuapp.com/movies')
+ 
+        
+    getMovies(token){
+          axios.get('https://myflixdb-pl.herokuapp.com/movies', {
+            headers: { Authorization: `Bearer $`}
+          })
       .then(response => {
         // Assign the result to the state
         this.setState({
@@ -33,8 +37,11 @@ export class MainView extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-  }
-  
+      };
+
+      
+    
+
     onMovieClick(movie) {
       this.setState({
         selectedMovie: movie
