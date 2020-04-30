@@ -74,17 +74,8 @@ return (
                 <Form.Control.Feedback type="invalid">Please enter your date of birth</Form.Control.Feedback>
         </Form.Group>
 
-        <Button variant = "primary" type="submit" onClick={axios.post}>
+        <Button variant = "primary" type="submit" >
             Create User
         </Button>
-
-    
-   
-    </form>
-)
-
-};
-
-RegistrationView.proptypes= {
-
-};
+        </form>
+)};

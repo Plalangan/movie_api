@@ -19,8 +19,7 @@ export class MainView extends React.Component {
       super();
   
       this.state = {
-        movies: null,
-        selectedMovie: null,
+        movies: [],
         user: null
         
       
@@ -31,7 +30,7 @@ export class MainView extends React.Component {
         
     getMovies(token){
           axios.get('https://myflixdb-pl.herokuapp.com/movies', {
-            headers: { Authorization: `Bearer $`}
+            headers: { Authorization: `Bearer ${token}`}
           })
       .then(response => {
         // Assign the result to the state
@@ -45,7 +44,7 @@ export class MainView extends React.Component {
       };
 
       
-      componentDidMount() {
+    componentDidMount() {
         let accessToken = localStorage.getItem('token');
         if (accessToken !== null) {
           this.setState({
@@ -69,22 +68,26 @@ export class MainView extends React.Component {
     render() 
     {
       const { movies, user } = this.state;
+      
   
   
-      if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+    
       if (!movies) return <div className="main-view"/>;
   
       return (
         <Router>
            <div className="main-view">
-            <Route exact path="/" render={() => movies.map(m => <MovieCard key={m._id} movie={m}/>)}/>
+            <Route exact path="/" render={() => {
+              if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+             return movies.map(m => <MovieCard key={m._id} movie={m}/>)}}/>
+            <Route path="/register" render={() => <RegistrationView/>}/>
             <Route exact path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
             <Route exact path="/genres/:name" render={({match}) => {
               if (!movie) return <div className="main-view"/>;
             <GenreView genre={genres.find(g => g.name === match.params.name)}/>}}/>
             <Route exact path="/directors/:name" render={({match}) => {
               if (!movie) return <div className="main-view"/>;
-              return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Dir
+              return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director
               }/>}}/>
            </div>
         </Router>

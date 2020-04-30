@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {MainView} from './components/main-view/main-view.jsx';
+import {RegistrationView} from './components/registration-view/registration-view';
 
 // Import statement to indicate that we need to bundle `./index.scss`
 import './index.scss';

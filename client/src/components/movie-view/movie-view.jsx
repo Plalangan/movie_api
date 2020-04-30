@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import { Link } from 'react-router-dom';
 
 export class MovieView extends React.Component {
@@ -43,18 +43,4 @@ export class MovieView extends React.Component {
         )};
     };
 
-MovieView.PropTypes = {
-  movie: Proptypes.shape({
-    Title: Proptypes.string,
-    ImagePath: Proptypes.string,
-    Description: Proptypes.string,
-    Genre: Proptypes.exact({
-      _id: Proptypes.string,
-      Name: Proptypes.string,
-      Description: Proptypes.string
-    }),
-    Director: Proptypes.shape({
-      Name: Proptypes.string
-    })
-  }).isRequired
-};
+ 

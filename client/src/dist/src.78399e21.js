@@ -34796,8 +34796,6 @@ exports.MovieView = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
 var _reactRouterDom = require("react-router-dom");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -34886,22 +34884,7 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
 
 exports.MovieView = MovieView;
 ;
-MovieView.PropTypes = {
-  movie: Proptypes.shape({
-    Title: Proptypes.string,
-    ImagePath: Proptypes.string,
-    Description: Proptypes.string,
-    Genre: Proptypes.exact({
-      _id: Proptypes.string,
-      Name: Proptypes.string,
-      Description: Proptypes.string
-    }),
-    Director: Proptypes.shape({
-      Name: Proptypes.string
-    })
-  }).isRequired
-};
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/login-view/login-view.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/login-view/login-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -36301,13 +36284,11 @@ function RegistrationView(props) {
     type: "invalid"
   }, "Please enter your date of birth")), _react.default.createElement(_Button.default, {
     variant: "primary",
-    type: "submit",
-    onClick: _axios.default.post
+    type: "submit"
   }, "Create User"));
 }
 
 ;
-RegistrationView.proptypes = {};
 },{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","./registration-view.scss":"components/registration-view/registration-view.scss","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","axios":"../node_modules/axios/index.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
@@ -36376,8 +36357,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this);
     _this.state = {
-      movies: null,
-      selectedMovie: null,
+      movies: [],
       user: null
     };
     return _this;
@@ -36390,7 +36370,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
       _axios.default.get('https://myflixdb-pl.herokuapp.com/movies', {
         headers: {
-          Authorization: "Bearer $"
+          Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
         // Assign the result to the state
@@ -36432,11 +36412,6 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       var _this$state = this.state,
           movies = _this$state.movies,
           user = _this$state.user;
-      if (!user) return _react.default.createElement(_loginView.LoginView, {
-        onLoggedIn: function onLoggedIn(user) {
-          return _this3.onLoggedIn(user);
-        }
-      });
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
       });
@@ -36446,12 +36421,22 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         exact: true,
         path: "/",
         render: function render() {
+          if (!user) return _react.default.createElement(_loginView.LoginView, {
+            onLoggedIn: function onLoggedIn(user) {
+              return _this3.onLoggedIn(user);
+            }
+          });
           return movies.map(function (m) {
             return _react.default.createElement(_movieCard.MovieCard, {
               key: m._id,
               movie: m
             });
           });
+        }
+      }), _react.default.createElement(_reactRouterDom.Route, {
+        path: "/register",
+        render: function render() {
+          return _react.default.createElement(_registrationView.RegistrationView, null);
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
@@ -36490,7 +36475,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           return _react.default.createElement(_directorView.DirectorView, {
             director: movies.find(function (m) {
               return m.Director.Name === match.params.name;
-            }).Dir
+            }).Director
           });
         }
       })));
@@ -36514,6 +36499,8 @@ var _react = _interopRequireDefault(require("react"));
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
 var _mainView = require("./components/main-view/main-view.jsx");
+
+var _registrationView = require("./components/registration-view/registration-view");
 
 require("./index.scss");
 
@@ -36567,7 +36554,7 @@ var MyFlixApplication = /*#__PURE__*/function (_React$Component) {
 var container = document.getElementsByClassName('app-container')[0]; // Tell React to render our app in the root DOM element
 
 _reactDom.default.render(_react.default.createElement(MyFlixApplication), container);
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./components/main-view/main-view.jsx":"components/main-view/main-view.jsx","./index.scss":"index.scss"}],"../../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./components/main-view/main-view.jsx":"components/main-view/main-view.jsx","./components/registration-view/registration-view":"components/registration-view/registration-view.jsx","./index.scss":"index.scss"}],"../../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
