@@ -1,5 +1,6 @@
 import React from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export class MovieView extends React.Component {
 
@@ -25,23 +26,24 @@ export class MovieView extends React.Component {
           <span className="label">Description: </span>
           <span className="value">{movie.Description}</span>
         </div>
-
+      <Link to ={`/genres/${movie.Genre.Name}`}>
         <div className="movie-genre">
-          <span className="label">Genre: </span>
+        <Button variant="link">Genre</Button>
           <span className="value">{movie.Genre.Name}</span>
         </div>
+      </Link>
+      <Link to ={`/directors/${movie.Director.Name}`}>
         <div className="movie-director">
-          <span className="label">Director: </span>
+        <Button variant="link">Director</Button>
           <span className="value">{movie.Director.Name}</span>
         </div>
-       </div>
+        </Link>
+        </div>
 
+        )};
+    };
 
-    );
-  }
-};
-
-MovieView.Proptypes = {
+MovieView.PropTypes = {
   movie: Proptypes.shape({
     Title: Proptypes.string,
     ImagePath: Proptypes.string,
@@ -55,4 +57,4 @@ MovieView.Proptypes = {
       Name: Proptypes.string
     })
   }).isRequired
-}
+};

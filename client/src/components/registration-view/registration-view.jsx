@@ -3,6 +3,7 @@ import proptypes from 'prop-types';
 import './registration-view.scss';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
 
 export function RegistrationView(props){
     const [ name, setName ] = useState('');
@@ -14,9 +15,22 @@ export function RegistrationView(props){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(name, username, password, email, birthday, validated);
+        console.log(name, username, password, email, birthday, validated),
+        axios.post('https://myflixdb-pl.herokuapp.com/users', {
+        Name: name,
+        Username: username,
+        Password: password,
+        Email: email,
+        Birthday: birthday
+    }).then(response=> {
+        const data = response.data;
+        console.log(data);
+        window.open('/', '_self');
+    }).catch(e => {
+        console.log('error registering the user')
+    });
+    }
 
-};
 
 return (
     <form style = {{width: '80%', margin: 'auto', marginTop: '2rem'}}>
@@ -60,7 +74,7 @@ return (
                 <Form.Control.Feedback type="invalid">Please enter your date of birth</Form.Control.Feedback>
         </Form.Group>
 
-        <Button variant = "primary" type="submit">
+        <Button variant = "primary" type="submit" onClick={axios.post}>
             Create User
         </Button>
 
