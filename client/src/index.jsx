@@ -14,7 +14,7 @@ import { GenreView } from './components/genre-view/genre-view.jsx';
 // Main component (will eventually use all the others)
 class MyFlixApplication extends React.Component {
   render() {
-    return <ProfileView/>;
+    return <MainView/>;
   }
 }
 
