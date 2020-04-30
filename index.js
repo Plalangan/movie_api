@@ -2,7 +2,7 @@ const express = require('express'),
 app = express(),
 morgan = require('morgan'),
 bodyParser = require('body-parser'),
-uuid = require('uuid'),
+uuid = require('uuid');
 cors = require('cors');
 passport = require('passport');
 require('./passport.js');
@@ -23,8 +23,8 @@ let auth = require('./auth.js')(app);
 mongoose.connect( 'mongodb+srv://plalangan:Infiniti727@cluster0-koyhm.mongodb.net/myFlixDB?retryWrites=true&w=majority' , {useNewUrlParser: true});
 
 
-var allowedOrigins = ['*'];
-//var allowedOrigins = ['http://localhost:3000', 'https://myflixdb-pl.herokuapp.com/','http://localhost:1234'];
+
+var allowedOrigins = ['http://localhost:3000', 'https://myflixdb-pl.herokuapp.com/','http://localhost:1234'];
 
 app.use(cors({
   origin: function(origin, callback){
