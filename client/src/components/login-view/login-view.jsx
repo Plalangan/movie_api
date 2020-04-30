@@ -26,7 +26,7 @@ export function LoginView(props) {
             Username: username,
             Password: password
         },
-        {headers: {'Access-Control-Allow-Origin' : '*'}})
+        )
         .then(response =>{
             const data = response.data;
             props.onLoggedIn(data);

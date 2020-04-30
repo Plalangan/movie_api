@@ -36109,10 +36109,6 @@ function LoginView(props) {
     _axios.default.post('https://myflixdb-pl.herokuapp.com/login', {
       Username: username,
       Password: password
-    }, {
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      }
     }).then(function (response) {
       var data = response.data;
       props.onLoggedIn(data);
@@ -49717,7 +49713,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50886" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51266" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
