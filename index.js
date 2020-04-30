@@ -23,7 +23,7 @@ let auth = require('./auth.js')(app);
 mongoose.connect( 'mongodb+srv://plalangan:Infiniti727@cluster0-koyhm.mongodb.net/myFlixDB?retryWrites=true&w=majority' , {useNewUrlParser: true});
 
 
-
+/*
 
 var allowedOrigins = ['http://localhost:3000', 'https://myflixdb-pl.herokuapp.com/','http://localhost:1234',];
 
@@ -38,6 +38,8 @@ app.use(cors({
   }
 }));
 
+*/
+app.use(cors());
 
 app.use(function (err, req, res, next) {
   console.error(err.stack);

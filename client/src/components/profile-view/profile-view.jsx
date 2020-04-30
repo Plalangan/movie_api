@@ -1,168 +1,126 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import { Link } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+
+
+import './profile-view.scss';
 import axios from 'axios';
-import Proptypes from 'prop-types';
 
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+export class ProfileView extends React.Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
 
-import './ProfileView/ProfileView.scss';
-import { useState } from 'react';
+  deleteFavorite(movieId) {
+    axios.delete(`https://myflixdb-pl.herokuapp.com/users/${localStorage.getItem('user')}/Movies/${movieId}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    })
+      .then(res => {
+        document.location.reload(true);
+      })
+      .then(res => {
+        alert('Movie successfully deleted from favorites');
+      })
 
-export function ProfileView(props) {
+      .catch(e => {
+        alert('Movie could not be deleted from favorites ' + e)
+      });
+  }
 
-    const { movies, userProfile, token } = props;
+  deleteProfile() {
+    axios.delete(`https://myflixdb-pl.herokuapp.com/users/${localStorage.getItem('user')}`,
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      .then(res => {
+        alert('Do you really want to delete your account?')
+      })
+      .then(res => {
+        alert('Account was successfully deleted')
+      })
+      .then(res => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
 
-    if (!userProfile) {
-        return null;
-    }
+        this.setState({
+          user: null
 
-    const { user, onToggleFavorite } = props;
+        });
+        window.open('/', '_self');
+      })
+      .catch(e => {
+        alert('Account could not be deleted ' + e)
+      });
+  }
 
-    const [ name, setName ] = useState(userProfile.Name);
-    const [ username, setUsername ] = useState(userProfile.Username);
-    const [ password, setPassword ] = useState('');
-    const [ email, setEmail ] = useState(userProfile.Email);
-    const [ birthday, setBirthday ] = useState(userProfile.Birthday.substring(0,10));
-    const [ validated, setValidated] = useState(false);
 
-    const formField = (label, value, onChange, type='text', feedback, options) => {
-        if (!feedback) {
-          feedback = `Please insert your ${label.toLowerCase()}.`;
-        }
-        return (
-          <Form.Group controlId={`formBasic${label.trim()}`}>
-            <Form.Label>{label}</Form.Label>
-            <Form.Control 
-              type={type}
-              value={value}
-              onChange={ e => onChange(e.target.value)}      
-              required
-              {...options}
-              placeholder={`Enter ${label.toLowerCase()}`} />
-            <Form.Control.Feedback type="invalid">
-              {feedback}
-            </Form.Control.Feedback>            
-          </Form.Group>
-        );
-      }
-    
-      const handleUpdate = (e) => {
-    
-        e.preventDefault();
-    
-        if (!token) {
-          // if token is not present, user is not logged in, go home
-          console.log('user is not logged in');
-          window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
-          return
-        }
-    
-        // handles form validation
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-          event.stopPropagation();
-        } else {
-          console.log('user update', username, 'with password', password);
-    
-          let options = {}
-          if (token) {
-            options = {
-              headers: { Authorization: `Bearer ${token}`}
+
+  render() {
+    const { user, userProfile, movies } = this.props;
+
+    const favoritesList = movies.filter(movie => userProfile.Favorites.includes(movie._id));
+
+    if (!user || !userProfile || !movies || movies.length === 0) return <div>loading</div>;
+
+    return (
+      <div className="profile-view">
+        <Container>
+          <Card style={{ minwidth: '20rem' }} className="border-0 pl-0">
+            <Card.Body>
+              <span className="d-flex align-items-center mb-4">
+                <Link to={`/`}>
+                  <i className="material-icons">arrow_back_ios</i>
+                </Link>
+                <h1 className="display-4">Profile</h1>
+              </span>
+              <Card.Text className="mb-4 lead">
+                <span className="font-weight-bold">Username: </span>{userProfile.Username} <br />
+                <span className="font-weight-bold">Email: </span>{userProfile.Email} <br />
+                <span className="font-weight-bold">Birthday: </span>{userProfile.Birthday.slice(0, 10)} <br />
+              </Card.Text>
+              <Link to={`/update/${userProfile.Username}`}>
+                <Button variant="primary" className="update-button">Update my profile</Button>
+              </Link>
+
+              <Button variant="primary" className="delete-button ml-2" onClick={() => this.deleteProfile()}>Delete my profile</Button>
+            </Card.Body>
+          </Card>
+          <Container>
+
+            <h4 className="mt-4 mb-4">My favorite movies: </h4>
+            {userProfile.Favorites.length === 0 &&
+              <div>You have no favorite movies</div>}
+            {userProfile.Favorites.length > 0 &&
+              <ul className="ml-0 pl-0">
+                {favoritesList.map(movie =>
+                  (
+                    <li key={movie._id} className="mb-2 ">
+                      <span className="d-flex align-items-center">
+                        <Button variant="primary" size="sm" className="delete-movie mr-2" onClick={e => this.deleteFavorite(movie._id)}>
+                          <i className="material-icons bin">delete</i>
+                        </Button>
+                        <Link to={`/movies/${movie._id}`}>
+                          <h5 className="movie-link link">{movie.Title}</h5>
+                        </Link>
+
+                      </span>
+                    </li>
+                  ))}
+              </ul>
+
             }
-          }
-    
-          axios.put(`'http:https://myflixdb-pl.herokuapp.com/users/${username}'`, {
-            Name: name,
-            Username: username,
-            Password: password,
-            Email: email,
-            Birthday: birthday
-          }, options)
-          .then(response => {
-            const data = response.data;
-            props.onUserUpdate(data)
-          })
-          .catch(e => {
-            console.log('error updating the user')
-          });      
-        }
-        // notify that fields were validated,
-        // therefore feedback can be shown
-        // (otherwise it will appear at page load)
-        setValidated(true);
-      };
-    
-    
-      const handleUnregister = (e) => {
-    
-        e.preventDefault();
-    
-        if (!confirm('Do you really want to leave us?')) {
-          return;
-        }
-    
-        if (!token) {
-          // if token is not present, user is not logged in, go home
-          console.log('user is not logged in');
-          window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
-          return
-        }
-    
-        console.log('unregister user', username);
-    
-        let options = {}
-        if (token) {
-          options = {
-            headers: { Authorization: `Bearer ${token}`}
-          }
-        }
-    
-        axios.delete(`'http:https://myflixdb-pl.herokuapp.com/users/${username}'`,  options)
-        .then(response => {
-          const data = response.data;
-          props.onLoggedIn(null); // logout the user from the current session
-        })
-        .catch(e => {
-          console.log('error unregistering the user', e)
-        });      
-      };
-    
-      return (
-        <div className="profile-view">
-          <Row>
-            <Col className="mb-5" xs={11} sm={6} md={6}>
-              <Form noValidate validated={validated} onSubmit={handleUpdate}>
-                {formField('Name', name, setName)}
-                {formField('Username', username, setUsername, 'text', '', {readOnly:true, disabled:true, required:false, value: username})}
-                {formField('Password', password, setPassword, 'password', 'Please provide a password of at least 6 characters.', {minLength: 6})}
-                {formField('Email', email, setEmail, 'email', 'Please provide a valid email address.')}
-                {formField('Birthday', birthday, setBirthday, 'date', 'Please provide a valid date (e.g. 01/01/1970).')}
-    
-                <Button variant="primary" type="submit">
-                  Update
-                </Button>
-              </Form>
-            </Col>
-            <Col xs={11} sm={6} md={6} className="text-center">
-              <Form className="p-3 border border-danger rounded" noValidate validated={validated} onSubmit={handleUnregister}>
-                <Form.Label className="mb-3 text-center text-danger">Dangerous Area</Form.Label>
-                <br />
-                <Button variant="danger" type="submit">
-                  Unregister
-                </Button>
-              </Form>
-            </Col>
-          </Row>
-          <br />
-          <MoviesGrid 
-            movies={movies}
-            title="My favourite movies"
-            onToggleFavourite={movieId => onToggleFavourite(movieId)}
-            user={user}
-            userProfile={userProfile}
-          />
-        </div>
-      );
-    };
+
+          </Container>
+        </Container>
+      </div >
+
+
+    );
+
+  }
+}
