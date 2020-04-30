@@ -12,19 +12,19 @@ models = require('./models.js'),
 Movies = models.Movie,
 Users = models.User;
 
-//mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
-mongoose.connect( 'mongodb+srv://plalangan:Infiniti727@cluster0-koyhm.mongodb.net/myFlixDB?retryWrites=true&w=majority' , {useNewUrlParser: true});
-
-
 //Middleware
 app.use(express.static('public'));
 app.use(morgan('common'));
 app.use(bodyParser.json());
+
 let auth = require('./auth.js')(app);
 
+//mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
+mongoose.connect( 'mongodb+srv://plalangan:Infiniti727@cluster0-koyhm.mongodb.net/myFlixDB?retryWrites=true&w=majority' , {useNewUrlParser: true});
 
 
-var allowedOrigins = ['http://localhost:3000', 'https://myflixdb-pl.herokuapp.com/','http://localhost:1234s'];
+
+var allowedOrigins = ['http://localhost:3000', 'https://myflixdb-pl.herokuapp.com/','http://localhost:1234'];
 
 app.use(cors({
   origin: function(origin, callback){
@@ -108,7 +108,7 @@ app.get('/movies/directors/:Name', function (req, res){
 });
 
 // get a list of all users
-app.get('/users', passport.authenticate('jwt', { session: false}), function(req, res) {
+app.get('/users', function(req, res) {
 
   Users.find()
   .then(function(users) {
