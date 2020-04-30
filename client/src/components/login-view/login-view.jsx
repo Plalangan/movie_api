@@ -11,6 +11,13 @@ export function LoginView(props) {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
 
+
+    /*const handleSubmit = (e) => {
+        e.preventDefault();
+        props.onLoggedIn(username);
+    }
+    */
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Send a request to the server for authentication 
@@ -18,7 +25,8 @@ export function LoginView(props) {
         {
             Username: username,
             Password: password
-        })
+        },
+        {headers: {'Access-Control-Allow-Origin' : '*'}})
         .then(response =>{
             const data = response.data;
             props.onLoggedIn(data);
@@ -27,6 +35,7 @@ export function LoginView(props) {
             console.log('No User Found')
         });
     };
+    
     
 
 

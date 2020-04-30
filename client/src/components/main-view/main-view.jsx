@@ -54,6 +54,13 @@ export class MainView extends React.Component {
         }
       }
 
+     /*onLoggedIn(user){
+       this.setState({
+         user
+       });
+     } 
+     */
+      
     onLoggedIn(authData) {
       console.log(authData);
       this.setState({
@@ -64,6 +71,7 @@ export class MainView extends React.Component {
       localStorage.setItem('user', authData.user.Username);
       this.getMovies(authData.token);
     }
+    
 
     render() 
     {

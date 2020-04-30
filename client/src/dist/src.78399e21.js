@@ -34037,6 +34037,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
@@ -34057,10 +34061,48 @@ var DirectorView = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(DirectorView);
 
   function DirectorView() {
+    var _this;
+
     _classCallCheck(this, DirectorView);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this);
+    _this.state = {};
+    return _this;
   }
+
+  _createClass(DirectorView, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          director = _this$props.director,
+          movie = _this$props.movie;
+      if (!director) return null;
+      return _react.default.createElement("div", {
+        className: "director-view"
+      }, _react.default.createElement("img", {
+        className: "director-poster",
+        src: movie.Director.ImagePath
+      }), _react.default.createElement("div", {
+        className: "director-name"
+      }, _react.default.createElement("span", {
+        className: "label"
+      }, "Name:"), _react.default.createElement("span", {
+        className: "value"
+      }, movie.Director.Name)), _react.default.createElement("div", {
+        className: "director-bio"
+      }, _react.default.createElement("span", {
+        className: "label"
+      }, "Bio:"), _react.default.createElement("span", {
+        className: "value"
+      }, movie.Director.Bio)), _react.default.createElement("div", {
+        className: "director-born"
+      }, _react.default.createElement("span", {
+        className: "label"
+      }, "Born:"), _react.default.createElement("span", {
+        className: "value"
+      }, movie.Director.Born)));
+    }
+  }]);
 
   return DirectorView;
 }(_react.default.Component);
@@ -36017,6 +36059,12 @@ function LoginView(props) {
       _useState4 = _slicedToArray(_useState3, 2),
       password = _useState4[0],
       setPassword = _useState4[1];
+  /*const handleSubmit = (e) => {
+      e.preventDefault();
+      props.onLoggedIn(username);
+  }
+  */
+
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault(); // Send a request to the server for authentication 
@@ -36024,6 +36072,10 @@ function LoginView(props) {
     _axios.default.post('https://myflixdb-pl.herokuapp.com/login', {
       Username: username,
       Password: password
+    }, {
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
     }).then(function (response) {
       var data = response.data;
       props.onLoggedIn(data);
@@ -36393,6 +36445,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         this.getMovies(accessToken);
       }
     }
+    /*onLoggedIn(user){
+      this.setState({
+        user
+      });
+    } 
+    */
+
   }, {
     key: "onLoggedIn",
     value: function onLoggedIn(authData) {
@@ -36582,7 +36641,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58328" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53111" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
