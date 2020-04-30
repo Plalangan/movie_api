@@ -25,7 +25,7 @@ mongoose.connect( 'mongodb+srv://plalangan:Infiniti727@cluster0-koyhm.mongodb.ne
 
 
 
-var allowedOrigins = ['*'];
+var allowedOrigins = ['http://localhost:3000', 'https://myflixdb-pl.herokuapp.com/','http://localhost:1234',];
 
 app.use(cors({
   origin: function(origin, callback){
