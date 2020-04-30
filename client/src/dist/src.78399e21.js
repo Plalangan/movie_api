@@ -36070,8 +36070,8 @@ function LoginView(props) {
     e.preventDefault(); // Send a request to the server for authentication 
 
     _axios.default.post('https://myflixdb-pl.herokuapp.com/login', {
-      Username: username,
-      Password: password
+      Username: Username,
+      Password: Password
     }, {
       headers: {
         'Access-Control-Allow-Origin': '*'
@@ -36095,7 +36095,7 @@ function LoginView(props) {
   }, _react.default.createElement(_Form.default.Label, null, "Username"), _react.default.createElement(_Form.default.Control, {
     type: "text",
     placeholder: "Enter Username",
-    value: username,
+    value: Username,
     required: true,
     onChange: function onChange(e) {
       return setUsername(e.target.value);
@@ -36107,7 +36107,7 @@ function LoginView(props) {
   }, _react.default.createElement(_Form.default.Label, null, "Password"), _react.default.createElement(_Form.default.Control, {
     type: "password",
     placeholder: "Enter Password",
-    value: password,
+    value: Password,
     required: true,
     onChange: function onChange(e) {
       return setPassword(e.target.value);

@@ -23,8 +23,8 @@ export function LoginView(props) {
         // Send a request to the server for authentication 
         axios.post('https://myflixdb-pl.herokuapp.com/login',
         {
-            Username: username,
-            Password: password
+            Username: Username,
+            Password: Password
         },
         {headers: {'Access-Control-Allow-Origin' : '*'}})
         .then(response =>{
@@ -46,7 +46,7 @@ export function LoginView(props) {
             <Form.Label>
                 Username
             </Form.Label>
-                <Form.Control type = "text" placeholder="Enter Username" value= {username} required onChange = {e => setUsername(e.target.value)}/>
+                <Form.Control type = "text" placeholder="Enter Username" value= {Username} required onChange = {e => setUsername(e.target.value)}/>
                 <Form.Control.Feedback type="invalid">Please enter correct user name</Form.Control.Feedback>
             </Form.Group>
 
@@ -54,7 +54,7 @@ export function LoginView(props) {
                 <Form.Label>
                 Password
                 </Form.Label>
-                <Form.Control type = "password" placeholder="Enter Password" value={password} required onChange={e => setPassword(e.target.value)}/>
+                <Form.Control type = "password" placeholder="Enter Password" value={Password} required onChange={e => setPassword(e.target.value)}/>
                 <Form.Control.Feedback type ="invalid">Please enter correct password</Form.Control.Feedback>
             </Form.Group>
             <Button variant="primary" type="submit" onClick={handleSubmit}>
