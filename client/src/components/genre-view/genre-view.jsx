@@ -1,15 +1,7 @@
   
 import React from 'react';
 import PropTypes from 'prop-types';
-
-// import app components
-import { MoviesGrid } from '../movies-grid/movies-grid';
-
-// get bootstrap imports
 import Media from 'react-bootstrap/Media';
-// import Button from 'react-bootstrap/Button';
-
-// imports for files to bundle
 import './genre-view.scss';
 
 
