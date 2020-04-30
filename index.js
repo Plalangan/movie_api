@@ -1,5 +1,6 @@
 const express = require('express'),
-app = express(),
+app = express();
+app.use(cors());
 morgan = require('morgan'),
 bodyParser = require('body-parser'),
 uuid = require('uuid');
@@ -39,7 +40,7 @@ app.use(cors({
 }));
 
 */
-app.use(cors());
+
 
 app.use(function (err, req, res, next) {
   console.error(err.stack);
