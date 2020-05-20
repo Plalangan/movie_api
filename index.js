@@ -87,7 +87,7 @@ app.get('/movies/:Title', function(req, res){
 
 // get list of all genres
 
-app.get('/movies/genres', function (req, res){
+app.get('/genres', function (req, res){
   Genres.find()
   .then(function(genres){
     res.status(201).json(genres)
