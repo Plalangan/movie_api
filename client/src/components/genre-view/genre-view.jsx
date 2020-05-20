@@ -6,7 +6,7 @@ import './genre-view.scss';
 
 
 export const GenreView = (props) => {
-  const { genre, movies, user, userProfile, onToggleFavourite } = props;
+  const { genre, movies, user, userProfile, onToggleFavourite, onGenreClick } = props;
   if (!genre) return null;
   return (
     <div className="genre-view">

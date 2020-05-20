@@ -12,7 +12,8 @@ const {check, validationResult} = require('express-validator');
 const mongoose = require('mongoose'),
 models = require('./models.js'),
 Movies = models.Movie,
-Users = models.User;
+Users = models.User,
+Genres = models.Genre;
 
 //Middleware
 app.use(express.static('public'));
@@ -77,6 +78,19 @@ app.get('/movies/:Title', function(req, res){
   Movies.findOne({ Title: req.params.Title})
   .then(function(movie){
     res.json(movie)
+  })
+  .catch(function(err){
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
+});
+
+// get list of all genres
+
+app.get('/movies/genres', function (req, res){
+  Genres.find()
+  .then(function(genres){
+    res.status(201).json(genres)
   })
   .catch(function(err){
     console.error(err);

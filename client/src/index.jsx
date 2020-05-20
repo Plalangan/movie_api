@@ -1,20 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
-import {MainView} from './components/main-view/main-view.jsx';
-import {RegistrationView} from './components/registration-view/registration-view';
+import { MainView } from './components/main-view/main-view.jsx';
+import moviesApp from './reducers/reducers';
 
 // Import statement to indicate that we need to bundle `./index.scss`
 import './index.scss';
-import { LoginView } from './components/login-view/login-view.jsx';
-import { DirectorView } from './components/director-view/director-view.jsx';
-import { ProfileView } from './components/profile-view/profile-view.jsx';
-import { GenreView } from './components/genre-view/genre-view.jsx';
+
+
+const store = createStore(moviesApp);
 
 // Main component (will eventually use all the others)
 class MyFlixApplication extends React.Component {
   render() {
-    return <MainView/>;
+    return(
+ 
+      <MainView/>
+    
+    );
   }
 }
 
