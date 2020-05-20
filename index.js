@@ -13,7 +13,8 @@ const mongoose = require('mongoose'),
 models = require('./models.js'),
 Movies = models.Movie,
 Users = models.User,
-Genres = models.Genre;
+Genres = models.Genre,
+Directors = models.Director;
 
 //Middleware
 app.use(express.static('public'));
@@ -101,7 +102,7 @@ app.get('/genres', function (req, res){
 
 // get the data about a single genre by name
 
-app.get('/movies/genres/:Name', function (req, res){
+app.get('/genres/:Name', function (req, res){
   Movies.findOne({ "Genre.Name" : req.params.Name})
   .then(function(movie){
     res.status(201).json(movie.Genre)
@@ -113,9 +114,22 @@ app.get('/movies/genres/:Name', function (req, res){
 });
 
 
+// get a list of all directors
+
+app.get('/directors', function(req, res){
+  Directors.find()
+  .then(function(directors){
+    res.status(201).json(directors)
+  })
+  .catch(function(err){
+    console.error(err);
+    res.status(500).send("Erro: " + err)
+  });
+});
+
 // get the data about a single director by name
 
-app.get('/movies/directors/:Name', function (req, res){
+app.get('/directors/:Name', function (req, res){
   Movies.findOne({ "Director.Name" : req.params.Name})
 .then(function(movie){
   res.status(201).json(movie.Director)
