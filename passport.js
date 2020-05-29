@@ -3,16 +3,16 @@ LocalStrategy = require('passport-local').Strategy,
 Models = require('./models.js'),
 passportJWT = require('passport-jwt');
 
-var Users = Models.User;
-var JWTStrategy = passportJWT.Strategy;
-var ExtractJWT = passportJWT.ExtractJwt;
+let Users = Models.User,
+JWTStrategy = passportJWT.Strategy,
+ExtractJWT = passportJWT.ExtractJwt;
 
 passport.use(new LocalStrategy({
  usernameField: 'Username',
  passwordField: 'Password'
-}, (Username, Password, callback) => {
+}, (username, password, callback) => {
  console.log(Username + '  ' + password);
- Users.findOne({ Username: Username }, (error, user) => {
+ Users.findOne({ Username: username }, (error, user) => {
    if (error) {
      console.log(error);
      return callback(error);
@@ -21,7 +21,7 @@ passport.use(new LocalStrategy({
      console.log('incorrect username');
      return callback(null, false, {message: 'Incorrect username.'});
    }
-   if(!user.validatePassword(Password)){
+   if(!user.validatePassword(password)){
      console.log('incorrect password');
      return callback(null, false, {message: 'Incorrect password'});
    }
