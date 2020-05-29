@@ -1,10 +1,11 @@
 const express = require('express'),
-app = express();
-cors = require('cors');
-app.use(cors());
-const morgan = require('morgan'),
 bodyParser = require('body-parser'),
 uuid = require('uuid');
+const app = express();
+const cors = require('cors');
+app.use(cors());
+const morgan = require('morgan'),
+
 var auth = require('./auth.js')(app);
 
 const passport = require('passport');
