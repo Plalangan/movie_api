@@ -1,12 +1,12 @@
 const express = require('express'),
 app = express();
-const cors = require('cors');
+cors = require('cors');
 app.use(cors());
-const morgan = require('morgan'),
+morgan = require('morgan'),
 bodyParser = require('body-parser'),
 uuid = require('uuid');
 
-const passport = require('passport');
+passport = require('passport');
 require('./passport.js');
 const {check, validationResult} = require('express-validator');
 const mongoose = require('mongoose'),
@@ -21,7 +21,7 @@ app.use(express.static('public'));
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
-const auth = require('./auth.js')(app);
+let auth = require('./auth.js')(app);
 
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
 mongoose.connect( 'mongodb+srv://plalangan:Infiniti727@cluster0-koyhm.mongodb.net/myFlixDB?retryWrites=true&w=majority' , {useNewUrlParser: true});
