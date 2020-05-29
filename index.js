@@ -1,14 +1,12 @@
 const express = require('express'),
+app = express();
+cors = require('cors');
+app.use(cors());
+morgan = require('morgan'),
 bodyParser = require('body-parser'),
 uuid = require('uuid');
-const app = express();
-const cors = require('cors');
-app.use(cors());
-const morgan = require('morgan'),
 
-var auth = require('./auth.js')(app);
-
-const passport = require('passport');
+passport = require('passport');
 require('./passport.js');
 const {check, validationResult} = require('express-validator');
 const mongoose = require('mongoose'),
@@ -23,7 +21,7 @@ app.use(express.static('public'));
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
-
+let auth = require('./auth.js')(app);
 
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
 mongoose.connect( 'mongodb+srv://plalangan:Infiniti727@cluster0-koyhm.mongodb.net/myFlixDB?retryWrites=true&w=majority' , {useNewUrlParser: true});
@@ -209,7 +207,7 @@ app.post('/users',
 
 
 
-app.delete('/users/:Username'/*, passport.authenticate('jwt', { session: false})*/, function(req, res) {
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false}), function(req, res) {
   Users.findOneAndRemove({ Username: req.params.Username })
   .then(function(user) {
     if (!user) {
@@ -228,7 +226,7 @@ app.delete('/users/:Username'/*, passport.authenticate('jwt', { session: false})
 
 
 
-  app.put('/users/:Username', function(req, res) {
+  app.put('/users/:Username', passport.authenticate('jwt', { session: false}), function(req, res) {
   Users.findOneAndUpdate({ Username : req.params.Username }, { $set :
   {
     Name: req.body.Name,
@@ -254,7 +252,7 @@ app.delete('/users/:Username'/*, passport.authenticate('jwt', { session: false})
 // adds a movie to the favorites list of a user
 
 
-app.post('/users/:Username/Movies/:MovieID'/*, passport.authenticate('jwt', { session: false})*/, function(req, res) {
+app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false}), function(req, res) {
   Users.findOneAndUpdate({ Username : req.params.Username }, {
     $push : { Favorites : req.params.MovieID }
   },
@@ -273,7 +271,7 @@ app.post('/users/:Username/Movies/:MovieID'/*, passport.authenticate('jwt', { se
 // removes a movie from the favorites list of a user
 
 
-app.delete('/users/:Username/movies/:MovieID'/*, passport.authenticate('jwt', { session: false})*/, function(req, res){
+app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false}), function(req, res){
   Users.findOneAndUpdate(
     { Username: req.params.Username },
     { $pull: {Favorites: req.params.MovieID}},
