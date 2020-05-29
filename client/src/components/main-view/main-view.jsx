@@ -59,7 +59,7 @@ export class MainView extends React.Component {
 
     onGenreClick(genre){
       this.setState({
-        selectedGenre: genre
+        selectedGenre
       });
     }
   
@@ -122,7 +122,7 @@ export class MainView extends React.Component {
     // Before the movies have been loaded
     if (!movies) return <div className="main-view"/>;
 
-    if (this.state === selectedGenre) return <GenreView key={genre._id} genre={genre}/>;
+    if (this.state = selectedGenre) return <GenreView key={genre._id} genre={genre}/>;
 
     return (
      <div className="main-view">

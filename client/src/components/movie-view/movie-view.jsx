@@ -9,11 +9,14 @@ export class MovieView extends React.Component {
     super();
 
     this.state = {};
-  }
+  };
+
+  
+  
 
 
   render() {
-    const { movie, onClick, onGenreClick, genre } = this.props;
+    const { movie,  onGenreClick, genre } = this.props;
 
     if (!movie) return null;
 
@@ -30,7 +33,7 @@ export class MovieView extends React.Component {
         </div>
      
         <div className="movie-genre">
-        <Button onClick={onGenreClick} className ="genre-view" >Genre</Button>
+        <Button onClick={() => onGenreClick(genre)} className ="genre-view" >Genre</Button>
           <span className="value">{movie.Genre.Name}</span>
         </div>
      
@@ -44,5 +47,6 @@ export class MovieView extends React.Component {
 
         )};
     };
+
 
  
