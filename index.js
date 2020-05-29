@@ -5,6 +5,7 @@ app.use(cors());
 const morgan = require('morgan'),
 bodyParser = require('body-parser'),
 uuid = require('uuid');
+var auth = require('./auth.js')(app);
 
 const passport = require('passport');
 require('./passport.js');
@@ -21,7 +22,7 @@ app.use(express.static('public'));
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
-const auth = require('./auth.js')(app);
+
 
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
 mongoose.connect( 'mongodb+srv://plalangan:Infiniti727@cluster0-koyhm.mongodb.net/myFlixDB?retryWrites=true&w=majority' , {useNewUrlParser: true});
