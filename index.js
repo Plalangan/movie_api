@@ -9,12 +9,7 @@ uuid = require('uuid');
 passport = require('passport');
 require('./passport.js');
 const {check, validationResult} = require('express-validator');
-const mongoose = require('mongoose'),
-models = require('./models.js'),
-Movies = models.Movie,
-Users = models.User,
-Genres = models.Genre,
-Directors = models.Director;
+
 
 //Middleware
 app.use(express.static('public'));
@@ -22,6 +17,13 @@ app.use(morgan('common'));
 app.use(bodyParser.json());
 
 let auth = require('./auth.js')(app);
+
+const mongoose = require('mongoose'),
+models = require('./models.js'),
+Movies = models.Movie,
+Users = models.User,
+Genres = models.Genre,
+Directors = models.Director;
 
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
 mongoose.connect( 'mongodb+srv://plalangan:Infiniti727@cluster0-koyhm.mongodb.net/myFlixDB?retryWrites=true&w=majority' , {useNewUrlParser: true});
