@@ -209,7 +209,7 @@ app.post('/users',
 
 
 
-app.delete('/users/:Username'/*, passport.authenticate('jwt', { session: false})*/, function(req, res) {
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false}), function(req, res) {
   Users.findOneAndRemove({ Username: req.params.Username })
   .then(function(user) {
     if (!user) {
