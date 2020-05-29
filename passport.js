@@ -11,7 +11,7 @@ passport.use(new LocalStrategy({
  usernameField: 'Username',
  passwordField: 'Password'
 }, (Username, Password, callback) => {
- console.log(Username + '  ' + Password);
+ console.log(Username + '  ' + password);
  Users.findOne({ Username: Username }, (error, user) => {
    if (error) {
      console.log(error);
