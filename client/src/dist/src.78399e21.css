@@ -5,6 +5,23 @@
   margin: auto;
   height: 100%;
 }
+.movies-list {
+  margin: auto;
+}
+.movie-card {
+  margin: auto;
+  text-align: center;
+}
+.movie-view {
+  margin: auto;
+  text-align: center;
+  font-size: 20px;
+}
+
+.movie-poster {
+  height: 500px;
+  width: 500px;
+}
 .my-flix {
   color: steelblue;
 }

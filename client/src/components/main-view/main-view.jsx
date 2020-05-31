@@ -21,81 +21,40 @@ import  {LoginView}  from '../login-view/login-view';
 import  {ProfileView} from '../profile-view/profile-view';
 import  {RegistrationView} from '../registration-view/registration-view';
 
-export class MainView extends React.Component {
+class MainView extends React.Component {
 
     constructor() {
       super();
   
       this.state = {
-        movies: null,
-        user: null
-        
-      
+       user: null
       };
     }
-  
- 
-        
- 
-      
+    
     componentDidMount() {
-      axios.get('https://myflixdb-pl.herokuapp.com/movies')
-      .then(response => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
-
-    onMovieClick(movie) {
-      this.setState({
-        selectedMovie: movie
-      });
-    }
-
-    onGenreClick(genre){
-      this.setState({
-        selectedGenre
-      });
-    }
-  
-
-      /*
-        let accessToken = localStorage.getItem('token');
+    let accessToken = localStorage.getItem('token');
         if (accessToken !== null) {
           this.setState({
             user: localStorage.getItem('user')
           });
           this.getMovies(accessToken);
-        }
-      }
-
+        }};
       
-      getMovies(token){
+    getMovies(token){
         axios.get('https://myflixdb-pl.herokuapp.com/movies', {
           headers: { Authorization: `Bearer ${token}`}
         })
-    .then(response => {
+      .then(response => {
       // Assign the result to the state
-      this.setState({
-        movies: response.data
-      });
-    })
-    .catch(function (error) {
+      this.props.setMovies(response.data);
+      })
+      .catch(function (error) {
       console.log(error);
-    });
-    };
-*/
+      });
+      };
 
-  
-     
-     /*
-      
-    onLoggedIn(authData) {
+
+      onLoggedIn(authData) {
       console.log(authData);
       this.setState({
         user: authData.user.Username
@@ -106,33 +65,31 @@ export class MainView extends React.Component {
       this.getMovies(authData.token);
     }
     
-    */
+    
 
-   onLoggedIn(user){
-    this.setState({
-      user
-    });
-  } 
 
    render() {
-    const { movies, selectedMovie, user, selectedGenre } = this.state;
-
-    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-
-    // Before the movies have been loaded
-    if (!movies) return <div className="main-view"/>;
-
-    if (this.state = selectedGenre) return <GenreView key={genre._id} genre={genre}/>;
+    let { movies } = this.props;
+    let { user } = this.state;
 
     return (
+    <Router basename="/client">
      <div className="main-view">
-      {selectedMovie
-         ? <MovieView movie={selectedMovie}/>
-         : movies.map(movie => (
-           <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
-         ))
-      }
+     <Route exact path ="/" render={() => {
+       if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+       return <MoviesList movies = {movies}/>;
+     }}/>
+     <Route path ="/register" render={() => <RegistrationView />} />
+     <Route path ="/movies/:Title" render={({match}) => <MovieView movie={movies.find(m => m.Title === match.params.Title)}/>}/>
+     <Route path="/genres/:Name" render ={({match})=> <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre }/>}/>
      </div>
+     </Router>
     );
+   }
   }
-}
+
+  let mapStateToProps = state => {
+    return { movies: state.movies}
+  }
+
+  export default connect(mapStateToProps, {setMovies})(MainView)

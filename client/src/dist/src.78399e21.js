@@ -36403,7 +36403,12 @@ function setFilter() {
     value: value
   };
 }
-},{}],"../node_modules/classnames/index.js":[function(require,module,exports) {
+},{}],"components/movies-list/movies-list.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/classnames/index.js":[function(require,module,exports) {
 var define;
 /*!
   Copyright (c) 2017 Jed Watson.
@@ -37726,8 +37731,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function VisibilityFilterInput(props) {
   return _react.default.createElement(_Form.default.Control, {
-    on: true,
-    change: function change(e) {
+    onChange: function onChange(e) {
       return props.setFilter(e.target.value);
     },
     value: props.visibilityFilter,
@@ -38106,7 +38110,120 @@ Card.Footer = (0, _createWithBsPrefix.default)('card-footer');
 Card.ImgOverlay = (0, _createWithBsPrefix.default)('card-img-overlay');
 var _default = Card;
 exports.default = _default;
-},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","classnames":"../node_modules/classnames/index.js","react":"../node_modules/react/index.js","./ThemeProvider":"../node_modules/react-bootstrap/esm/ThemeProvider.js","./createWithBsPrefix":"../node_modules/react-bootstrap/esm/createWithBsPrefix.js","./divWithClassName":"../node_modules/react-bootstrap/esm/divWithClassName.js","./CardContext":"../node_modules/react-bootstrap/esm/CardContext.js","./CardImg":"../node_modules/react-bootstrap/esm/CardImg.js"}],"components/movie-card/movie-card.jsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","classnames":"../node_modules/classnames/index.js","react":"../node_modules/react/index.js","./ThemeProvider":"../node_modules/react-bootstrap/esm/ThemeProvider.js","./createWithBsPrefix":"../node_modules/react-bootstrap/esm/createWithBsPrefix.js","./divWithClassName":"../node_modules/react-bootstrap/esm/divWithClassName.js","./CardContext":"../node_modules/react-bootstrap/esm/CardContext.js","./CardImg":"../node_modules/react-bootstrap/esm/CardImg.js"}],"components/movie-card/movie-card.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/movie-view/movie-view.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/movie-view/movie-view.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MovieView = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+
+var _reactRouterDom = require("react-router-dom");
+
+require("./movie-view.scss");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var MovieView = /*#__PURE__*/function (_React$Component) {
+  _inherits(MovieView, _React$Component);
+
+  var _super = _createSuper(MovieView);
+
+  function MovieView() {
+    var _this;
+
+    _classCallCheck(this, MovieView);
+
+    _this = _super.call(this);
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(MovieView, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          movie = _this$props.movie,
+          onGenreClick = _this$props.onGenreClick,
+          genre = _this$props.genre;
+      if (!movie) return null;
+      return _react.default.createElement("div", {
+        className: "movie-view"
+      }, _react.default.createElement("img", {
+        className: "movie-poster",
+        src: movie.ImagePath
+      }), _react.default.createElement("div", {
+        className: "movie-title"
+      }, _react.default.createElement("span", {
+        className: "label"
+      }, "Title: "), _react.default.createElement("span", {
+        className: "value"
+      }, movie.Title), _react.default.createElement("p", null)), _react.default.createElement("div", {
+        className: "movie-description"
+      }, _react.default.createElement("span", {
+        className: "label"
+      }, "Description: "), _react.default.createElement("span", {
+        className: "value"
+      }, movie.Description), _react.default.createElement("p", null)), _react.default.createElement("div", {
+        className: "movie-genre"
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/genres/".concat(movie.Genre.Name)
+      }), _react.default.createElement(_Button.default, {
+        className: "genre-view",
+        a: true,
+        href: "/genres/".concat(movie.Genre.Name)
+      }, "Genre"), _react.default.createElement("span", {
+        className: "value"
+      }, "-", movie.Genre.Name), _react.default.createElement("p", null)), _react.default.createElement("div", {
+        className: "movie-director"
+      }, _react.default.createElement(_Button.default, null, "Director"), _react.default.createElement("span", {
+        className: "value"
+      }, "-", movie.Director.Name), _react.default.createElement("p", null)));
+    }
+  }]);
+
+  return MovieView;
+}(_react.default.Component);
+
+exports.MovieView = MovieView;
+;
+},{"react":"../node_modules/react/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./movie-view.scss":"components/movie-view/movie-view.scss"}],"components/movie-card/movie-card.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38124,6 +38241,10 @@ var _Card = _interopRequireDefault(require("react-bootstrap/Card"));
 
 var _reactRouterDom = require("react-router-dom");
 
+require("./movie-card.scss");
+
+var _movieView = require("../movie-view/movie-view");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -38134,37 +38255,36 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var MovieCard =
-/*#__PURE__*/
-function (_React$Component) {
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var MovieCard = /*#__PURE__*/function (_React$Component) {
   _inherits(MovieCard, _React$Component);
+
+  var _super = _createSuper(MovieCard);
 
   function MovieCard() {
     _classCallCheck(this, MovieCard);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(MovieCard).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   _createClass(MovieCard, [{
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          movie = _this$props.movie,
-          _onClick = _this$props.onClick;
+      var movie = this.props.movie;
       return _react.default.createElement(_Card.default, {
-        onClick: function onClick() {
-          return _onClick(movie);
-        },
         className: "movie-card",
         style: {
           width: '50rem'
@@ -38172,7 +38292,11 @@ function (_React$Component) {
       }, _react.default.createElement(_Card.default.Img, {
         variant: "top",
         src: movie.imgPath
-      }), _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Card.default.Title, null, movie.Title), _react.default.createElement(_Card.default.Text, null, movie.Description)));
+      }), _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Card.default.Title, null, movie.Title), _react.default.createElement(_Card.default.Text, null, movie.Description), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/movies/".concat(movie.Title)
+      }, _react.default.createElement(_Button.default, {
+        className: "btn-sm"
+      }, "See More about ", movie.Title))));
     }
   }]);
 
@@ -38188,7 +38312,7 @@ MovieCard.propTypes = {
   }).isRequired,
   onClick: _propTypes.default.func.isRequired
 };
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/movies-list/movies-list.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./movie-card.scss":"components/movie-card/movie-card.scss","../movie-view/movie-view":"components/movie-view/movie-view.jsx"}],"components/movies-list/movies-list.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38199,6 +38323,8 @@ exports.default = void 0;
 var _react = _interopRequireDefault(require("react"));
 
 var _reactRedux = require("react-redux");
+
+require("./movies-list.scss");
 
 var _visibilityFilterInput = _interopRequireDefault(require("../visibility-filter-input/visibility-filter-input"));
 
@@ -38233,7 +38359,7 @@ function MoviesList(props) {
     visibilityFilter: visibilityFilter
   }), filteredMovies.map(function (m) {
     return _react.default.createElement(_movieCard.MovieCard, {
-      key: m._id,
+      key: m.Title,
       movie: m
     });
   }));
@@ -38242,7 +38368,7 @@ function MoviesList(props) {
 var _default = (0, _reactRedux.connect)(mapStateToProps)(MoviesList);
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../visibility-filter-input/visibility-filter-input":"components/visibility-filter-input/visibility-filter-input.jsx","../movie-card/movie-card":"components/movie-card/movie-card.jsx"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","./movies-list.scss":"components/movies-list/movies-list.scss","../visibility-filter-input/visibility-filter-input":"components/visibility-filter-input/visibility-filter-input.jsx","../movie-card/movie-card":"components/movie-card/movie-card.jsx"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38396,46 +38522,6 @@ require("./genre-view.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var GenreView = function GenreView(props) {
-  var genre = props.genre,
-      movies = props.movies,
-      user = props.user,
-      userProfile = props.userProfile,
-      _onToggleFavourite = props.onToggleFavourite,
-      onGenreClick = props.onGenreClick;
-  if (!genre) return null;
-  return _react.default.createElement("div", {
-    className: "genre-view"
-  }, _react.default.createElement("h1", null, genre.Name), _react.default.createElement("br", null), _react.default.createElement(_Media.default, {
-    className: "d-flex flex-column flex-md-row align-items-center"
-  }, _react.default.createElement(_Media.default.Body, null, _react.default.createElement("h5", null, "Description"), _react.default.createElement("p", null, genre.Description))), _react.default.createElement("br", null), _react.default.createElement(MoviesGrid, {
-    movies: movies,
-    title: "Some movies that belong to this Genre",
-    onToggleFavourite: function onToggleFavourite(movieId) {
-      return _onToggleFavourite(movieId);
-    },
-    user: user,
-    userProfile: userProfile
-  }));
-};
-
-exports.GenreView = GenreView;
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Media":"../node_modules/react-bootstrap/esm/Media.js","./genre-view.scss":"components/genre-view/genre-view.scss"}],"components/movie-view/movie-view.jsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.MovieView = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
-
-var _reactRouterDom = require("react-router-dom");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38458,69 +38544,45 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var MovieView = /*#__PURE__*/function (_React$Component) {
-  _inherits(MovieView, _React$Component);
+var GenreView = /*#__PURE__*/function (_React$Component) {
+  _inherits(GenreView, _React$Component);
 
-  var _super = _createSuper(MovieView);
+  var _super = _createSuper(GenreView);
 
-  function MovieView() {
+  function GenreView() {
     var _this;
 
-    _classCallCheck(this, MovieView);
+    _classCallCheck(this, GenreView);
 
     _this = _super.call(this);
     _this.state = {};
     return _this;
   }
 
-  _createClass(MovieView, [{
+  _createClass(GenreView, [{
     key: "render",
     value: function render() {
       var _this$props = this.props,
           movie = _this$props.movie,
-          onGenreClick = _this$props.onGenreClick,
           genre = _this$props.genre;
-      if (!movie) return null;
-      return _react.default.createElement("div", {
-        className: "movie-view"
-      }, _react.default.createElement("img", {
-        className: "movie-poster",
-        src: movie.ImagePath
-      }), _react.default.createElement("div", {
-        className: "movie-title"
-      }, _react.default.createElement("span", {
-        className: "label"
-      }, "Title: "), _react.default.createElement("span", {
-        className: "value"
-      }, movie.Title)), _react.default.createElement("div", {
-        className: "movie-description"
-      }, _react.default.createElement("span", {
-        className: "label"
-      }, "Description: "), _react.default.createElement("span", {
-        className: "value"
-      }, movie.Description)), _react.default.createElement("div", {
-        className: "movie-genre"
-      }, _react.default.createElement(_Button.default, {
-        onClick: function onClick() {
-          return onGenreClick(genre);
-        },
-        className: "genre-view"
-      }, "Genre"), _react.default.createElement("span", {
-        className: "value"
-      }, movie.Genre.Name)), _react.default.createElement("div", {
-        className: "movie-director"
-      }, _react.default.createElement(_Button.default, null, "Director"), _react.default.createElement("span", {
-        className: "value"
-      }, movie.Director.Name)));
+      if (!genre) return null;
+      return _react.default.createElement("div", null, _react.default.createElement(Container, null, _react.default.createElement(Card, {
+        style: {
+          width: '32rem'
+        }
+      }, _react.default.createElement(Card.Body, null, _react.default.createElement(Card.Title, null, genre.Name), _react.default.createElement(Card.Text, null, "Description: ", genre.Description), _react.default.createElement(Link, {
+        to: "/"
+      }, _react.default.createElement(Button, {
+        variant: "link"
+      }, "Back"))))));
     }
   }]);
 
-  return MovieView;
+  return GenreView;
 }(_react.default.Component);
 
-exports.MovieView = MovieView;
-;
-},{"react":"../node_modules/react/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/login-view/login-view.scss":[function(require,module,exports) {
+exports.GenreView = GenreView;
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Media":"../node_modules/react-bootstrap/esm/Media.js","./genre-view.scss":"components/genre-view/genre-view.scss"}],"components/login-view/login-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -38575,29 +38637,18 @@ function LoginView(props) {
       setPassword = _useState4[1];
 
   var handleSubmit = function handleSubmit(e) {
-    e.preventDefault();
-    props.onLoggedIn(username);
-  };
-  /*
-      const handleSubmit = (e) => {
-          e.preventDefault();
-          // Send a request to the server for authentication 
-          axios.post('https://myflixdb-pl.herokuapp.com/login',
-          {
-              Username: username,
-              Password: password
-          },
-          )
-          .then(response =>{
-              const data = response.data;
-              props.onLoggedIn(data);
-          })
-          .catch(e => {
-              console.log('No User Found')
-          });
-      };
-    */
+    e.preventDefault(); // Send a request to the server for authentication 
 
+    _axios.default.post('https://myflixdb-pl.herokuapp.com/login', {
+      Username: username,
+      Password: password
+    }).then(function (response) {
+      var data = response.data;
+      props.onLoggedIn(data);
+    }).catch(function (e) {
+      console.log('No User Found');
+    });
+  };
 
   return _react.default.createElement("form", {
     style: {
@@ -38635,7 +38686,8 @@ function LoginView(props) {
     onClick: handleSubmit
   }, "Log In"), _react.default.createElement("p", null), _react.default.createElement(_Button.default, {
     variant: "primary",
-    type: "submit"
+    link: true,
+    href: "/register"
   }, "Register"));
 }
 
@@ -51882,7 +51934,8 @@ function RegistrationView(props) {
     type: "invalid"
   }, "Please enter your date of birth")), _react.default.createElement(_Button.default, {
     variant: "primary",
-    type: "submit"
+    type: "submit",
+    onClick: handleSubmit
   }, "Create User"));
 }
 
@@ -51893,7 +51946,7 @@ function RegistrationView(props) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MainView = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -51959,7 +52012,6 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this);
     _this.state = {
-      movies: null,
       user: null
     };
     return _this;
@@ -51968,33 +52020,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   _createClass(MainView, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
+      var accessToken = localStorage.getItem('token');
 
-      _axios.default.get('https://myflixdb-pl.herokuapp.com/movies').then(function (response) {
-        // Assign the result to the state
-        _this2.setState({
-          movies: response.data
-        });
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-  }, {
-    key: "onMovieClick",
-    value: function onMovieClick(movie) {
-      this.setState({
-        selectedMovie: movie
-      });
-    }
-  }, {
-    key: "onGenreClick",
-    value: function onGenreClick(genre) {
-      this.setState({
-        selectedGenre: selectedGenre
-      });
-    }
-    /*
-      let accessToken = localStorage.getItem('token');
       if (accessToken !== null) {
         this.setState({
           user: localStorage.getItem('user')
@@ -52002,88 +52029,100 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         this.getMovies(accessToken);
       }
     }
-      
-    getMovies(token){
-      axios.get('https://myflixdb-pl.herokuapp.com/movies', {
-        headers: { Authorization: `Bearer ${token}`}
-      })
-    .then(response => {
-    // Assign the result to the state
-    this.setState({
-      movies: response.data
-    });
-    })
-    .catch(function (error) {
-    console.log(error);
-    });
-    };
-    */
+  }, {
+    key: "getMovies",
+    value: function getMovies(token) {
+      var _this2 = this;
 
-    /*
-     
-    onLoggedIn(authData) {
-     console.log(authData);
-     this.setState({
-       user: authData.user.Username
-     });
-    
-     localStorage.setItem('token', authData.token);
-     localStorage.setItem('user', authData.user.Username);
-     this.getMovies(authData.token);
+      _axios.default.get('https://myflixdb-pl.herokuapp.com/movies', {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        // Assign the result to the state
+        _this2.props.setMovies(response.data);
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
-    
-    */
-
   }, {
     key: "onLoggedIn",
-    value: function onLoggedIn(user) {
+    value: function onLoggedIn(authData) {
+      console.log(authData);
       this.setState({
-        user: user
+        user: authData.user.Username
       });
+      localStorage.setItem('token', authData.token);
+      localStorage.setItem('user', authData.user.Username);
+      this.getMovies(authData.token);
     }
   }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
-      var _this$state = this.state,
-          movies = _this$state.movies,
-          selectedMovie = _this$state.selectedMovie,
-          user = _this$state.user,
-          selectedGenre = _this$state.selectedGenre;
-      if (!user) return _react.default.createElement(_loginView.LoginView, {
-        onLoggedIn: function onLoggedIn(user) {
-          return _this3.onLoggedIn(user);
+      var movies = this.props.movies;
+      var user = this.state.user;
+      return _react.default.createElement(_reactRouterDom.BrowserRouter, {
+        basename: "/client"
+      }, _react.default.createElement("div", {
+        className: "main-view"
+      }, _react.default.createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/",
+        render: function render() {
+          if (!user) return _react.default.createElement(_loginView.LoginView, {
+            onLoggedIn: function onLoggedIn(user) {
+              return _this3.onLoggedIn(user);
+            }
+          });
+          return _react.default.createElement(_moviesList.default, {
+            movies: movies
+          });
         }
-      }); // Before the movies have been loaded
-
-      if (!movies) return _react.default.createElement("div", {
-        className: "main-view"
-      });
-      if (this.state = selectedGenre) return _react.default.createElement(_genreView.GenreView, {
-        key: genre._id,
-        genre: genre
-      });
-      return _react.default.createElement("div", {
-        className: "main-view"
-      }, selectedMovie ? _react.default.createElement(_movieView.MovieView, {
-        movie: selectedMovie
-      }) : movies.map(function (movie) {
-        return _react.default.createElement(_movieCard.MovieCard, {
-          key: movie._id,
-          movie: movie,
-          onClick: function onClick(movie) {
-            return _this3.onMovieClick(movie);
-          }
-        });
-      }));
+      }), _react.default.createElement(_reactRouterDom.Route, {
+        path: "/register",
+        render: function render() {
+          return _react.default.createElement(_registrationView.RegistrationView, null);
+        }
+      }), _react.default.createElement(_reactRouterDom.Route, {
+        path: "/movies/:Title",
+        render: function render(_ref) {
+          var match = _ref.match;
+          return _react.default.createElement(_movieView.MovieView, {
+            movie: movies.find(function (m) {
+              return m.Title === match.params.Title;
+            })
+          });
+        }
+      }), _react.default.createElement(_reactRouterDom.Route, {
+        path: "/genres/:Name",
+        render: function render(_ref2) {
+          var match = _ref2.match;
+          return _react.default.createElement(_genreView.GenreView, {
+            genre: movies.find(function (m) {
+              return m.Genre.Name === match.params.name;
+            }).Genre
+          });
+        }
+      })));
     }
   }]);
 
   return MainView;
 }(_react.default.Component);
 
-exports.MainView = MainView;
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    movies: state.movies
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, {
+  setMovies: _actions.setMovies
+})(MainView);
+
+exports.default = _default;
 },{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","./main-view.scss":"components/main-view/main-view.scss","react-redux":"../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../../actions/actions":"actions/actions.js","../movies-list/movies-list":"components/movies-list/movies-list.jsx","../director-view/director-view":"components/director-view/director-view.jsx","../genre-view/genre-view":"components/genre-view/genre-view.jsx","../movie-card/movie-card":"components/movie-card/movie-card.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx","../login-view/login-view":"components/login-view/login-view.jsx","../profile-view/profile-view":"components/profile-view/profile-view.jsx","../registration-view/registration-view":"components/registration-view/registration-view.jsx"}],"reducers/reducers.js":[function(require,module,exports) {
 "use strict";
 
@@ -52144,7 +52183,7 @@ var _redux = require("redux");
 
 var _reactRedux = require("react-redux");
 
-var _mainView = require("./components/main-view/main-view.jsx");
+var _mainView = _interopRequireDefault(require("./components/main-view/main-view.jsx"));
 
 var _reducers = _interopRequireDefault(require("./reducers/reducers"));
 
@@ -52160,33 +52199,39 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 var store = (0, _redux.createStore)(_reducers.default); // Main component (will eventually use all the others)
 
-var MyFlixApplication =
-/*#__PURE__*/
-function (_React$Component) {
+var MyFlixApplication = /*#__PURE__*/function (_React$Component) {
   _inherits(MyFlixApplication, _React$Component);
+
+  var _super = _createSuper(MyFlixApplication);
 
   function MyFlixApplication() {
     _classCallCheck(this, MyFlixApplication);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(MyFlixApplication).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   _createClass(MyFlixApplication, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement(_mainView.MainView, null);
+      return _react.default.createElement(_reactRedux.Provider, {
+        store: store
+      }, _react.default.createElement(_mainView.default, null));
     }
   }]);
 
@@ -52225,7 +52270,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60623" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60568" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

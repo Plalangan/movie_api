@@ -5,18 +5,23 @@ import Card from 'react-bootstrap/Card';
 
 import { Link } from "react-router-dom";
 
+import './movie-card.scss'
+import { MovieView } from '../movie-view/movie-view';
+
 export class MovieCard extends React.Component {
   render() {
-    const { movie, onClick } = this.props;
+    const { movie } = this.props;
 
     return (
-      <Card onClick={() => onClick(movie)} className ="movie-card" style ={{ width: '50rem'}}>
+      <Card  className ="movie-card" style ={{ width: '50rem'}}>
         <Card.Img variant = "top" src ={movie.imgPath}/>
         <Card.Body>
           <Card.Title >{movie.Title}</Card.Title>
           <Card.Text>{movie.Description}</Card.Text>
-         
-        </Card.Body>
+          <Link to={`/movies/${movie.Title}`}>
+          <Button className="btn-sm">See More about {movie.Title}</Button>
+          </Link>
+         </Card.Body>
       </Card>
     );
 }

@@ -12,13 +12,9 @@ export function LoginView(props) {
     const [ password, setPassword ] = useState('');
 
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        props.onLoggedIn(username);
-    }
+   
 
    
-/*
     const handleSubmit = (e) => {
         e.preventDefault();
         // Send a request to the server for authentication 
@@ -36,7 +32,7 @@ export function LoginView(props) {
             console.log('No User Found')
         });
     };
-  */  
+
     
 
 
@@ -62,7 +58,7 @@ export function LoginView(props) {
                 Log In
             </Button>
             <p></p>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" link href="/register">
                 Register
             </Button>
             
