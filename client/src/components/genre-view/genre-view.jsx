@@ -2,7 +2,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Media from 'react-bootstrap/Media';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 import './genre-view.scss';
+
+import { Link } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 
 
 export class GenreView extends React.Component {

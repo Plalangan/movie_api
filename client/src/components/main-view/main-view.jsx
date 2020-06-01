@@ -13,6 +13,7 @@ import { setMovies } from '../../actions/actions';
 
 import MoviesList from '../movies-list/movies-list';
 
+import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
 import  {DirectorView} from '../director-view/director-view';
 import  {GenreView}  from '../genre-view/genre-view';
 import  {MovieCard}  from '../movie-card/movie-card';
@@ -27,7 +28,7 @@ class MainView extends React.Component {
       super();
   
       this.state = {
-       user: null
+       //user: null
       };
     }
     
@@ -64,24 +65,36 @@ class MainView extends React.Component {
       localStorage.setItem('user', authData.user.Username);
       this.getMovies(authData.token);
     }
+
+
+    onLoggedOut(){
+      console.log('yo');
+      this.props.setUser({});
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      }
+      
+      
     
     
 
 
    render() {
-    let { movies } = this.props;
+    let { movies,onLoggedOut } = this.props;
     let { user } = this.state;
 
     return (
+    
     <Router basename="/client">
      <div className="main-view">
      <Route exact path ="/" render={() => {
        if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
        return <MoviesList movies = {movies}/>;
      }}/>
+   <Route path ="/register" render={() => <RegistrationView />} />
      <Route path ="/register" render={() => <RegistrationView />} />
      <Route path ="/movies/:Title" render={({match}) => <MovieView movie={movies.find(m => m.Title === match.params.Title)}/>}/>
-     <Route path="/genres/:Name" render ={({match})=> <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre }/>}/>
+     <Route path="/movies/genres/:Name" render ={({match})=> <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre }/>}/>
      </div>
      </Router>
     );

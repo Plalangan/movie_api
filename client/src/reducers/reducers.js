@@ -8,7 +8,7 @@ function visibilityFilter(state ='', action) {
             return action.value;
         default:
             return state;
-    }
+    };
 }
 
 function movies(state = [], action){
@@ -17,7 +17,7 @@ function movies(state = [], action){
             return action.value;
         default: 
             return state;
-    }
+    };
 }
 
 const moviesApp = combineReducers({
@@ -25,4 +25,4 @@ const moviesApp = combineReducers({
     movies
 });
 
-export default moviesApp
+export default moviesApp;

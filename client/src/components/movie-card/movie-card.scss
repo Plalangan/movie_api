@@ -2,3 +2,45 @@
     margin: auto;
     text-align: center;
 }
+
+.movie-poster {
+    height: 100px;
+    width: 100px;
+}
+
+.card-img {
+    height: 250px;
+    width: 200px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.like-button {
+    display: inline-block;
+    position: relative;
+    font-size: 20px;
+    cursor: pointer;
+    // border: 1px solid black;
+    &::before {
+      font-size: 3em;
+      color:#A9A9A9;
+      content: '♥';
+      position: absolute;
+      left: 10%;
+      top: 15%;
+      transform: translate(-50%, -50%);
+    }
+    &::after {
+      font-size: 3em;
+      color: #FF0000;
+      content: '♥';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.2s;
+    }
+    &.liked::after {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+  }

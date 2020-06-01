@@ -1,8 +1,9 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-
+import Animated from 'react-css-animated';
 import { Link } from 'react-router-dom';
 import './movie-view.scss';
+import Card from 'react-bootstrap/Card';
 
 export class MovieView extends React.Component {
 
@@ -17,40 +18,55 @@ export class MovieView extends React.Component {
 
 
   render() {
-    const { movie,  onGenreClick, genre } = this.props;
+    const { movie,  onGenreClick, genre, animate } = this.props;
 
     if (!movie) return null;
 
     return (
-      <div className="movie-view">
-        <img className="movie-poster" src={movie.ImagePath} />
-        <div className="movie-title">
-          <span className="label">Title: </span>
+      
+      <Animated className='col-lg-8 mx-auto mt-4' animateOnMount duration={{in:300}} animationIn="slideInUp" animationOut="slideOutDown" isVisible={animate}>
+      <div className="movie-view" class="card">
+        <img className="movie-poster"src={movie.ImagePath} />
+        <Card.Title className="text-center"> 
+          <span className="label"></span>
           <span className="value">{movie.Title}</span>
-          <p></p>
-        </div>
+          <p></p><p></p>
+        </Card.Title>
+        <Card.Text className="text-center">
         <div className="movie-description">
-          <span className="label">Description: </span>
+          <span className="label"></span>
           <span className="value">{movie.Description}</span>
           <p></p>
         </div>
      
         <div className="movie-genre">
           <Link to={`/genres/${movie.Genre.Name}`}></Link>
-            <Button className ="genre-view" a href={`/genres/${movie.Genre.Name}`}>Genre</Button>
-          <span className="value">-{movie.Genre.Name}</span>
+            
+          <span className="value">Genre: - {movie.Genre.Name}</span>
           <p></p>
+          <Button className ="genre-view" a href={`/movies/genres/${movie.Genre.Name}`}>See more about {movie.Genre.Name}</Button>
         </div>
+        <p></p>
      
     
      
         <div className="movie-director">
-        <Button>Director</Button>
-          <span className="value">-{movie.Director.Name}</span>
+        <span className="value">Directed by {movie.Director.Name}</span><p></p>
+        <Button>See more about {movie.Director.Name}</Button>
+          
           <p></p>
         </div>
+
+        
+        <p></p><p></p>
+        <Link to={`/`}>
+        <Button class="btn-sm">Back to movies</Button>
+        </Link>
+        </Card.Text>
+        <p></p>
       
         </div>
+        </Animated>
 
         )};
     };
