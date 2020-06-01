@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import './movies-list.scss'
 import Animated from 'react-css-animated';
 import Container from 'react-bootstrap/Container'
@@ -14,7 +15,7 @@ import { MovieCard } from '../movie-card/movie-card';
 
 
 const mapStateToProps = state => {
-    const { visibilityFilter, visible, onLoggedOut } = state;
+    const { visibilityFilter, visible, onLoggedOut, user } = state;
     return { visibilityFilter, visible, onLoggedOut };
 };
 
@@ -35,20 +36,17 @@ function MoviesList(props){
     <div className ="movies-list">
     
     <Navbar bg="dark" variant="dark">
-    <Navbar.Brand>MyFlix</Navbar.Brand>
-    <Nav.Link>
-    <button className="btn btn-danger btn-sm">Your Favorites</button>
-    </Nav.Link>
-    <Nav.Link>
-    <button className="btn btn-danger btn-sm">Edit Your Profile</button>
-    </Nav.Link>
-    <Nav.Link>
-    <button className="btn btn-danger btn-sm" onClick={onLoggedOut}>Log Out</button>
-    </Nav.Link>
-    <Col>
-    <VisibilityFilterInput visibilityFilter={visibilityFilter} visible={visible}/>
-    </Col>
-    </Navbar>
+        <Navbar.Brand>MyFlix</Navbar.Brand>
+        <Nav.Link>
+            <button className="btn btn-danger btn-sm">Log In</button>
+        </Nav.Link>
+        <Nav.Link>
+            <button className="btn btn-danger btn-sm">Sign Up</button>
+        </Nav.Link>
+        <Col>
+        <VisibilityFilterInput visibilityFilter={visibilityFilter} visible={visible}/>
+        </Col>
+        </Navbar>
     
 
     <Animated animateOnMount duration={{in:1000}} animationIn="slideInUp" animationOut="slideOutDown" isVisible={animate}>

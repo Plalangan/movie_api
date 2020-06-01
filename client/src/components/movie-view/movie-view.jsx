@@ -23,7 +23,7 @@ export class MovieView extends React.Component {
     if (!movie) return null;
 
     return (
-      
+      <div className="background">
       <Animated className='col-lg-8 mx-auto mt-4' animateOnMount duration={{in:300}} animationIn="slideInUp" animationOut="slideOutDown" isVisible={animate}>
       <div className="movie-view" class="card">
         <img className="movie-poster"src={movie.ImagePath} />
@@ -67,7 +67,7 @@ export class MovieView extends React.Component {
       
         </div>
         </Animated>
-
+        </div>
         )};
     };
 

@@ -41298,7 +41298,9 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
           genre = _this$props.genre,
           animate = _this$props.animate;
       if (!movie) return null;
-      return _react.default.createElement(_reactCssAnimated.default, {
+      return _react.default.createElement("div", {
+        className: "background"
+      }, _react.default.createElement(_reactCssAnimated.default, {
         className: "col-lg-8 mx-auto mt-4",
         animateOnMount: true,
         duration: {
@@ -41345,7 +41347,7 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         "class": "btn-sm"
-      }, "Back to movies"))), _react.default.createElement("p", null)));
+      }, "Back to movies"))), _react.default.createElement("p", null))));
     }
   }]);
 
@@ -41466,6 +41468,8 @@ var _react = _interopRequireDefault(require("react"));
 
 var _reactRedux = require("react-redux");
 
+var _reactRouterDom = require("react-router-dom");
+
 require("./movies-list.scss");
 
 var _reactCssAnimated = _interopRequireDefault(require("react-css-animated"));
@@ -41489,7 +41493,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mapStateToProps = function mapStateToProps(state) {
   var visibilityFilter = state.visibilityFilter,
       visible = state.visible,
-      onLoggedOut = state.onLoggedOut;
+      onLoggedOut = state.onLoggedOut,
+      user = state.user;
   return {
     visibilityFilter: visibilityFilter,
     visible: visible,
@@ -41523,12 +41528,9 @@ function MoviesList(props) {
     variant: "dark"
   }, _react.default.createElement(_Navbar.default.Brand, null, "MyFlix"), _react.default.createElement(_Nav.default.Link, null, _react.default.createElement("button", {
     className: "btn btn-danger btn-sm"
-  }, "Your Favorites")), _react.default.createElement(_Nav.default.Link, null, _react.default.createElement("button", {
+  }, "Log In")), _react.default.createElement(_Nav.default.Link, null, _react.default.createElement("button", {
     className: "btn btn-danger btn-sm"
-  }, "Edit Your Profile")), _react.default.createElement(_Nav.default.Link, null, _react.default.createElement("button", {
-    className: "btn btn-danger btn-sm",
-    onClick: onLoggedOut
-  }, "Log Out")), _react.default.createElement(_Col.default, null, _react.default.createElement(_visibilityFilterInput.default, {
+  }, "Sign Up")), _react.default.createElement(_Col.default, null, _react.default.createElement(_visibilityFilterInput.default, {
     visibilityFilter: visibilityFilter,
     visible: visible
   }))), _react.default.createElement(_reactCssAnimated.default, {
@@ -41552,7 +41554,7 @@ function MoviesList(props) {
 var _default = (0, _reactRedux.connect)(mapStateToProps)(MoviesList);
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","./movies-list.scss":"components/movies-list/movies-list.scss","react-css-animated":"../node_modules/react-css-animated/dist/index.es.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","react-bootstrap/Nav":"../node_modules/react-bootstrap/esm/Nav.js","react-bootstrap/Navbar":"../node_modules/react-bootstrap/esm/Navbar.js","../visibility-filter-input/visibility-filter-input":"components/visibility-filter-input/visibility-filter-input.jsx","../movie-card/movie-card":"components/movie-card/movie-card.jsx"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./movies-list.scss":"components/movies-list/movies-list.scss","react-css-animated":"../node_modules/react-css-animated/dist/index.es.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","react-bootstrap/Nav":"../node_modules/react-bootstrap/esm/Nav.js","react-bootstrap/Navbar":"../node_modules/react-bootstrap/esm/Navbar.js","../visibility-filter-input/visibility-filter-input":"components/visibility-filter-input/visibility-filter-input.jsx","../movie-card/movie-card":"components/movie-card/movie-card.jsx"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -52543,6 +52545,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   _createClass(MainView, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.getMovies();
       var accessToken = localStorage.getItem('token');
 
       if (accessToken !== null) {
@@ -52554,14 +52557,10 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "getMovies",
-    value: function getMovies(token) {
+    value: function getMovies() {
       var _this2 = this;
 
-      _axios.default.get('https://myflixdb-pl.herokuapp.com/movies', {
-        headers: {
-          Authorization: "Bearer ".concat(token)
-        }
-      }).then(function (response) {
+      _axios.default.get('https://myflixdb-pl.herokuapp.com/movies', {}).then(function (response) {
         // Assign the result to the state
         _this2.props.setMovies(response.data);
       }).catch(function (error) {
@@ -52604,13 +52603,17 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         exact: true,
         path: "/",
         render: function render() {
-          if (!user) return _react.default.createElement(_loginView.LoginView, {
+          return _react.default.createElement(_moviesList.default, {
+            movies: movies
+          });
+        }
+      }), _react.default.createElement(_reactRouterDom.Route, {
+        path: "/login",
+        render: function render() {
+          return _react.default.createElement(_loginView.LoginView, {
             onLoggedIn: function onLoggedIn(user) {
               return _this3.onLoggedIn(user);
             }
-          });
-          return _react.default.createElement(_moviesList.default, {
-            movies: movies
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -52652,7 +52655,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    movies: state.movies
+    movies: state.movies //user: state.user
+
   };
 };
 

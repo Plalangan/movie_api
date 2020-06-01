@@ -7,7 +7,8 @@
 
 .movies-list {
   margin: auto;
-  padding: 15px; }
+  padding: 15px;
+  background-color: gray; }
 
 .btn-danger {
   height: 40px;
@@ -19,14 +20,10 @@
   margin: auto;
   text-align: center; }
 
-.movie-poster {
-  height: 100px;
-  width: 100px; }
-
 .card-img {
   height: 250px;
   width: 200px;
-  margin: auto;
+  margin-left: 20px;
   margin-top: 20px; }
 
 .like-button {
@@ -39,7 +36,7 @@
     color: #A9A9A9;
     content: '♥';
     position: absolute;
-    left: 10%;
+    left: 20%;
     top: 15%;
     transform: translate(-50%, -50%); }
   .like-button::after {
@@ -54,6 +51,9 @@
   .like-button.liked::after {
     transform: translate(-50%, -50%) scale(1.1); }
 
+.moreButton {
+  float: right; }
+
 .movie-view {
   margin: auto;
   text-align: center;
@@ -64,6 +64,9 @@
   width: 600px;
   margin: auto;
   margin-top: 50px; }
+
+.background {
+  background-color: gray; }
 
 .my-flix {
   color: steelblue; }

@@ -33,6 +33,8 @@ class MainView extends React.Component {
     }
     
     componentDidMount() {
+
+    this.getMovies();
     let accessToken = localStorage.getItem('token');
         if (accessToken !== null) {
           this.setState({
@@ -41,9 +43,9 @@ class MainView extends React.Component {
           this.getMovies(accessToken);
         }};
       
-    getMovies(token){
+    getMovies(){
         axios.get('https://myflixdb-pl.herokuapp.com/movies', {
-          headers: { Authorization: `Bearer ${token}`}
+          
         })
       .then(response => {
       // Assign the result to the state
@@ -84,13 +86,16 @@ class MainView extends React.Component {
     let { user } = this.state;
 
     return (
+
+    
     
     <Router basename="/client">
      <div className="main-view">
      <Route exact path ="/" render={() => {
-       if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+      
        return <MoviesList movies = {movies}/>;
      }}/>
+     <Route path ="/login" render={() => <LoginView onLoggedIn={user => this.onLoggedIn(user)} />}/>
    <Route path ="/register" render={() => <RegistrationView />} />
      <Route path ="/register" render={() => <RegistrationView />} />
      <Route path ="/movies/:Title" render={({match}) => <MovieView movie={movies.find(m => m.Title === match.params.Title)}/>}/>
@@ -102,7 +107,9 @@ class MainView extends React.Component {
   }
 
   let mapStateToProps = state => {
-    return { movies: state.movies}
+    return { movies: state.movies,
+             //user: state.user
+            }
   }
 
   export default connect(mapStateToProps, {setMovies})(MainView)

@@ -62,7 +62,7 @@ app.get('/', (req, res) => {
 
 // Get the list of data about all movies
 
-app.get('/movies', passport.authenticate('jwt', { session: false}), function(req, res) {
+app.get('/movies',  function(req, res) {
   Movies.find()
   .then(function(movies){
     res.status(201).json(movies)
@@ -76,7 +76,7 @@ app.get('/movies', passport.authenticate('jwt', { session: false}), function(req
 // Get the data about a single movie by title
 
 
-app.get('/movies/:Title',  passport.authenticate('jwt', { session: false}), function(req, res){
+app.get('/movies/:Title', function(req, res){
   Movies.findOne({ Title: req.params.Title})
   .then(function(movie){
     res.json(movie)
@@ -89,7 +89,7 @@ app.get('/movies/:Title',  passport.authenticate('jwt', { session: false}), func
 
 // get list of all genres
 
-app.get('/movies/genres',  passport.authenticate('jwt', { session: false}), function (req, res){
+app.get('/movies/genres',  function (req, res){
   Genres.find()
   .then(function(genres){
     res.status(201).json(genres)
@@ -103,7 +103,7 @@ app.get('/movies/genres',  passport.authenticate('jwt', { session: false}), func
 
 // get the data about a single genre by name
 
-app.get('/movies/genres/:Name',  passport.authenticate('jwt', { session: false}), function (req, res){
+app.get('/movies/genres/:Name', function (req, res){
   Movies.findOne({ "Genre.Name" : req.params.Name})
   .then(function(movie){
     res.status(201).json(movie.Genre)
@@ -117,7 +117,7 @@ app.get('/movies/genres/:Name',  passport.authenticate('jwt', { session: false})
 
 // get a list of all directors
 
-app.get('/movies/directors',  passport.authenticate('jwt', { session: false}), function(req, res){
+app.get('/movies/directors',  function(req, res){
   Directors.find()
   .then(function(directors){
     res.status(201).json(directors)
@@ -130,7 +130,7 @@ app.get('/movies/directors',  passport.authenticate('jwt', { session: false}), f
 
 // get the data about a single director by name
 
-app.get('/movies/directors/:Name',  passport.authenticate('jwt', { session: false}), function (req, res){
+app.get('/movies/directors/:Name',  function (req, res){
   Movies.findOne({ "Director.Name" : req.params.Name})
 .then(function(movie){
   res.status(201).json(movie.Director)
@@ -169,7 +169,7 @@ app.post('/users',
     check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
     check('Password', 'Password is required').not().isEmpty(),
     check('Email', 'Email does not appear to be valid').isEmail()
-  ],  passport.authenticate('jwt', { session: false}), (req, res) => {
+  ], (req, res) => {
 
   // check the validation object for errors
     let errors = validationResult(req);

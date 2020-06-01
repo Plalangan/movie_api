@@ -3,15 +3,12 @@
     text-align: center;
 }
 
-.movie-poster {
-    height: 100px;
-    width: 100px;
-}
+
 
 .card-img {
     height: 250px;
     width: 200px;
-    margin: auto;
+    margin-left: 20px;
     margin-top: 20px;
 }
 
@@ -26,7 +23,7 @@
       color:#A9A9A9;
       content: '♥';
       position: absolute;
-      left: 10%;
+      left: 20%;
       top: 15%;
       transform: translate(-50%, -50%);
     }
@@ -43,4 +40,8 @@
     &.liked::after {
       transform: translate(-50%, -50%) scale(1.1);
     }
+  }
+
+  .moreButton {
+    float: right;
   }
