@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {connect} from 'react-redux';
 import Proptypes from 'prop-types';
 import './login-view.scss';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row'
 import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal'
 
 
 
 export function LoginView(props) {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
-
+    const [ show, setShow ] = useState(true);
+    
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
    
 
-   
+   const backToMovies = (e) => {
+       window.open('/', '_self');
+   }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Send a request to the server for authentication 
@@ -27,6 +36,7 @@ export function LoginView(props) {
         .then(response =>{
             const data = response.data;
             props.onLoggedIn(data);
+            window.open('/client', '_self');
         })
         .catch(e => {
             console.log('No User Found')
@@ -38,6 +48,13 @@ export function LoginView(props) {
 
 
     return (
+
+        <div className="background">
+        <div className="login">
+        <Modal show = {show}
+                      backdrop="static">
+                      <p></p>
+        <Modal.Title className="text-center">Login Form</Modal.Title>
         <form style={{width: '80%', margin: 'auto', marginTop: '2rem'}}>
             <Form.Group controlId="formBasicUsername">
             <Form.Label>
@@ -54,15 +71,29 @@ export function LoginView(props) {
                 <Form.Control type = "password" placeholder="Enter Password" value={password} required onChange={e => setPassword(e.target.value)}/>
                 <Form.Control.Feedback type ="invalid">Please enter correct password</Form.Control.Feedback>
             </Form.Group>
+            <Row className="justify-content-md-center">
             <Button variant="primary" type="submit" onClick={handleSubmit}>
                 Log In
             </Button>
+            </Row>
             <p></p>
+            <Row className="justify-content-md-center">Don't have an account yet?</Row>
+            <Row className="justify-content-md-center">
             <Button variant="primary" link href="/register">
                 Register
             </Button>
-            
+            </Row>
+            <p></p>
+            <Row className="justify-content-md-center">
+            <Button variant="primary" link href="/">
+                Back To Movies
+            </Button>
+            </Row>
+            <p></p>
         </form>
+        </Modal>
+        </div>
+        </div>
     )
 };
 

@@ -14,7 +14,7 @@
 
 .like-button {
     display: inline-block;
-    position: relative;
+    position: absolute;
     font-size: 20px;
     cursor: pointer;
     // border: 1px solid black;
@@ -24,7 +24,7 @@
       content: '♥';
       position: absolute;
       left: 20%;
-      top: 15%;
+      top: 75%;
       transform: translate(-50%, -50%);
     }
     &::after {
@@ -42,6 +42,43 @@
     }
   }
 
-  .moreButton {
-    float: right;
+  .liked-button {
+    display: inline-block;
+    position: absolute;
+    font-size: 20px;
+    cursor: pointer;
+    // border: 1px solid black;
+    &::before {
+      font-size: 3em;
+      color:#FF0000;
+      content: '♥';
+      position: absolute;
+      left: 20%;
+      top: 75%;
+      transform: translate(-50%, -50%);
+    }
+    &::after {
+      font-size: 3em;
+      color: #FF0000;
+      content: '♥';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.2s;
+    }
+    &.liked::after {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
   }
+
+
+
+ .moviecard {
+   margin-top: 50px;
+ }
+
+ .btn-sm{
+   position: relative;
+   bottom: 0;
+ }

@@ -3,7 +3,12 @@ import proptypes from 'prop-types';
 import './registration-view.scss';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Card from 'react-bootstrap/Card'
+import Modal from 'react-bootstrap/Modal'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 import axios from 'axios';
+
 
 export function RegistrationView(props){
     const [ name, setName ] = useState('');
@@ -12,6 +17,13 @@ export function RegistrationView(props){
     const [ email, setEmail ] = useState('');
     const [ birthday, setBirthday ] = useState('');
     const [ validated, setValidated ] = useState('false');
+    const [ show, setShow ] = useState(true);
+    
+    const handleClose = () => setShow (false);
+    const handleShow = () => setShow(true);
+
+
+   
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -33,6 +45,13 @@ export function RegistrationView(props){
 
 
 return (
+    <div class="background" >
+        <div></div>
+    
+    <Modal show={show}
+            backdrop="static">
+                <p></p>
+    <Modal.Title className="text-center">Registration Form </Modal.Title>
     <form style = {{width: '80%', margin: 'auto', marginTop: '2rem'}}>
         <Form.Group controlId="formBasicName">
             <Form.Label>
@@ -68,14 +87,35 @@ return (
 
         <Form.Group controlId="formBasicUsername">
             <Form.Label>
-                Birthday
+                Birthdate
             </Form.Label>
                 <Form.Control type="date" placeholder="Enter your date of birth" value={birthday} required onChange = {e => setBirthday(e.target.value)}/>
                 <Form.Control.Feedback type="invalid">Please enter your date of birth</Form.Control.Feedback>
         </Form.Group>
-
-        <Button variant = "primary" type="submit" onClick={handleSubmit} >
+        <Row className="justify-content-md-center">
+        <Button variant = "primary" class="btn" type="submit" onClick={handleSubmit} >
             Create User
         </Button>
+        </Row>
+        <p></p>
+        <Row className="justify-content-md-center">
+        Already have an account?
+        </Row>
+        <Row className="justify-content-md-center">
+        <Button variant = "primary" class="btn" link href='/login' >
+            Log In
+        </Button>
+        </Row>
+        <p></p>
+        
+        <Row className="justify-content-md-center">
+        <Button variant = "primary" class="btn" link href='/' >
+            Back To Movies
+        </Button>
+        </Row>
+        <p></p>
         </form>
+        <p></p>
+        </Modal>
+        </div>
 )};

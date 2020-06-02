@@ -10,23 +10,73 @@ import { MovieView } from '../movie-view/movie-view';
 
 export class MovieCard extends React.Component {
   render() {
-    const { movie, userProfile, isFavorite, onToggleFavorite } = this.props;
+    const { movie, user, onToggleFavorite} = this.props;
 
-    return (
+    var isFavorite = movie.isFavorite;
+    
+    const HandleToggleFavorite = (e) => {
+      onToggleFavorite(movie);
+     
+    }
+    
 
 
- 
-      <Card className ="mb-3 mb-sm-4" style ={{ minWidth: '15rem', maxWidth: '15rem', minHeight: 'rem'}}>
-        <span className="like-button"><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/></span>
+    if (!user) return (
+
+      <Card className ="mb-3 mb-sm-4" class="moviecard" style ={{ minWidth: '15rem', maxWidth: '15rem', minHeight: 'rem'}}>
+       <Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
         
         <Card.Body>
           <Card.Title className="text-center">{movie.Title}</Card.Title>
           <Card.Text>{movie.Description}</Card.Text>
-          
+          </Card.Body>
+          <Card.Footer>
           <Link to={`/movies/${movie.Title}`}>
           <Button className="btn-sm">See More about {movie.Title}</Button>
           </Link>
-         </Card.Body>
+          </Card.Footer>.
+         
+         
+      </Card>
+    )
+
+    if (user && isFavorite === true) return (
+      <Card className ="mb-3 mb-sm-4" class="moviecard" style ={{ minWidth: '15rem', maxWidth: '15rem', minHeight: 'rem'}}>
+        <span className="liked-button" onClick={HandleToggleFavorite}></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
+        
+        <Card.Body>
+          <Card.Title className="text-center">{movie.Title}</Card.Title>
+          <Card.Text>{movie.Description}</Card.Text>
+          </Card.Body>
+          <Card.Footer>
+          <Link to={`/movies/${movie.Title}`}>
+          <Button className="btn-sm">See More about {movie.Title}</Button>
+          </Link>
+          </Card.Footer>.
+         
+         
+      </Card>
+
+    )
+
+    
+    return (
+
+
+ 
+      <Card className ="mb-3 mb-sm-4" class="moviecard" style ={{ minWidth: '15rem', maxWidth: '15rem', minHeight: 'rem'}}>
+        <span className="like-button" onClick={HandleToggleFavorite}></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
+        
+        <Card.Body>
+          <Card.Title className="text-center">{movie.Title}</Card.Title>
+          <Card.Text>{movie.Description}</Card.Text>
+          </Card.Body>
+          <Card.Footer>
+          <Link to={`/movies/${movie.Title}`}>
+          <Button className="btn-sm">See More about {movie.Title}</Button>
+          </Link>
+          </Card.Footer>.
+         
          
       </Card>
     );

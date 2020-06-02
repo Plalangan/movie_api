@@ -15,6 +15,13 @@
   width: 150px;
   position: right; }
 
+.btn {
+  margin-left: 10px; }
+
+.card-deck {
+  margin-top: 20px;
+  margin-left: 50px; }
+
 @charset "UTF-8";
 .movie-card {
   margin: auto;
@@ -28,7 +35,7 @@
 
 .like-button {
   display: inline-block;
-  position: relative;
+  position: absolute;
   font-size: 20px;
   cursor: pointer; }
   .like-button::before {
@@ -37,7 +44,7 @@
     content: '♥';
     position: absolute;
     left: 20%;
-    top: 15%;
+    top: 75%;
     transform: translate(-50%, -50%); }
   .like-button::after {
     font-size: 3em;
@@ -51,8 +58,37 @@
   .like-button.liked::after {
     transform: translate(-50%, -50%) scale(1.1); }
 
-.moreButton {
-  float: right; }
+.liked-button {
+  display: inline-block;
+  position: absolute;
+  font-size: 20px;
+  cursor: pointer; }
+  .liked-button::before {
+    font-size: 3em;
+    color: #FF0000;
+    content: '♥';
+    position: absolute;
+    left: 20%;
+    top: 75%;
+    transform: translate(-50%, -50%); }
+  .liked-button::after {
+    font-size: 3em;
+    color: #FF0000;
+    content: '♥';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.2s; }
+  .liked-button.liked::after {
+    transform: translate(-50%, -50%) scale(1.1); }
+
+.moviecard {
+  margin-top: 50px; }
+
+.btn-sm {
+  position: relative;
+  bottom: 0; }
 
 .movie-view {
   margin: auto;
@@ -67,6 +103,12 @@
 
 .background {
   background-color: gray; }
+
+.login-modal {
+  position: absolute; }
+
+.Modal {
+  z-index: 1050; }
 
 .my-flix {
   color: steelblue; }
