@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
@@ -9,15 +10,34 @@ import './movie-card.scss'
 import { MovieView } from '../movie-view/movie-view';
 
 export class MovieCard extends React.Component {
-  render() {
-    const { movie, user, addFavorite} = this.props;
 
-    var isFavorite = movie.isFavorite;
+  
+  
+  render() {
+    const { movie, user} = this.props;
+    var isFavorite = this.props.movie.isFavorite;
+  
     
-    const HandleToggleFavorite = (e) => {
-      addFavorite();
-     
+  const onToggleFavorite = (e) => {
+    let token = localStorage.getItem('token');
+    console.log(token);
+      
+  
+      
+      if( user ) {
+        axios.post(`https://myflixdb-pl.herokuapp.com/users/${user}/movies/${movie._id}`, {
+          headers: { Authorization: `Bearer ${token}`}
+        })
+        .console.log('added to favorites');
+        }
+
+       axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user}/movies/${movie._id}`,{
+        headers: { Authorization: token}
+      })
+      .console.log('removed from favorites');
+      
     }
+    
     
 
 
@@ -42,7 +62,7 @@ export class MovieCard extends React.Component {
 
     if (user && isFavorite === true) return (
       <Card className ="mb-3 mb-sm-4" class="moviecard" style ={{ minWidth: '15rem', maxWidth: '15rem', minHeight: 'rem'}}>
-        <span className="liked-button" onClick={HandleToggleFavorite}></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
+        <span className="liked-button" ></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
         
         <Card.Body>
           <Card.Title className="text-center">{movie.Title}</Card.Title>
@@ -65,7 +85,7 @@ export class MovieCard extends React.Component {
 
  
       <Card className ="mb-3 mb-sm-4" class="moviecard" style ={{ minWidth: '15rem', maxWidth: '15rem', minHeight: 'rem'}}>
-        <span className="like-button" onClick={HandleToggleFavorite}></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
+        <span className="like-button" onClick={onToggleFavorite} ></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
         
         <Card.Body>
           <Card.Title className="text-center">{movie.Title}</Card.Title>

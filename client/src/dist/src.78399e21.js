@@ -41418,6 +41418,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MovieCard = void 0;
 
+var _axios = _interopRequireDefault(require("axios"));
+
 var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
@@ -41472,12 +41474,26 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this$props = this.props,
           movie = _this$props.movie,
-          user = _this$props.user,
-          addFavorite = _this$props.addFavorite;
-      var isFavorite = movie.isFavorite;
+          user = _this$props.user;
+      var isFavorite = this.props.movie.isFavorite;
 
-      var HandleToggleFavorite = function HandleToggleFavorite(e) {
-        addFavorite();
+      var onToggleFavorite = function onToggleFavorite(e) {
+        var token = localStorage.getItem('token');
+        console.log(token);
+
+        if (user) {
+          _axios.default.post("https://myflixdb-pl.herokuapp.com/users/".concat(user, "/movies/").concat(movie._id), {
+            headers: {
+              Authorization: "Bearer ".concat(token)
+            }
+          }).console.log('added to favorites');
+        }
+
+        _axios.default.delete("https://myflixdb-pl.herokuapp.com/users/".concat(user, "/movies/").concat(movie._id), {
+          headers: {
+            Authorization: token
+          }
+        }).console.log('removed from favorites');
       };
 
       if (!user) return _react.default.createElement(_Card.default, {
@@ -41508,8 +41524,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
           minHeight: 'rem'
         }
       }, _react.default.createElement("span", {
-        className: "liked-button",
-        onClick: HandleToggleFavorite
+        className: "liked-button"
       }), _react.default.createElement(_Card.default.Img, {
         "class": "card-img",
         variant: "top",
@@ -41531,7 +41546,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
         }
       }, _react.default.createElement("span", {
         className: "like-button",
-        onClick: HandleToggleFavorite
+        onClick: onToggleFavorite
       }), _react.default.createElement(_Card.default.Img, {
         "class": "card-img",
         variant: "top",
@@ -41558,7 +41573,7 @@ MovieCard.propTypes = {
   }).isRequired,
   onClick: _propTypes.default.func
 };
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./movie-card.scss":"components/movie-card/movie-card.scss","../movie-view/movie-view":"components/movie-view/movie-view.jsx"}],"../node_modules/dom-helpers/esm/scrollbarSize.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./movie-card.scss":"components/movie-card/movie-card.scss","../movie-view/movie-view":"components/movie-view/movie-view.jsx"}],"../node_modules/dom-helpers/esm/scrollbarSize.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -43665,7 +43680,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state) {
   var visibilityFilter = state.visibilityFilter,
-      visible = state.visible;
+      visible = state.visible,
+      user = state.user;
   return {
     visibilityFilter: visibilityFilter,
     visible: visible
@@ -43683,7 +43699,8 @@ function MoviesList(props) {
       user = props.user,
       onLoggedOut = props.onLoggedOut,
       toggleModal = props.toggleModal,
-      onToggleFavorite = props.onToggleFavorite;
+      onToggleFavorite = props.onToggleFavorite,
+      token = props.token;
   var filteredMovies = movies;
 
   if (visibilityFilter !== '') {
@@ -43719,7 +43736,9 @@ function MoviesList(props) {
       key: m._id,
       movie: m,
       isFavorite: isFavorite,
-      onToggleFavorite: onToggleFavorite,
+      onToggleFavorite: function onToggleFavorite(movie) {
+        return _this.onToggleFavorite;
+      },
       user: user
     });
   }))));
@@ -43746,10 +43765,9 @@ function MoviesList(props) {
       key: m._id,
       movie: m,
       isFavorite: isFavorite,
-      onToggleFavorite: function onToggleFavorite(movie) {
-        return _this.onToggleFavorite(movie);
-      },
-      user: user
+      onToggleFavorite: onToggleFavorite,
+      user: user,
+      token: token
     });
   }))));
 }
@@ -52949,10 +52967,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "onToggleFavorite",
-    value: function onToggleFavorite() {
-      var _props = props,
-          user = _props.user;
-
+    value: function onToggleFavorite(movie) {
       if (this.movie.isFavorite === false) {
         _axios.default.post("https://myflixdb-pl.herokuapp.com/users/".concat(user.Username, "/movies/").concat(movie._id), {
           headers: {
@@ -52960,6 +52975,12 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           }
         }).console.log('added to favorites');
       }
+
+      _axios.default.delete("https://myflixdb-pl.herokuapp.com/users/".concat(user.Username, "/movies/").concat(movie._id), {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).console.log('removed from favorites');
     }
   }, {
     key: "render",
@@ -52969,7 +52990,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           movies = _this$props.movies,
           onLoggedOut = _this$props.onLoggedOut,
-          isFavorite = _this$props.isFavorite;
+          isFavorite = _this$props.isFavorite,
+          token = _this$props.token;
       var _this$state = this.state,
           user = _this$state.user,
           showModal = _this$state.showModal;
@@ -52991,7 +53013,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             },
             toggleModal: _this3.toggleModal,
             isFavorite: isFavorite,
-            onToggleFavorite: _this3.onToggleFavorite
+            onToggleFavorite: _this3.onToggleFavorite,
+            token: token
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {

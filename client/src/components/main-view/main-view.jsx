@@ -80,8 +80,11 @@ class MainView extends React.Component {
 
       }
 
-    onToggleFavorite(){
-      const { user } = props;
+    onToggleFavorite(movie){
+      
+      
+      
+      
     
       
       if( this.movie.isFavorite === false ) {
@@ -90,6 +93,11 @@ class MainView extends React.Component {
         })
         .console.log('added to favorites');
         }
+
+       axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`,{
+        headers: { Authorization: `Bearer ${token}`}
+      })
+      .console.log('removed from favorites');
       
     }
     
@@ -100,7 +108,7 @@ class MainView extends React.Component {
 
 
    render() {
-    let { movies, onLoggedOut, isFavorite} = this.props;
+    let { movies, onLoggedOut, isFavorite, token} = this.props;
     let { user, showModal } = this.state;
 
     if (showModal === true) return <LoginView/>
@@ -110,7 +118,7 @@ class MainView extends React.Component {
      <div className="main-view">
      <Route exact path ="/" render={() => {
        
-       return <MoviesList movies = {movies} user={user} onLoggedOut={this.onLoggedOut} onLoggedIn={user => this.onLoggedIn(user)} toggleModal={this.toggleModal} isFavorite={isFavorite} onToggleFavorite={this.onToggleFavorite} />;
+       return <MoviesList movies = {movies} user={user} onLoggedOut={this.onLoggedOut} onLoggedIn={user => this.onLoggedIn(user)} toggleModal={this.toggleModal} isFavorite={isFavorite} onToggleFavorite={this.onToggleFavorite} token={token} />;
      }}/>
 
    <Route path ="/login" render={() => <LoginView movies = {movies}  user = {user} onLoggedIn={user => this.onLoggedIn(user)} />} />
