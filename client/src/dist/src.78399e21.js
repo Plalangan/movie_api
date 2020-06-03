@@ -41480,19 +41480,14 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
       var onToggleFavorite = function onToggleFavorite(e) {
         var token = localStorage.getItem('token');
         console.log(token);
+        console.log(movie._id);
 
         if (user) {
-          _axios.default.post("https://myflixdb-pl.herokuapp.com/users/".concat(user, "/movies/").concat(movie._id), {
-            headers: {
-              Authorization: "Bearer ".concat(token)
-            }
+          _axios.default.post("https://myflixdb-pl.herokuapp.com/users/".concat(user, "/movies/").concat(movie._id), {// headers: { Authorization: `Bearer ${token}`}
           }).console.log('added to favorites');
         }
 
-        _axios.default.delete("https://myflixdb-pl.herokuapp.com/users/".concat(user, "/movies/").concat(movie._id), {
-          headers: {
-            Authorization: token
-          }
+        _axios.default.delete("https://myflixdb-pl.herokuapp.com/users/".concat(user.Username, "/movies/").concat(movie._id), {// headers: { Authorization: `Bearer ${token}`}
         }).console.log('removed from favorites');
       };
 

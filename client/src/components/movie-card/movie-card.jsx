@@ -20,19 +20,20 @@ export class MovieCard extends React.Component {
     
   const onToggleFavorite = (e) => {
     let token = localStorage.getItem('token');
-    console.log(token);
+    console.log(token)
+    console.log(movie._id);
       
   
       
       if( user ) {
         axios.post(`https://myflixdb-pl.herokuapp.com/users/${user}/movies/${movie._id}`, {
-          headers: { Authorization: `Bearer ${token}`}
+         // headers: { Authorization: `Bearer ${token}`}
         })
         .console.log('added to favorites');
         }
 
-       axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user}/movies/${movie._id}`,{
-        headers: { Authorization: token}
+       axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`,{
+       // headers: { Authorization: `Bearer ${token}`}
       })
       .console.log('removed from favorites');
       
