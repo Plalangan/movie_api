@@ -41474,18 +41474,24 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this$props = this.props,
           movie = _this$props.movie,
-          user = _this$props.user;
+          user = _this$props.user,
+          favoritemovies = _this$props.favoritemovies;
       var isFavorite = this.props.movie.isFavorite;
 
       var onToggleFavorite = function onToggleFavorite(e) {
         var token = localStorage.getItem('token');
+        console.log(favoritemovies);
         console.log(token);
         console.log(movie._id);
-
-        if (user) {
-          _axios.default.post("https://myflixdb-pl.herokuapp.com/users/".concat(user, "/movies/").concat(movie._id), {// headers: { Authorization: `Bearer ${token}`}
-          }).console.log('added to favorites');
-        }
+        /* if(user && movie._id !== favoritemovies.includes(movie._id)) {
+           axios.post(`https://myflixdb-pl.herokuapp.com/users/${user}/movies/${movie._id}`, {
+            // headers: { Authorization: `Bearer ${token}`}
+           })
+           .console.log('added to favorites');
+           }
+         
+        
+         if(user && movie._id === favoritemovies.includes(movie._id)) {*/
 
         _axios.default.delete("https://myflixdb-pl.herokuapp.com/users/".concat(user.Username, "/movies/").concat(movie._id), {// headers: { Authorization: `Bearer ${token}`}
         }).console.log('removed from favorites');
@@ -41510,7 +41516,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
       }, _react.default.createElement(_Button.default, {
         className: "btn-sm"
       }, "See More about ", movie.Title))), ".");
-      if (user && isFavorite === true) return _react.default.createElement(_Card.default, {
+      if (user && movie._id === favoritemovies.includes(movie._id)) return _react.default.createElement(_Card.default, {
         className: "mb-3 mb-sm-4",
         "class": "moviecard",
         style: {
@@ -41519,7 +41525,8 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
           minHeight: 'rem'
         }
       }, _react.default.createElement("span", {
-        className: "liked-button"
+        className: "liked-button",
+        onClick: onToggleFavorite
       }), _react.default.createElement(_Card.default.Img, {
         "class": "card-img",
         variant: "top",
@@ -43686,7 +43693,8 @@ var mapStateToProps = function mapStateToProps(state) {
 function MoviesList(props) {
   var _this = this;
 
-  var movies = props.movies,
+  var favoritemovies = props.favoritemovies,
+      movies = props.movies,
       visibilityFilter = props.visibilityFilter,
       visible = props.visible,
       animate = props.animate,
@@ -43762,7 +43770,8 @@ function MoviesList(props) {
       isFavorite: isFavorite,
       onToggleFavorite: onToggleFavorite,
       user: user,
-      token: token
+      token: token,
+      favoritemovies: favoritemovies
     });
   }))));
 }
@@ -52908,7 +52917,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this);
     _this.state = {
       user: null,
-      showModal: false
+      showModal: false,
+      favoritemovies: []
     };
     return _this;
   }
@@ -52921,7 +52931,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
       if (accessToken !== null) {
         this.setState({
-          user: localStorage.getItem('user')
+          user: localStorage.getItem('user'),
+          favoritemovies: localStorage.getItem('favorites')
         });
         this.getMovies(accessToken);
       }
@@ -52947,10 +52958,12 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     value: function onLoggedIn(authData) {
       console.log(authData);
       this.setState({
-        user: authData.user.Username
+        user: authData.user.Username,
+        favoritemovies: authData.user.FavoriteMovies
       });
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.Username);
+      localStorage.setItem('favorites', authData.user.FavoriteMovies);
       this.getMovies(authData.token);
     }
   }, {
@@ -52959,23 +52972,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       window.open('/', '_self');
+      this.setState({
+        favoritemovies: []
+      });
     }
   }, {
-    key: "onToggleFavorite",
-    value: function onToggleFavorite(movie) {
-      if (this.movie.isFavorite === false) {
-        _axios.default.post("https://myflixdb-pl.herokuapp.com/users/".concat(user.Username, "/movies/").concat(movie._id), {
-          headers: {
-            Authorization: "Bearer ".concat(token)
-          }
-        }).console.log('added to favorites');
-      }
-
-      _axios.default.delete("https://myflixdb-pl.herokuapp.com/users/".concat(user.Username, "/movies/").concat(movie._id), {
-        headers: {
-          Authorization: "Bearer ".concat(token)
-        }
-      }).console.log('removed from favorites');
+    key: "check",
+    value: function check() {
+      console.log(favoritemovies);
     }
   }, {
     key: "render",
@@ -52986,10 +52990,12 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           movies = _this$props.movies,
           onLoggedOut = _this$props.onLoggedOut,
           isFavorite = _this$props.isFavorite,
-          token = _this$props.token;
+          token = _this$props.token,
+          check = _this$props.check;
       var _this$state = this.state,
           user = _this$state.user,
-          showModal = _this$state.showModal;
+          showModal = _this$state.showModal,
+          favoritemovies = _this$state.favoritemovies;
       if (showModal === true) return _react.default.createElement(_loginView.LoginView, null);
       return _react.default.createElement(_reactRouterDom.BrowserRouter, {
         basename: "/client"
@@ -53009,7 +53015,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             toggleModal: _this3.toggleModal,
             isFavorite: isFavorite,
             onToggleFavorite: _this3.onToggleFavorite,
-            token: token
+            token: token,
+            favoritemovies: favoritemovies,
+            check: check
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -53058,7 +53066,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     movies: state.movies,
-    user: state.user
+    user: state.user,
+    favoritemovies: state.favoritemovies
   };
 };
 

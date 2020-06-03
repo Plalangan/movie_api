@@ -11,34 +11,39 @@ import { MovieView } from '../movie-view/movie-view';
 
 export class MovieCard extends React.Component {
 
-  
+
   
   render() {
-    const { movie, user} = this.props;
+    const { movie, user, favoritemovies} = this.props;
     var isFavorite = this.props.movie.isFavorite;
   
     
   const onToggleFavorite = (e) => {
     let token = localStorage.getItem('token');
+  
+    console.log(favoritemovies)
     console.log(token)
     console.log(movie._id);
       
   
       
-      if( user ) {
+     /* if(user && movie._id !== favoritemovies.includes(movie._id)) {
         axios.post(`https://myflixdb-pl.herokuapp.com/users/${user}/movies/${movie._id}`, {
          // headers: { Authorization: `Bearer ${token}`}
         })
         .console.log('added to favorites');
         }
-
+      
+     
+      if(user && movie._id === favoritemovies.includes(movie._id)) {*/
        axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`,{
        // headers: { Authorization: `Bearer ${token}`}
       })
       .console.log('removed from favorites');
-      
-    }
+    } 
     
+  
+
     
 
 
@@ -61,9 +66,9 @@ export class MovieCard extends React.Component {
       </Card>
     )
 
-    if (user && isFavorite === true) return (
+    if (user && movie._id === favoritemovies.includes(movie._id)) return (
       <Card className ="mb-3 mb-sm-4" class="moviecard" style ={{ minWidth: '15rem', maxWidth: '15rem', minHeight: 'rem'}}>
-        <span className="liked-button" ></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
+        <span className="liked-button" onClick={onToggleFavorite} ></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
         
         <Card.Body>
           <Card.Title className="text-center">{movie.Title}</Card.Title>

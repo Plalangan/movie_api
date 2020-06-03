@@ -23,7 +23,7 @@ const mapStateToProps = state => {
 };
 
 function MoviesList(props){
-    const { movies, visibilityFilter, visible, animate, isFavorite, user, onLoggedOut, toggleModal, onToggleFavorite, token} = props;
+    const { favoritemovies, movies, visibilityFilter, visible, animate, isFavorite, user, onLoggedOut, toggleModal, onToggleFavorite, token} = props;
     let filteredMovies = movies;
     
     
@@ -60,7 +60,7 @@ function MoviesList(props){
     
         <Animated animateOnMount duration={{in:1000}} animationIn="slideInUp" animationOut="slideOutDown" isVisible={animate}>
         <div className='card-deck'>
-        {filteredMovies.map(m => <MovieCard key={m._id} movie={m} isFavorite ={isFavorite} onToggleFavorite={onToggleFavorite} user={user} token={token}/>)}
+        {filteredMovies.map(m => <MovieCard key={m._id} movie={m} isFavorite ={isFavorite} onToggleFavorite={onToggleFavorite} user={user} token={token} favoritemovies={favoritemovies}/>)}
         </div> 
         </Animated>
         

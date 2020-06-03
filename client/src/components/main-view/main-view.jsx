@@ -30,7 +30,8 @@ class MainView extends React.Component {
   
       this.state = {
        user: null,
-       showModal: false
+       showModal: false,
+       favoritemovies: []
       };
     }
     
@@ -39,12 +40,18 @@ class MainView extends React.Component {
     let accessToken = localStorage.getItem('token');
         if (accessToken !== null) {
           this.setState({
-            user: localStorage.getItem('user')
+            user: localStorage.getItem('user'),
+            favoritemovies : localStorage.getItem('favorites')
           });
           this.getMovies(accessToken);
-        }};
+        }
+        
+      
+      };
 
         
+    
+    
       
     getMovies(token){
         axios.get('https://myflixdb-pl.herokuapp.com/movies', {
@@ -63,12 +70,16 @@ class MainView extends React.Component {
       onLoggedIn(authData) {
       console.log(authData);
       this.setState({
-        user: authData.user.Username
+        user: authData.user.Username,
+        favoritemovies: authData.user.FavoriteMovies
       });
-    
+     
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.Username);
+      localStorage.setItem('favorites', authData.user.FavoriteMovies);
       this.getMovies(authData.token);
+      
+      
     }
 
 
@@ -76,31 +87,18 @@ class MainView extends React.Component {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       window.open('/', '_self')
+      this.setState({
+        favoritemovies: []
+      })
      
 
       }
 
-    onToggleFavorite(movie){
-      
-      
-      
-      
     
-      
-      if( this.movie.isFavorite === false ) {
-        axios.post(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`, {
-          headers: { Authorization: `Bearer ${token}`}
-        })
-        .console.log('added to favorites');
-        }
 
-       axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`,{
-        headers: { Authorization: `Bearer ${token}`}
-      })
-      .console.log('removed from favorites');
-      
+    check(){
+      console.log(favoritemovies);
     }
-    
       
       
     
@@ -108,8 +106,8 @@ class MainView extends React.Component {
 
 
    render() {
-    let { movies, onLoggedOut, isFavorite, token} = this.props;
-    let { user, showModal } = this.state;
+    let { movies, onLoggedOut, isFavorite, token, check} = this.props;
+    let { user, showModal, favoritemovies } = this.state;
 
     if (showModal === true) return <LoginView/>
     return (
@@ -118,7 +116,7 @@ class MainView extends React.Component {
      <div className="main-view">
      <Route exact path ="/" render={() => {
        
-       return <MoviesList movies = {movies} user={user} onLoggedOut={this.onLoggedOut} onLoggedIn={user => this.onLoggedIn(user)} toggleModal={this.toggleModal} isFavorite={isFavorite} onToggleFavorite={this.onToggleFavorite} token={token} />;
+       return <MoviesList movies = {movies} user={user} onLoggedOut={this.onLoggedOut} onLoggedIn={user => this.onLoggedIn(user)} toggleModal={this.toggleModal} isFavorite={isFavorite} onToggleFavorite={this.onToggleFavorite} token={token} favoritemovies={favoritemovies} check={check}/>;
      }}/>
 
    <Route path ="/login" render={() => <LoginView movies = {movies}  user = {user} onLoggedIn={user => this.onLoggedIn(user)} />} />
@@ -134,7 +132,8 @@ class MainView extends React.Component {
 
   let mapStateToProps = state => {
     return { movies: state.movies,
-             user: state.user}
+             user: state.user,
+             favoritemovies: state.favoritemovies}
   }
 
   export default connect(mapStateToProps, {setMovies})(MainView)
