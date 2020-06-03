@@ -80,8 +80,17 @@ class MainView extends React.Component {
 
       }
 
-    onToggleFavorite(movie){
-      console.log(this.movie.isFavorite);
+    onToggleFavorite(){
+      const { user } = props;
+    
+      
+      if( this.movie.isFavorite === false ) {
+        axios.post(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`, {
+          headers: { Authorization: `Bearer ${token}`}
+        })
+        .console.log('added to favorites');
+        }
+      
     }
     
       

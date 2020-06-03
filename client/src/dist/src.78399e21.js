@@ -52949,8 +52949,17 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "onToggleFavorite",
-    value: function onToggleFavorite(movie) {
-      console.log(this.movie.isFavorite);
+    value: function onToggleFavorite() {
+      var _props = props,
+          user = _props.user;
+
+      if (this.movie.isFavorite === false) {
+        _axios.default.post("https://myflixdb-pl.herokuapp.com/users/".concat(user.Username, "/movies/").concat(movie._id), {
+          headers: {
+            Authorization: "Bearer ".concat(token)
+          }
+        }).console.log('added to favorites');
+      }
     }
   }, {
     key: "render",
