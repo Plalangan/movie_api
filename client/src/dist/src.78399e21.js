@@ -41480,22 +41480,32 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
 
       var onToggleFavorite = function onToggleFavorite(e) {
         var token = localStorage.getItem('token');
-        console.log(favoritemovies);
-        console.log(token);
-        console.log(movie._id);
-        /* if(user && movie._id !== favoritemovies.includes(movie._id)) {
-           axios.post(`https://myflixdb-pl.herokuapp.com/users/${user}/movies/${movie._id}`, {
-            // headers: { Authorization: `Bearer ${token}`}
-           })
-           .console.log('added to favorites');
-           }
-         
-        
-         if(user && movie._id === favoritemovies.includes(movie._id)) {*/
 
-        _axios.default.delete("https://myflixdb-pl.herokuapp.com/users/".concat(user.Username, "/movies/").concat(movie._id), {// headers: { Authorization: `Bearer ${token}`}
-        }).console.log('removed from favorites');
+        _axios.default.delete("https://myflixdb-pl.herokuapp.com/users/".concat(user, "/movies/").concat(movie._id), {
+          headers: {
+            Authorization: "Bearer ".concat(token)
+          }
+        });
+
+        favoritemovies.remove(movie._id);
+        console.log('deleted');
       };
+      /* if(user && favoritemovies.includes(movie._id)) {
+         axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`,{
+         headers: { Authorization: `Bearer ${token}`}
+        })
+        
+       }
+       
+        
+       else {
+          axios.post(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`,{
+           headers: { Authorization: `Bearer ${token}`}
+         })
+         .console.log('removed from favorites');
+       }};
+       */
+
 
       if (!user) return _react.default.createElement(_Card.default, {
         className: "mb-3 mb-sm-4",
@@ -41516,7 +41526,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
       }, _react.default.createElement(_Button.default, {
         className: "btn-sm"
       }, "See More about ", movie.Title))), ".");
-      if (user && movie._id === favoritemovies.includes(movie._id)) return _react.default.createElement(_Card.default, {
+      if (user && favoritemovies.includes(movie._id)) return _react.default.createElement(_Card.default, {
         className: "mb-3 mb-sm-4",
         "class": "moviecard",
         style: {

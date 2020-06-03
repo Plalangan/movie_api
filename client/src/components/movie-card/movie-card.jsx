@@ -20,27 +20,32 @@ export class MovieCard extends React.Component {
     
   const onToggleFavorite = (e) => {
     let token = localStorage.getItem('token');
-  
-    console.log(favoritemovies)
-    console.log(token)
-    console.log(movie._id);
+    axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user}/movies/${movie._id}`,{
+      headers: { Authorization: `Bearer ${token}`}
+     })
+     favoritemovies.remove(movie._id)
+     console.log('deleted');
+
+    }
+
       
   
       
-     /* if(user && movie._id !== favoritemovies.includes(movie._id)) {
-        axios.post(`https://myflixdb-pl.herokuapp.com/users/${user}/movies/${movie._id}`, {
-         // headers: { Authorization: `Bearer ${token}`}
-        })
-        .console.log('added to favorites');
-        }
-      
+   /* if(user && favoritemovies.includes(movie._id)) {
+      axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`,{
+      headers: { Authorization: `Bearer ${token}`}
+     })
      
-      if(user && movie._id === favoritemovies.includes(movie._id)) {*/
-       axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`,{
-       // headers: { Authorization: `Bearer ${token}`}
+    }
+    
+     
+    else {
+       axios.post(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`,{
+        headers: { Authorization: `Bearer ${token}`}
       })
       .console.log('removed from favorites');
-    } 
+    }};
+    */
     
   
 
@@ -66,7 +71,7 @@ export class MovieCard extends React.Component {
       </Card>
     )
 
-    if (user && movie._id === favoritemovies.includes(movie._id)) return (
+    if (user && favoritemovies.includes(movie._id)) return (
       <Card className ="mb-3 mb-sm-4" class="moviecard" style ={{ minWidth: '15rem', maxWidth: '15rem', minHeight: 'rem'}}>
         <span className="liked-button" onClick={onToggleFavorite} ></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
         
