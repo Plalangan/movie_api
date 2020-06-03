@@ -18,8 +18,8 @@ import NaviBar from '../navi-bar/navi-bar';
 
 
 const mapStateToProps = state => {
-    const { visibilityFilter, visible, user} = state;
-    return { visibilityFilter, visible, };
+    const { visibilityFilter, visible} = state;
+    return { visibilityFilter, visible};
 };
 
 function MoviesList(props){
@@ -60,7 +60,7 @@ function MoviesList(props){
     
         <Animated animateOnMount duration={{in:1000}} animationIn="slideInUp" animationOut="slideOutDown" isVisible={animate}>
         <div className='card-deck'>
-        {filteredMovies.map(m => <MovieCard key={m._id} movie={m} isFavorite ={isFavorite} onToggleFavorite={onToggleFavorite} user={user}/>)}
+        {filteredMovies.map(m => <MovieCard key={m._id} movie={m} isFavorite ={isFavorite} onToggleFavorite={movie => this.onToggleFavorite(movie)} user={user}/>)}
         </div> 
         </Animated>
         

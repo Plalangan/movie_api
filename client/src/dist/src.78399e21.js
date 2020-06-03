@@ -41473,11 +41473,11 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           movie = _this$props.movie,
           user = _this$props.user,
-          onToggleFavorite = _this$props.onToggleFavorite;
+          addFavorite = _this$props.addFavorite;
       var isFavorite = movie.isFavorite;
 
       var HandleToggleFavorite = function HandleToggleFavorite(e) {
-        onToggleFavorite(movie);
+        addFavorite();
       };
 
       if (!user) return _react.default.createElement(_Card.default, {
@@ -43665,8 +43665,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state) {
   var visibilityFilter = state.visibilityFilter,
-      visible = state.visible,
-      user = state.user;
+      visible = state.visible;
   return {
     visibilityFilter: visibilityFilter,
     visible: visible
@@ -43747,7 +43746,9 @@ function MoviesList(props) {
       key: m._id,
       movie: m,
       isFavorite: isFavorite,
-      onToggleFavorite: onToggleFavorite,
+      onToggleFavorite: function onToggleFavorite(movie) {
+        return _this.onToggleFavorite(movie);
+      },
       user: user
     });
   }))));
@@ -52933,10 +52934,10 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     value: function onLoggedIn(authData) {
       console.log(authData);
       this.setState({
-        user: authData.user
+        user: authData.user.Username
       });
       localStorage.setItem('token', authData.token);
-      localStorage.setItem('user', authData.user);
+      localStorage.setItem('user', authData.user.Username);
       this.getMovies(authData.token);
     }
   }, {
@@ -52949,8 +52950,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onToggleFavorite",
     value: function onToggleFavorite(movie) {
-      movie.isFavorite = true;
-      console.log(movie.isFavorite);
+      console.log(this.movie.isFavorite);
     }
   }, {
     key: "render",

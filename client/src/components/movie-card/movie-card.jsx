@@ -10,12 +10,12 @@ import { MovieView } from '../movie-view/movie-view';
 
 export class MovieCard extends React.Component {
   render() {
-    const { movie, user, onToggleFavorite} = this.props;
+    const { movie, user, addFavorite} = this.props;
 
     var isFavorite = movie.isFavorite;
     
     const HandleToggleFavorite = (e) => {
-      onToggleFavorite(movie);
+      addFavorite();
      
     }
     

@@ -43,6 +43,8 @@ class MainView extends React.Component {
           });
           this.getMovies(accessToken);
         }};
+
+        
       
     getMovies(token){
         axios.get('https://myflixdb-pl.herokuapp.com/movies', {
@@ -61,11 +63,11 @@ class MainView extends React.Component {
       onLoggedIn(authData) {
       console.log(authData);
       this.setState({
-        user: authData.user
+        user: authData.user.Username
       });
     
       localStorage.setItem('token', authData.token);
-      localStorage.setItem('user', authData.user);
+      localStorage.setItem('user', authData.user.Username);
       this.getMovies(authData.token);
     }
 
@@ -73,15 +75,13 @@ class MainView extends React.Component {
     onLoggedOut(){
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      
       window.open('/', '_self')
      
 
       }
 
     onToggleFavorite(movie){
-      movie.isFavorite = true;
-      console.log(movie.isFavorite)
+      console.log(this.movie.isFavorite);
     }
     
       

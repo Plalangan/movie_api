@@ -255,7 +255,7 @@ app.delete('/users/:Username'/ passport.authenticate('jwt', { session: false}), 
 
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false}), function(req, res) {
   Users.findOneAndUpdate({ Username : req.params.Username }, {
-    $push : { Favorites : req.params.MovieID }
+    $push : { FavoriteMovies : req.params.MovieID }
   },
   { new : true }, // This line makes sure that the updated document is returned
   function(err, updatedUser) {
