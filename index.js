@@ -156,9 +156,10 @@ app.get('/users',  passport.authenticate('jwt', { session: false}), function(req
 
 // get info about a single user
 app.get('/users/:Username', /*passport.authenticate('jwt', { session: false}), */function(req,res){
-  Users.findOne({ "User.Username" : req.params.Username})
+  Users.findOne({ Username : req.params.Username})
   .then(function(user){
     res.json(user)
+    console.log('failed')
   })
   .catch(function(err){
     console.error(err);

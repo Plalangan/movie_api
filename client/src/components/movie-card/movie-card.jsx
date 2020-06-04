@@ -14,20 +14,31 @@ export class MovieCard extends React.Component {
 
   
   render() {
-    const { movie, user, favoritemovies} = this.props;
+    const { movie, user, favoritemovies, addFavorite} = this.props;
     var isFavorite = this.props.movie.isFavorite;
   
     
   const onToggleFavorite = (e) => {
     let token = localStorage.getItem('token');
+    if( favoritemovies.includes(movie._id)){
     axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user}/movies/${movie._id}`,{
       headers: { Authorization: `Bearer ${token}`}
      })
-     favoritemovies.remove(movie._id)
      console.log('deleted');
-
+    }
+    else {
+      axios.post(`https://myflixdb-pl.herokuapp.com/users/${user}/movies/${movie._id}`, {
+        headers: { Authorization: `Bearer ${token}`}
+      })
+      console.log('favorited');
+      
     }
 
+    };
+
+    const check = (e) => {
+      addFavorite(user);
+    }
       
   
       
@@ -73,7 +84,7 @@ export class MovieCard extends React.Component {
 
     if (user && favoritemovies.includes(movie._id)) return (
       <Card className ="mb-3 mb-sm-4" class="moviecard" style ={{ minWidth: '15rem', maxWidth: '15rem', minHeight: 'rem'}}>
-        <span className="liked-button" onClick={onToggleFavorite} ></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
+        <span className="liked-button" onClick={check} ></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
         
         <Card.Body>
           <Card.Title className="text-center">{movie.Title}</Card.Title>
@@ -96,7 +107,7 @@ export class MovieCard extends React.Component {
 
  
       <Card className ="mb-3 mb-sm-4" class="moviecard" style ={{ minWidth: '15rem', maxWidth: '15rem', minHeight: 'rem'}}>
-        <span className="like-button" onClick={onToggleFavorite} ></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
+        <span className="like-button" onClick={check} ></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
         
         <Card.Body>
           <Card.Title className="text-center">{movie.Title}</Card.Title>

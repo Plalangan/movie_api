@@ -96,13 +96,62 @@ class MainView extends React.Component {
 
     
 
-    check(){
-      console.log(favoritemovies);
-    }
-      
+      addFavorite(user){
+        let token = localStorage.getItem('token');
+        console.log(user);
+        axios.get(`https://myflixdb-pl.herokuapp.com/users/${user}`, {
+          headers: { Authorization: `Bearer ${token}`}
+        })
+      .then(response => {
+          console.log(response)
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
+      };
       
     
+      componentDidMount() {
+        this.getMovies();
+        let accessToken = localStorage.getItem('token');
+            if (accessToken !== null) {
+              this.setState({
+                user: localStorage.getItem('user'),
+                favoritemovies : localStorage.getItem('favorites')
+              });
+              this.getMovies(accessToken);
+            }
+            
+          
+          };
     
+            
+        
+        
+          
+        getMovies(token){
+            axios.get('https://myflixdb-pl.herokuapp.com/movies', {
+              headers: { Authorization: `Bearer ${token}`}
+            })
+          .then(response => {
+          // Assign the result to the state
+          this.props.setMovies(response.data);
+          })
+          .catch(function (error) {
+          console.log(error);
+          });
+          };
+
+
+          /*
+        componentDidUpdate(){
+          this.setState({
+            favoritemovies: localStorage.getItem('favorites')
+          })
+        }
+        */
+
+
 
 
    render() {
@@ -116,7 +165,7 @@ class MainView extends React.Component {
      <div className="main-view">
      <Route exact path ="/" render={() => {
        
-       return <MoviesList movies = {movies} user={user} onLoggedOut={this.onLoggedOut} onLoggedIn={user => this.onLoggedIn(user)} toggleModal={this.toggleModal} isFavorite={isFavorite} onToggleFavorite={this.onToggleFavorite} token={token} favoritemovies={favoritemovies} check={check}/>;
+       return <MoviesList addFavorite={this.addFavorite} movies = {movies} user={user} onLoggedOut={this.onLoggedOut} onLoggedIn={user => this.onLoggedIn(user)} toggleModal={this.toggleModal} isFavorite={isFavorite} onToggleFavorite={this.onToggleFavorite} token={token} favoritemovies={favoritemovies} check={check}/>;
      }}/>
 
    <Route path ="/login" render={() => <LoginView movies = {movies}  user = {user} onLoggedIn={user => this.onLoggedIn(user)} />} />

@@ -41444,25 +41444,29 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var MovieCard =
-/*#__PURE__*/
-function (_React$Component) {
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var MovieCard = /*#__PURE__*/function (_React$Component) {
   _inherits(MovieCard, _React$Component);
+
+  var _super = _createSuper(MovieCard);
 
   function MovieCard() {
     _classCallCheck(this, MovieCard);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(MovieCard).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   _createClass(MovieCard, [{
@@ -41471,34 +41475,19 @@ function (_React$Component) {
       var _this$props = this.props,
           movie = _this$props.movie,
           user = _this$props.user,
-          favoritemovies = _this$props.favoritemovies,
-          addFavorite = _this$props.addFavorite;
+          favoritemovies = _this$props.favoritemovies;
       var isFavorite = this.props.movie.isFavorite;
 
       var onToggleFavorite = function onToggleFavorite(e) {
         var token = localStorage.getItem('token');
 
-        if (favoritemovies.includes(movie._id)) {
-          _axios.default.delete("https://myflixdb-pl.herokuapp.com/users/".concat(user, "/movies/").concat(movie._id), {
-            headers: {
-              Authorization: "Bearer ".concat(token)
-            }
-          });
+        _axios.default.delete("https://myflixdb-pl.herokuapp.com/users/".concat(user, "/movies/").concat(movie._id), {
+          headers: {
+            Authorization: "Bearer ".concat(token)
+          }
+        });
 
-          console.log('deleted');
-        } else {
-          _axios.default.post("https://myflixdb-pl.herokuapp.com/users/".concat(user, "/movies/").concat(movie._id), {
-            headers: {
-              Authorization: "Bearer ".concat(token)
-            }
-          });
-
-          console.log('favorited');
-        }
-      };
-
-      var check = function check(e) {
-        addFavorite(user);
+        console.log('deleted');
       };
       /* if(user && favoritemovies.includes(movie._id)) {
          axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`,{
@@ -41546,7 +41535,7 @@ function (_React$Component) {
         }
       }, _react.default.createElement("span", {
         className: "liked-button",
-        onClick: check
+        onClick: onToggleFavorite
       }), _react.default.createElement(_Card.default.Img, {
         "class": "card-img",
         variant: "top",
@@ -41568,7 +41557,7 @@ function (_React$Component) {
         }
       }, _react.default.createElement("span", {
         className: "like-button",
-        onClick: check
+        onClick: onToggleFavorite
       }), _react.default.createElement(_Card.default.Img, {
         "class": "card-img",
         variant: "top",
@@ -43541,11 +43530,15 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -43607,10 +43600,6 @@ function NaviBar(props) {
     sm: {
       span: 2,
       offset: 9
-    },
-    xs: {
-      span: 2,
-      offset: 7
     }
   }, _react.default.createElement(_visibilityFilterInput.default, {
     visibilityFilter: visibilityFilter,
@@ -43638,22 +43627,15 @@ function NaviBar(props) {
     "class": "headerButtons",
     onClick: onLoggedOut
   }, " Log Out"), _react.default.createElement(_Col.default, {
-    xl: {
-      span: 2,
-      offset: 6
-    },
     lg: {
       span: 2,
-      offset: 6
+      offset: 7
     },
     md: {
       span: 2,
-      offset: 6
+      offset: 7
     },
-    sm: {
-      span: 4,
-      offset: 0
-    }
+    sm: 8
   }, _react.default.createElement(_visibilityFilterInput.default, {
     visibilityFilter: visibilityFilter,
     visible: visible
@@ -43710,8 +43692,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mapStateToProps = function mapStateToProps(state) {
   var visibilityFilter = state.visibilityFilter,
       visible = state.visible,
-      user = state.user,
-      favorites = state.favorites;
+      user = state.user;
   return {
     visibilityFilter: visibilityFilter,
     visible: visible
@@ -43721,8 +43702,7 @@ var mapStateToProps = function mapStateToProps(state) {
 function MoviesList(props) {
   var _this = this;
 
-  var addFavorite = props.addFavorite,
-      favoritemovies = props.favoritemovies,
+  var favoritemovies = props.favoritemovies,
       movies = props.movies,
       visibilityFilter = props.visibilityFilter,
       visible = props.visible,
@@ -43745,36 +43725,6 @@ function MoviesList(props) {
     className: "main-view"
   });
   if (!user) return _react.default.createElement("div", {
-    className: "movies-list"
-  }, _react.default.createElement(_naviBar.default, {
-    onLoggedIn: function onLoggedIn(user) {
-      return _this.onLoggedIn(user);
-    },
-    onLoggedOut: onLoggedOut,
-    user: user,
-    toggleModal: toggleModal
-  }), _react.default.createElement(_reactCssAnimated.default, {
-    animateOnMount: true,
-    duration: {
-      in: 1000
-    },
-    animationIn: "slideInUp",
-    animationOut: "slideOutDown",
-    isVisible: animate
-  }, _react.default.createElement("div", {
-    className: "card-deck"
-  }, filteredMovies.map(function (m) {
-    return _react.default.createElement(_movieCard.MovieCard, {
-      key: m._id,
-      movie: m,
-      isFavorite: isFavorite,
-      onToggleFavorite: function onToggleFavorite(movie) {
-        return _this.onToggleFavorite;
-      },
-      user: user
-    });
-  }))));
-  if (user && favorites) return _react.default.createElement("div", {
     className: "movies-list"
   }, _react.default.createElement(_naviBar.default, {
     onLoggedIn: function onLoggedIn(user) {
@@ -43827,7 +43777,6 @@ function MoviesList(props) {
       key: m._id,
       movie: m,
       isFavorite: isFavorite,
-      addFavorite: addFavorite,
       onToggleFavorite: onToggleFavorite,
       user: user,
       token: token,
@@ -52950,27 +52899,31 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var MainView =
-/*#__PURE__*/
-function (_React$Component) {
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var MainView = /*#__PURE__*/function (_React$Component) {
   _inherits(MainView, _React$Component);
+
+  var _super = _createSuper(MainView);
 
   function MainView() {
     var _this;
 
     _classCallCheck(this, MainView);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(MainView).call(this));
+    _this = _super.call(this);
     _this.state = {
       user: null,
       showModal: false,
@@ -53033,63 +52986,14 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "addFavorite",
-    value: function addFavorite(user) {
-      var token = localStorage.getItem('token');
-      console.log(user);
-
-      _axios.default.get("https://myflixdb-pl.herokuapp.com/users/".concat(user), {
-        headers: {
-          Authorization: "Bearer ".concat(token)
-        }
-      }).then(function (response) {
-        console.log(response);
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.getMovies();
-      var accessToken = localStorage.getItem('token');
-
-      if (accessToken !== null) {
-        this.setState({
-          user: localStorage.getItem('user'),
-          favoritemovies: localStorage.getItem('favorites')
-        });
-        this.getMovies(accessToken);
-      }
-    }
-  }, {
-    key: "getMovies",
-    value: function getMovies(token) {
-      var _this3 = this;
-
-      _axios.default.get('https://myflixdb-pl.herokuapp.com/movies', {
-        headers: {
-          Authorization: "Bearer ".concat(token)
-        }
-      }).then(function (response) {
-        // Assign the result to the state
-        _this3.props.setMovies(response.data);
-      }).catch(function (error) {
-        console.log(error);
-      });
+    key: "check",
+    value: function check() {
+      console.log(favoritemovies);
     }
   }, {
     key: "render",
-
-    /*
-    componentDidUpdate(){
-    this.setState({
-      favoritemovies: localStorage.getItem('favorites')
-    })
-    }
-    */
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       var _this$props = this.props,
           movies = _this$props.movies,
@@ -53111,16 +53015,15 @@ function (_React$Component) {
         path: "/",
         render: function render() {
           return _react.default.createElement(_moviesList.default, {
-            addFavorite: _this4.addFavorite,
             movies: movies,
             user: user,
-            onLoggedOut: _this4.onLoggedOut,
+            onLoggedOut: _this3.onLoggedOut,
             onLoggedIn: function onLoggedIn(user) {
-              return _this4.onLoggedIn(user);
+              return _this3.onLoggedIn(user);
             },
-            toggleModal: _this4.toggleModal,
+            toggleModal: _this3.toggleModal,
             isFavorite: isFavorite,
-            onToggleFavorite: _this4.onToggleFavorite,
+            onToggleFavorite: _this3.onToggleFavorite,
             token: token,
             favoritemovies: favoritemovies,
             check: check
@@ -53133,7 +53036,7 @@ function (_React$Component) {
             movies: movies,
             user: user,
             onLoggedIn: function onLoggedIn(user) {
-              return _this4.onLoggedIn(user);
+              return _this3.onLoggedIn(user);
             }
           });
         }

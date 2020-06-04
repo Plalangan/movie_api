@@ -46,7 +46,7 @@ function NaviBar(props){
         <Button className="btn btn-sm" class="headerButtons">Sign Up</Button>
         </Link>
     
-        <Col xl={{ span: 2, offset: 8}} lg ={{ span: 2, offset: 9}} md={{ span: 2, offset: 9}} sm={{ span: 2, offset: 9}}>
+        <Col xl={{ span: 2, offset: 8}} lg ={{ span: 2, offset: 9}} md={{ span: 2, offset: 9}} sm={{ span: 2, offset: 9}} xs={{ span: 2, offset: 7}}>
         <VisibilityFilterInput visibilityFilter={visibilityFilter} visible={visible}/>
         </Col>
         </Navbar>
@@ -74,7 +74,7 @@ function NaviBar(props){
             <Button className="btn btn-sm" class="headerButtons" onClick={onLoggedOut}> Log Out</Button>
             
         
-            <Col lg ={{ span: 2, offset: 7}} md={{ span: 2, offset: 7}} sm={8}>
+            <Col xl ={{ span: 2, offset: 6}} lg ={{ span: 2, offset: 6}} md={{ span: 2, offset: 6}} sm={{ span: 4, offset: 0}}>
             <VisibilityFilterInput visibilityFilter={visibilityFilter} visible={visible}/>
             </Col>
             </Navbar>
