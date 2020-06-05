@@ -1,6 +1,6 @@
 const express = require('express'),
 
-// test line
+
 app = express();
 cors = require('cors');
 app.use(cors());
