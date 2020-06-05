@@ -126,7 +126,23 @@ class MainView extends React.Component {
           };
     
             
-        
+        updateFavorites(){
+          let token = localStorage.getItem('token');
+          console.log(user);
+          axios.get(`https://myflixdb-pl.herokuapp.com/users/${user}`,{
+            headers: {Authorization: `Bearer ${token}`}
+          })
+          .then(
+            response => {
+            this.setState({
+              favoritemovies : response.data.user.FavoriteMovies
+            })
+            console.log(response)
+          })
+          .catch(function (error) {
+            console.log(error);
+            });
+        }
         
           
         getMovies(token){
@@ -155,7 +171,7 @@ class MainView extends React.Component {
 
 
    render() {
-    let { movies, onLoggedOut, isFavorite, token, check} = this.props;
+    let { movies, onLoggedOut, isFavorite, token, check, addFavorite, updateFavorites} = this.props;
     let { user, showModal, favoritemovies } = this.state;
 
     if (showModal === true) return <LoginView/>
@@ -165,7 +181,7 @@ class MainView extends React.Component {
      <div className="main-view">
      <Route exact path ="/" render={() => {
        
-       return <MoviesList addFavorite={this.addFavorite} movies = {movies} user={user} onLoggedOut={this.onLoggedOut} onLoggedIn={user => this.onLoggedIn(user)} toggleModal={this.toggleModal} isFavorite={isFavorite} onToggleFavorite={this.onToggleFavorite} token={token} favoritemovies={favoritemovies} check={check}/>;
+       return <MoviesList addFavorite={this.addFavorite} updateFavorites={updateFavorites} movies = {movies} user={user} onLoggedOut={this.onLoggedOut} onLoggedIn={user => this.onLoggedIn(user)} toggleModal={this.toggleModal} isFavorite={isFavorite} onToggleFavorite={this.onToggleFavorite} token={token} favoritemovies={favoritemovies} check={check}/>;
      }}/>
 
    <Route path ="/login" render={() => <LoginView movies = {movies}  user = {user} onLoggedIn={user => this.onLoggedIn(user)} />} />

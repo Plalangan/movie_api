@@ -14,38 +14,25 @@ export class MovieCard extends React.Component {
 
   
   render() {
-    const { movie, user, favoritemovies, addFavorite} = this.props;
+    const { movie, user, favoritemovies, updateFavorites} = this.props;
     var isFavorite = this.props.movie.isFavorite;
   
     
   const onToggleFavorite = (e) => {
+    
     let token = localStorage.getItem('token');
-    if( favoritemovies.includes(movie._id)){
-    axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user}/movies/${movie._id}`,{
-      headers: { Authorization: `Bearer ${token}`}
-     })
-     console.log('deleted');
-    }
-    else {
-      axios.post(`https://myflixdb-pl.herokuapp.com/users/${user}/movies/${movie._id}`, {
-        headers: { Authorization: `Bearer ${token}`}
-      })
-      console.log('favorited');
-      
-    }
-
-    };
-
-    const check = (e) => {
-      addFavorite(user);
-    }
+ 
       
   
       
-   /* if(user && favoritemovies.includes(movie._id)) {
+    if(user && favoritemovies.includes(movie._id)) {
       axios.delete(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`,{
       headers: { Authorization: `Bearer ${token}`}
      })
+     .then(
+       console.log('unfavorited'));
+       updateFavorites();
+
      
     }
     
@@ -53,10 +40,10 @@ export class MovieCard extends React.Component {
     else {
        axios.post(`https://myflixdb-pl.herokuapp.com/users/${user.Username}/movies/${movie._id}`,{
         headers: { Authorization: `Bearer ${token}`}
-      })
-      .console.log('removed from favorites');
+        }).then(console.log('favorited'));
+        updateFavorites();
     }};
-    */
+    
     
   
 
@@ -84,7 +71,7 @@ export class MovieCard extends React.Component {
 
     if (user && favoritemovies.includes(movie._id)) return (
       <Card className ="mb-3 mb-sm-4" class="moviecard" style ={{ minWidth: '15rem', maxWidth: '15rem', minHeight: 'rem'}}>
-        <span className="liked-button" onClick={check} ></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
+        <span className="liked-button" onClick={onToggleFavorite} ></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
         
         <Card.Body>
           <Card.Title className="text-center">{movie.Title}</Card.Title>
@@ -94,7 +81,7 @@ export class MovieCard extends React.Component {
           <Link to={`/movies/${movie.Title}`}>
           <Button className="btn-sm">See More about {movie.Title}</Button>
           </Link>
-          </Card.Footer>.
+          </Card.Footer>
          
          
       </Card>
@@ -107,7 +94,7 @@ export class MovieCard extends React.Component {
 
  
       <Card className ="mb-3 mb-sm-4" class="moviecard" style ={{ minWidth: '15rem', maxWidth: '15rem', minHeight: 'rem'}}>
-        <span className="like-button" onClick={check} ></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
+        <span className="like-button" onClick={onToggleFavorite} ></span><Card.Img class="card-img" variant = "top" src ={movie.ImagePath}/>
         
         <Card.Body>
           <Card.Title className="text-center">{movie.Title}</Card.Title>

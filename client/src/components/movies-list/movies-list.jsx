@@ -18,12 +18,12 @@ import NaviBar from '../navi-bar/navi-bar';
 
 
 const mapStateToProps = state => {
-    const { visibilityFilter, visible, user, favorites} = state;
+    const { visibilityFilter, visible, user, favorites, favoritemovies, updateFavorites} = state;
     return { visibilityFilter, visible, };
 };
 
 function MoviesList(props){
-    const { addFavorite, favoritemovies, movies, visibilityFilter, visible, animate, isFavorite, user, onLoggedOut, toggleModal, onToggleFavorite, token} = props;
+    const { addFavorite, updateFavorites, favoritemovies, movies, visibilityFilter, visible, animate, isFavorite, user, onLoggedOut, toggleModal, onToggleFavorite, token} = props;
     let filteredMovies = movies;
     
     
@@ -46,14 +46,14 @@ function MoviesList(props){
 
     <Animated animateOnMount duration={{in:1000}} animationIn="slideInUp" animationOut="slideOutDown" isVisible={animate}>
     <div className='card-deck'>
-    {filteredMovies.map(m => <MovieCard key={m._id} movie={m} isFavorite={isFavorite} onToggleFavorite={movie=>this.onToggleFavorite} user={user}/>)}
+    {filteredMovies.map(m => <MovieCard key={m._id} movie={m} favoritemovies={favoritemovies} updateFavorites={updateFavorites} isFavorite={isFavorite} onToggleFavorite={movie=>this.onToggleFavorite} user={user}/>)}
     </div> 
     </Animated>
     
     </div>
     )
 
-    if ( user && favorites) return (
+    if ( user ) return (
             
     <div className ="movies-list">
     
@@ -62,7 +62,7 @@ function MoviesList(props){
 
     <Animated animateOnMount duration={{in:1000}} animationIn="slideInUp" animationOut="slideOutDown" isVisible={animate}>
     <div className='card-deck'>
-    {filteredMovies.map(m =>  <MovieCard key={m._id} movie={m} isFavorite={isFavorite} onToggleFavorite={movie=>this.onToggleFavorite} user={user}/>)}
+    {filteredMovies.map(m =>  <MovieCard key={m._id} movie={m} favoritemovies={favoritemovies} isFavorite={isFavorite} updateFavorites={updateFavorites} onToggleFavorite={movie=>this.onToggleFavorite} user={user}/>)}
     </div> 
     </Animated>
     
@@ -77,7 +77,7 @@ function MoviesList(props){
     
         <Animated animateOnMount duration={{in:1000}} animationIn="slideInUp" animationOut="slideOutDown" isVisible={animate}>
         <div className='card-deck'>
-        {filteredMovies.map(m => <MovieCard key={m._id} movie={m} isFavorite ={isFavorite} addFavorite={addFavorite} onToggleFavorite={onToggleFavorite} user={user} token={token} favoritemovies={favoritemovies}/>)}
+        {filteredMovies.map(m => <MovieCard key={m._id} movie={m} isFavorite ={isFavorite} updateFavorites={updateFavorites} addFavorite={addFavorite} onToggleFavorite={onToggleFavorite} user={user} token={token} favoritemovies={favoritemovies}/>)}
         </div> 
         </Animated>
         
