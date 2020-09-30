@@ -6,7 +6,8 @@ cors = require('cors');
 app.use(cors());
 morgan = require('morgan'),
 bodyParser = require('body-parser'),
-uuid = require('uuid');
+uuid = require('uuid'),
+path = require("path");
 
 passport = require('passport');
 require('./passport.js');
@@ -15,6 +16,10 @@ const {check, validationResult} = require('express-validator');
 
 //Middleware
 app.use(express.static('public'));
+app.use("/client", express.static(path.join(__dirname, "client", "dist")));
+app.get("/client/", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
