@@ -96,83 +96,18 @@ class MainView extends React.Component {
 
     
 
-      addFavorite(user){
-        let token = localStorage.getItem('token');
-        console.log(user);
-        axios.get(`https://myflixdb-pl.herokuapp.com/users/${user}`, {
-          headers: { Authorization: `Bearer ${token}`}
-        })
-      .then(response => {
-          console.log(response)
-      })
-      .catch(function (error) {
-      console.log(error);
-      });
-      };
-      
     
-      componentDidMount() {
-        this.getMovies();
-        let accessToken = localStorage.getItem('token');
-            if (accessToken !== null) {
-              this.setState({
-                user: localStorage.getItem('user'),
-                favoritemovies : localStorage.getItem('favorites')
-              });
-              this.getMovies(accessToken);
-            }
-            
-          
-          };
     
             
-        updateFavorites(){
-          let token = localStorage.getItem('token');
-          console.log(user);
-          axios.get(`https://myflixdb-pl.herokuapp.com/users/${user}`,{
-            headers: {Authorization: `Bearer ${token}`}
-          })
-          .then(
-            response => {
-            this.setState({
-              favoritemovies : response.data.user.FavoriteMovies
-            })
-            console.log(response)
-          })
-          .catch(function (error) {
-            console.log(error);
-            });
-        }
+       
         
-          
-        getMovies(token){
-            axios.get('https://myflixdb-pl.herokuapp.com/movies', {
-              headers: { Authorization: `Bearer ${token}`}
-            })
-          .then(response => {
-          // Assign the result to the state
-          this.props.setMovies(response.data);
-          })
-          .catch(function (error) {
-          console.log(error);
-          });
-          };
-
-
-          /*
-        componentDidUpdate(){
-          this.setState({
-            favoritemovies: localStorage.getItem('favorites')
-          })
-        }
-        */
-
+  
 
 
 
    render() {
-    let { movies, onLoggedOut, isFavorite, token, check, addFavorite, updateFavorites} = this.props;
-    let { user, showModal, favoritemovies } = this.state;
+    let { movies, onLoggedOut, token, check} = this.props;
+    let { user, showModal} = this.state;
 
     if (showModal === true) return <LoginView/>
     return (
@@ -181,7 +116,7 @@ class MainView extends React.Component {
      <div className="main-view">
      <Route exact path ="/" render={() => {
        
-       return <MoviesList addFavorite={this.addFavorite} updateFavorites={updateFavorites} movies = {movies} user={user} onLoggedOut={this.onLoggedOut} onLoggedIn={user => this.onLoggedIn(user)} toggleModal={this.toggleModal} isFavorite={isFavorite} onToggleFavorite={this.onToggleFavorite} token={token} favoritemovies={favoritemovies} check={check}/>;
+       return <MoviesList  movies = {movies} user={user} onLoggedOut={this.onLoggedOut} onLoggedIn={user => this.onLoggedIn(user)} toggleModal={this.toggleModal}   token={token}  check={check}/>;
      }}/>
 
    <Route path ="/login" render={() => <LoginView movies = {movies}  user = {user} onLoggedIn={user => this.onLoggedIn(user)} />} />
@@ -198,7 +133,7 @@ class MainView extends React.Component {
   let mapStateToProps = state => {
     return { movies: state.movies,
              user: state.user,
-             favoritemovies: state.favoritemovies}
+             }
   }
 
   export default connect(mapStateToProps, {setMovies})(MainView)

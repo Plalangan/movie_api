@@ -41474,33 +41474,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this$props = this.props,
           movie = _this$props.movie,
-          user = _this$props.user,
-          favoritemovies = _this$props.favoritemovies,
-          updateFavorites = _this$props.updateFavorites;
-      var isFavorite = this.props.movie.isFavorite;
-
-      var onToggleFavorite = function onToggleFavorite(e) {
-        var token = localStorage.getItem('token');
-
-        if (user && favoritemovies.includes(movie._id)) {
-          _axios.default.delete("https://myflixdb-pl.herokuapp.com/users/".concat(user.Username, "/movies/").concat(movie._id), {
-            headers: {
-              Authorization: "Bearer ".concat(token)
-            }
-          }).then(console.log('unfavorited'));
-
-          updateFavorites();
-        } else {
-          _axios.default.post("https://myflixdb-pl.herokuapp.com/users/".concat(user.Username, "/movies/").concat(movie._id), {
-            headers: {
-              Authorization: "Bearer ".concat(token)
-            }
-          }).then(console.log('favorited'));
-
-          updateFavorites();
-        }
-      };
-
+          user = _this$props.user;
       if (!user) return _react.default.createElement(_Card.default, {
         className: "mb-3 mb-sm-4",
         "class": "moviecard",
@@ -53033,98 +53007,18 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "addFavorite",
-    value: function addFavorite(user) {
-      var token = localStorage.getItem('token');
-      console.log(user);
-
-      _axios.default.get("https://myflixdb-pl.herokuapp.com/users/".concat(user), {
-        headers: {
-          Authorization: "Bearer ".concat(token)
-        }
-      }).then(function (response) {
-        console.log(response);
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.getMovies();
-      var accessToken = localStorage.getItem('token');
-
-      if (accessToken !== null) {
-        this.setState({
-          user: localStorage.getItem('user'),
-          favoritemovies: localStorage.getItem('favorites')
-        });
-        this.getMovies(accessToken);
-      }
-    }
-  }, {
-    key: "updateFavorites",
-    value: function updateFavorites() {
-      var _this3 = this;
-
-      var token = localStorage.getItem('token');
-      console.log(user);
-
-      _axios.default.get("https://myflixdb-pl.herokuapp.com/users/".concat(user), {
-        headers: {
-          Authorization: "Bearer ".concat(token)
-        }
-      }).then(function (response) {
-        _this3.setState({
-          favoritemovies: response.data.user.FavoriteMovies
-        });
-
-        console.log(response);
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-  }, {
-    key: "getMovies",
-    value: function getMovies(token) {
-      var _this4 = this;
-
-      _axios.default.get('https://myflixdb-pl.herokuapp.com/movies', {
-        headers: {
-          Authorization: "Bearer ".concat(token)
-        }
-      }).then(function (response) {
-        // Assign the result to the state
-        _this4.props.setMovies(response.data);
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-  }, {
     key: "render",
-
-    /*
-    componentDidUpdate(){
-    this.setState({
-      favoritemovies: localStorage.getItem('favorites')
-    })
-    }
-    */
     value: function render() {
-      var _this5 = this;
+      var _this3 = this;
 
       var _this$props = this.props,
           movies = _this$props.movies,
           onLoggedOut = _this$props.onLoggedOut,
-          isFavorite = _this$props.isFavorite,
           token = _this$props.token,
-          check = _this$props.check,
-          addFavorite = _this$props.addFavorite,
-          updateFavorites = _this$props.updateFavorites;
+          check = _this$props.check;
       var _this$state = this.state,
           user = _this$state.user,
-          showModal = _this$state.showModal,
-          favoritemovies = _this$state.favoritemovies;
+          showModal = _this$state.showModal;
       if (showModal === true) return _react.default.createElement(_loginView.LoginView, null);
       return _react.default.createElement(_reactRouterDom.BrowserRouter, {
         basename: "/client"
@@ -53135,19 +53029,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         path: "/",
         render: function render() {
           return _react.default.createElement(_moviesList.default, {
-            addFavorite: _this5.addFavorite,
-            updateFavorites: updateFavorites,
             movies: movies,
             user: user,
-            onLoggedOut: _this5.onLoggedOut,
+            onLoggedOut: _this3.onLoggedOut,
             onLoggedIn: function onLoggedIn(user) {
-              return _this5.onLoggedIn(user);
+              return _this3.onLoggedIn(user);
             },
-            toggleModal: _this5.toggleModal,
-            isFavorite: isFavorite,
-            onToggleFavorite: _this5.onToggleFavorite,
+            toggleModal: _this3.toggleModal,
             token: token,
-            favoritemovies: favoritemovies,
             check: check
           });
         }
@@ -53158,7 +53047,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             movies: movies,
             user: user,
             onLoggedIn: function onLoggedIn(user) {
-              return _this5.onLoggedIn(user);
+              return _this3.onLoggedIn(user);
             }
           });
         }
@@ -53197,8 +53086,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     movies: state.movies,
-    user: state.user,
-    favoritemovies: state.favoritemovies
+    user: state.user
   };
 };
 
@@ -53374,7 +53262,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53001" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60919" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
