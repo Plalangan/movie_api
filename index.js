@@ -17,7 +17,7 @@ const {check, validationResult} = require('express-validator');
 //Middleware
 app.use(express.static('public'));
 app.use("/client", express.static(path.join(__dirname, "client", "dist")));
-app.get("/client/", (req, res) => {
+app.get("/client/*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 app.use(morgan('common'));
