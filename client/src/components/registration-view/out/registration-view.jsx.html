@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: registration-view.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: registration-view.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+import './registration-view.scss';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal'
+import Row from 'react-bootstrap/Row'
+import axios from 'axios';
+
+/**
+ * renders user registration view
+ * @requires react
+ * @requires react-boostrap
+ * @requires axios
+ * @function RegistrationView
+ * @function handleSubmit
+ */
+
+export function RegistrationView(props){
+    const [ name, setName ] = useState('');
+    const [ username, setUsername ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ email, setEmail ] = useState('');
+    const [ birthday, setBirthday ] = useState('');
+    const [ validated, setValidated ] = useState('false');
+    const [ show, setShow ] = useState(true);
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(name, username, password, email, birthday, validated),
+        axios.post('https://myflixdb-pl.herokuapp.com/users', {
+        Name: name,
+        Username: username,
+        Password: password,
+        Email: email,
+        Birthday: birthday
+    }).then(response=> {
+        const data = response.data;
+        console.log(data);
+        window.open('/client', '_self');
+    }).catch(e => {
+        console.log('error registering the user')
+    });
+    }
+
+
+return (
+    &lt;div class="background" >
+        &lt;div>&lt;/div>
+    
+    &lt;Modal show={show}
+            backdrop="static">
+                &lt;p>&lt;/p>
+    &lt;Modal.Title className="text-center">Registration Form &lt;/Modal.Title>
+    &lt;form style = {{width: '80%', margin: 'auto', marginTop: '2rem'}}>
+        &lt;Form.Group controlId="formBasicName">
+            &lt;Form.Label>
+                Name
+            &lt;/Form.Label>
+                &lt;Form.Control type="text" placeholder="Enter name" value={name} required onChange = {e => setName(e.target.value)}/>
+                &lt;Form.Control.Feedback type="invalid">Please enter your name&lt;/Form.Control.Feedback>
+        &lt;/Form.Group>
+
+        &lt;Form.Group controlId="formBasicUsername">
+            &lt;Form.Label>
+                Username
+            &lt;/Form.Label>
+                &lt;Form.Control type="text" placeholder="Create Username" value={username} required onChange = {e => setUsername(e.target.value)}/>
+                &lt;Form.Control.Feedback type="invalid">Please enter a username&lt;/Form.Control.Feedback>
+        &lt;/Form.Group>
+
+        &lt;Form.Group controlId="formBasicPassword">
+            &lt;Form.Label>
+                Password
+            &lt;/Form.Label>
+                &lt;Form.Control type="password" placeholder="Create Password" value={password} required onChange = {e => setPassword(e.target.value)}/>
+                &lt;Form.Control.Feedback type="invalid">Please enter a password&lt;/Form.Control.Feedback>
+        &lt;/Form.Group>
+
+        &lt;Form.Group controlId="formBasicEmail">
+            &lt;Form.Label>
+                E-mail
+            &lt;/Form.Label>
+                &lt;Form.Control type="email" placeholder="Enter your e-mail address" value={email} required onChange = {e => setEmail(e.target.value)}/>
+                &lt;Form.Control.Feedback type="invalid">Please enter your e-mail address&lt;/Form.Control.Feedback>
+        &lt;/Form.Group>
+
+        &lt;Form.Group controlId="formBasicUsername">
+            &lt;Form.Label>
+                Birthdate
+            &lt;/Form.Label>
+                &lt;Form.Control type="date" placeholder="Enter your date of birth" value={birthday} required onChange = {e => setBirthday(e.target.value)}/>
+                &lt;Form.Control.Feedback type="invalid">Please enter your date of birth&lt;/Form.Control.Feedback>
+        &lt;/Form.Group>
+        &lt;Row className="justify-content-md-center">
+        &lt;Button variant = "primary" class="btn" type="submit" onClick={handleSubmit} >
+            Create User
+        &lt;/Button>
+        &lt;/Row>
+        &lt;p>&lt;/p>
+        &lt;Row className="justify-content-md-center">
+        Already have an account?
+        &lt;/Row>
+        &lt;Row className="justify-content-md-center">
+        &lt;Button variant = "primary" class="btn" link href='/login' >
+            Log In
+        &lt;/Button>
+        &lt;/Row>
+        &lt;p>&lt;/p>
+        
+        &lt;Row className="justify-content-md-center">
+        &lt;Button variant = "primary" class="btn" link href='/' >
+            Back To Movies
+        &lt;/Button>
+        &lt;/Row>
+        &lt;p>&lt;/p>
+        &lt;/form>
+        &lt;p>&lt;/p>
+        &lt;/Modal>
+        &lt;/div>
+)};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#handleSubmit">handleSubmit</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Dec 03 2020 19:38:32 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

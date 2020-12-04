@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main-view.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main-view.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import axios from 'axios';
+import './main-view.scss';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { setMovies } from '../../actions/actions';
+import MoviesList from '../movies-list/movies-list';
+import  {GenreView}  from '../genre-view/genre-view';
+import  {MovieView}  from '../movie-view/movie-view';
+import  {LoginView}  from '../login-view/login-view';
+import  {RegistrationView} from '../registration-view/registration-view';
+
+/**
+ * renders the main view
+ * @requires react
+ * @requires axios
+ * @requires react-redux
+ * @requires react-router-dom
+ * @function getMovies
+ * @function onLoggedIn
+ * @function onLoggedOut
+ */
+
+class MainView extends React.Component {
+
+  constructor() {
+    super();
+       this.state = {
+       user: null,
+       showModal: false,
+       favoritemovies: []
+      };
+    }
+    
+  componentDidMount() {
+    
+    //retrieves movies from api then stores them in local storage for offline use
+    this.getMovies();
+    let accessToken = localStorage.getItem('token');
+        if (accessToken !== null) {
+          this.setState({
+            user: localStorage.getItem('user'),
+            favoritemovies : localStorage.getItem('favorites')
+          });
+          this.getMovies(accessToken);
+        }
+        };
+
+    /**
+     * retrieves movies from api then sets them to props
+     * @function getMovies
+     */
+
+    getMovies(token){
+        axios.get('https://myflixdb-pl.herokuapp.com/movies', {
+          headers: { Authorization: `Bearer ${token}`}
+        })
+      .then(response => {
+      // Assign the result to the state
+      this.props.setMovies(response.data);
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
+      };
+
+    /**
+     * sets user to state and saves it to local storage
+     * @function onLoggedIn
+     */
+
+    onLoggedIn(authData) {
+      console.log(authData);
+      this.setState({
+        user: authData.user.Username,
+        favoritemovies: authData.user.FavoriteMovies
+      });
+     
+      localStorage.setItem('token', authData.token);
+      localStorage.setItem('user', authData.user.Username);
+      localStorage.setItem('favorites', authData.user.FavoriteMovies);
+      this.getMovies(authData.token);
+    }
+
+    /**
+     * logs user out
+     * @function onLoggedOut
+     */
+
+    onLoggedOut(){
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.open('/', '_self')
+      this.setState({
+        favoritemovies: []
+      })
+      }
+
+  render() {
+    let { movies, onLoggedOut, token, check} = this.props;
+    let { user, showModal} = this.state;
+    if (showModal === true) return &lt;LoginView/>
+    return (
+      &lt;Router basename="/client">
+        &lt;div className="main-view">
+      &lt;Route exact path ="/" render={() => {
+         return &lt;MoviesList  movies = {movies} user={user} onLoggedOut={this.onLoggedOut} onLoggedIn={user => this.onLoggedIn(user)} toggleModal={this.toggleModal}   token={token}  check={check}/>;
+      }}/>
+      &lt;Route path ="/login" render={() => &lt;LoginView movies = {movies}  user = {user} onLoggedIn={user => this.onLoggedIn(user)} />} />
+      &lt;Route path ="/register" render={() => &lt;RegistrationView/>} />
+      &lt;Route path ="/movies/:Title" render={({match}) => &lt;MovieView movie={movies.find(m => m.Title === match.params.Title)}/>}/>
+      &lt;Route path="/movies/genres/:Name" render ={({match})=> &lt;GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre }/>}/>
+      &lt;/div>
+      &lt;/Router>
+      );
+      }
+      }
+    
+    //map movies to props
+    let mapStateToProps = state => {
+     return { movies: state.movies,
+              user: state.user,
+            }
+    }
+
+  export default connect(mapStateToProps, {setMovies})(MainView)</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#getMovies">getMovies</a></li><li><a href="global.html#onLoggedIn">onLoggedIn</a></li><li><a href="global.html#onLoggedOut">onLoggedOut</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Dec 03 2020 19:37:13 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
