@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import proptypes from 'prop-types';
 import './registration-view.scss';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Card from 'react-bootstrap/Card'
 import Modal from 'react-bootstrap/Modal'
-import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import axios from 'axios';
 
+/**
+ * renders user registration view
+ * @requires react
+ * @requires react-boostrap
+ * @requires axios
+ * @function RegistrationView
+ * @function handleSubmit
+ */
 
 export function RegistrationView(props){
     const [ name, setName ] = useState('');
@@ -19,12 +24,6 @@ export function RegistrationView(props){
     const [ validated, setValidated ] = useState('false');
     const [ show, setShow ] = useState(true);
     
-    const handleClose = () => setShow (false);
-    const handleShow = () => setShow(true);
-
-
-   
-
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(name, username, password, email, birthday, validated),

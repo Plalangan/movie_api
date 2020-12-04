@@ -1,18 +1,21 @@
 import React from 'react';
-import axios from 'axios';
-import Proptypes from 'prop-types';
+
+/**
+ * renders view for chosen director
+ * @requires React
+ */
 
 export class DirectorView extends React.Component {
     constructor(){
         super();
-
         this.state = {};
     }
 
+    //renders view of director chosen
+
     render(){
         const { director, movie } = this.props;
-
-        if (!director) return null;
+            if (!director) return null;
 
         return (
             <div className="director-view">
@@ -32,4 +35,4 @@ export class DirectorView extends React.Component {
             </div>
         )
     }
-}
+    }

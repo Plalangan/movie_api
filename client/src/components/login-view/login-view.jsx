@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {connect} from 'react-redux';
 import Proptypes from 'prop-types';
 import './login-view.scss';
 import Button from 'react-bootstrap/Button';
@@ -8,22 +7,27 @@ import Row from 'react-bootstrap/Row'
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal'
 
-
+/**
+ * renders login view
+ * @requires react
+ * @requires axios 
+ * @requires prop-types
+ * @requires react-bootstrap
+ */
 
 export function LoginView(props) {
+    
+    //sets username and password to state
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ show, setShow ] = useState(true);
     
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-   
-
-   const backToMovies = (e) => {
+    //returns to movies
+    const backToMovies = (e) => {
        window.open('/', '_self');
-   }
+    }
 
+    //handles login
     const handleSubmit = (e) => {
         e.preventDefault();
         // Send a request to the server for authentication 
@@ -42,10 +46,6 @@ export function LoginView(props) {
             console.log('No User Found')
         });
     };
-
-    
-
-
 
     return (
 

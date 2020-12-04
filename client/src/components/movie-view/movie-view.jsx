@@ -5,17 +5,19 @@ import { Link } from 'react-router-dom';
 import './movie-view.scss';
 import Card from 'react-bootstrap/Card';
 
-export class MovieView extends React.Component {
+/**
+ * renders movie view
+ * @requires react
+ * @requires react-bootstrap
+ * @requires react-css-animated
+ * @requires react-router-dom
+ */
 
+export class MovieView extends React.Component {
   constructor() {
     super();
-
-    this.state = {};
+      this.state = {};
   };
-
-  
-  
-
 
   render() {
     const { movie,  onGenreClick, genre, animate, } = this.props;
@@ -38,33 +40,25 @@ export class MovieView extends React.Component {
           <span className="value">{movie.Description}</span>
           <p></p>
         </div>
-     
         <div className="movie-genre">
           <Link to={`/genres/${movie.Genre.Name}`}></Link>
-            
           <span className="value">Genre: - {movie.Genre.Name}</span>
           <p></p>
           <Button className ="genre-view" a href={`/movies/genres/${movie.Genre.Name}`}>See more about {movie.Genre.Name}</Button>
         </div>
         <p></p>
      
-    
-     
         <div className="movie-director">
         <span className="value">Directed by {movie.Director.Name}</span><p></p>
-        <Button>See more about {movie.Director.Name}</Button>
-          
-          <p></p>
+        <Button>See more about {movie.Director.Name}</Button>  
+        <p></p>
         </div>
-
-        
         <p></p><p></p>
         <Link to={`/`}>
         <Button class="btn-sm">Back to movies</Button>
         </Link>
         </Card.Text>
         <p></p>
-      
         </div>
         </Animated>
         </div>

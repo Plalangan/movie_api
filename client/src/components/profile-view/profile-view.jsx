@@ -1,14 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
-
-
 import './profile-view.scss';
 import axios from 'axios';
+
+/**
+ * renders user profile view
+ * @requires react
+ * @requires react-router-dom
+ * @requires react-bootstrap
+ * @requires axios
+ * @function deleteFavorite
+ * @function deleteProfile
+ */
 
 export class ProfileView extends React.Component {
   constructor() {
@@ -58,11 +64,8 @@ export class ProfileView extends React.Component {
       });
   }
 
-
-
   render() {
     const { user, userProfile, movies } = this.props;
-
     const favoritesList = movies.filter(movie => userProfile.Favorites.includes(movie._id));
 
     if (!user || !userProfile || !movies || movies.length === 0) return <div>loading</div>;
@@ -86,7 +89,6 @@ export class ProfileView extends React.Component {
               <Link to={`/update/${userProfile.Username}`}>
                 <Button variant="primary" className="update-button">Update my profile</Button>
               </Link>
-
               <Button variant="primary" className="delete-button ml-2" onClick={() => this.deleteProfile()}>Delete my profile</Button>
             </Card.Body>
           </Card>
